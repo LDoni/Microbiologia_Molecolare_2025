@@ -1,0 +1,81 @@
+---
+title: "Pretrattamento con AmpWrap"
+---
+
+## AmpWrap per il pretrattamento delle letture amplicon
+
+Per il pretrattamento useremo AmpWrap:
+
+https://github.com/LDoni/AmpWrap
+
+Useremo il modulo Illumina.
+
+---
+
+## Workflow AmpWrap (Illumina)
+
+1. Initial quality control con FastQC.
+2. Report multi-campione con MultiQC.
+3. Rimozione primer con Cutadapt (`--discard-untrimmed`).
+4. Post-cutadapt FastQC + MultiQC.
+5. Determinazione parametri ottimali con FIGARO.
+6. Inferenza delle ASVs con DADA2.
+
+---
+
+## Schema del workflow
+
+```{=html}
+<p align="center">
+  <img width="50%" height="50%" src="immagini/Fig1.jpg">
+</p>
+```
+
+---
+
+## Help del comando
+
+```bash
+ampwrap short --help
+```
+
+---
+
+## Uso di base
+
+```bash
+ampwrap short           -i input_directory           -a forward_primer           -A reverse_primer           -l amplicon_length
+```
+
+---
+
+## Scaricare i dati di esempio
+
+```bash
+mkdir -p raw_fastqc
+
+wget --no-check-certificate 'https://drive.usercontent.google.com/download?export=download&id=16nTZKwVmxrFkrT-26-IZtlMetjqDTO3r&confirm=t' -O raw_fastqc/S2_11_L001_R2_001.fastq.gz
+wget --no-check-certificate 'https://drive.usercontent.google.com/download?export=download&id=1zHKpcZwgNRCe9_h8BqAJZJsG1OyFRW8_&confirm=t' -O raw_fastqc/S2_11_L001_R1_001.fastq.gz
+wget --no-check-certificate 'https://drive.usercontent.google.com/download?export=download&id=1oQ2yNHI1JPuu2-NOq3IMdUBq2It8U3P9&confirm=t' -O raw_fastqc/S1_10_L001_R2_001.fastq.gz
+wget --no-check-certificate 'https://drive.usercontent.google.com/download?export=download&id=1RmrDN98kDsxc40pVI2rpmP4LRNCYlvxT&confirm=t' -O raw_fastqc/S1_10_L001_R1_001.fastq.gz
+```
+
+---
+
+## Esecuzione AmpWrap
+
+```bash
+ampwrap short           -i raw_fastqc           -a GTGYCAGCMGCCGCGGTAA           -A CCGYCAATTYMTTTRAGTTT           -l 372           -o short_test_output
+```
+
+---
+
+## Analisi output
+
+FastQC / MultiQC: aprire i report HTML generati.
+
+Final report:
+
+```bash
+cat short_test_output/final_report.txt
+```

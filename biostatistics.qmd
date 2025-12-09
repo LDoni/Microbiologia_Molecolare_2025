@@ -1,0 +1,204 @@
+---
+title: "Analisi biostatistica (SEA4BLUE)"
+---
+
+# SEA4BLUE Project
+
+```{=html}
+<p align="center">
+  <img width="50%" height="50%" src="https://github.com/Luponsky/MicrobiolMarina2023/raw/main/img/Sea4Blue_page-0001.jpg">
+</p>
+```
+
+Sail4Blue samples were collected in the North Atlantic Ocean, from Florida to the Azores. DNA was extracted from 8–10 L seawater filters stored at RT.
+
+```{=html}
+<p align="center">
+  <img width="50%" height="50%" src="https://github.com/Luponsky/MicrobiolMarina2023/raw/main/img/gel.png">
+</p>
+```
+
+---
+
+## DADA2 Pre-processing Summary
+
+<details>
+<summary>Steps</summary>
+Inspect read quality profiles<br>
+Remove adaptors<br>
+Quality filter and trimming<br>
+Sample inference<br>
+Merge paired reads<br>
+Remove chimeras<br>
+</details>
+
+<details>
+<summary>Outputs</summary>
+ASVs table & representative sequences
+</details>
+
+<details>
+<summary>Inputs for phyloseq</summary>
+ASVs table + sequences + taxonomy + metadata
+</details>
+
+---
+
+## Apri il progetto su RCloud
+
+```
+https://posit.cloud/content/6858169
+```
+
+---
+
+## Pacchetti
+
+```r
+library(MiscMetabar)
+library(formattable)
+library(phyloseq)
+library(ggplot2)
+library(dplyr)
+library(metagenomeSeq)
+library(ggrepel)
+library(ranacapa)
+library(ggside)
+library(ggpubr)
+library(grid)
+```
+
+---
+
+## Import dati
+
+```r
+ps <- read_pq(path = "sea4blue_phyloseq")
+ps
+```
+
+---
+
+## Metadata
+
+```r
+sample_data(ps)
+```
+
+---
+
+## Funzione per rarefaction curves
+
+```r
+calculate_rarefaction_curves <- function(psdata, measures, depths) {
+  require('plyr')
+  require('reshape2')
+  estimate_rarified_richness <- function(psdata, measures, depth) {
+    if (max(sample_sums(psdata)) < depth) return()
+    psdata <- prune_samples(sample_sums(psdata) >= depth, psdata)
+    rar <- rarefy_even_depth(psdata, depth, verbose = FALSE)
+    alpha <- estimate_richness(rar, measures = measures)
+    melt(as.matrix(alpha), varnames = c('Sample','Measure'),
+         value.name = 'Alpha_diversity')
+  }
+  names(depths) <- depths
+  out <- ldply(depths, estimate_rarified_richness,
+               psdata = psdata, measures = measures)
+  out$Depth <- as.numeric(levels(out$Depth))[out$Depth]
+  out
+}
+```
+
+```r
+rarefaction_curve_data <- calculate_rarefaction_curves(
+  ps, "Observed",
+  depths = rep(c(1,10,100,1000,1:100*10000), each = 10)
+)
+```
+
+---
+
+## Normalizzazione CSS
+
+```r
+phyloseq_obj <- ps
+
+phyloseq_obj <- phyloseq_obj %>%
+  subset_taxa(Family != "Mitochondria" | is.na(Family)) %>%
+  subset_taxa(Order != "Chloroplast" | is.na(Order))
+
+doubleton <- genefilter_sample(
+  phyloseq_obj,
+  filterfun_sample(function(x) x > 1),
+  A = 1
+)
+
+doubleton <- prune_taxa(doubleton, phyloseq_obj)
+
+doubleton <- subset_samples(doubleton,
+                            !(SampleName %in% c("Positive","Negative")))
+```
+
+```r
+data.metagenomeSeq <- phyloseq_to_metagenomeSeq(doubleton)
+p <- cumNormStat(data.metagenomeSeq)
+data.cumnorm <- cumNorm(data.metagenomeSeq, p)
+data.CSS <- MRcounts(data.cumnorm, norm = TRUE, log = TRUE)
+
+phyloseq_obj_css <- phyloseq_obj
+otu_table(phyloseq_obj_css) <- otu_table(data.CSS, taxa_are_rows = TRUE)
+sample_names(phyloseq_obj_css) <- sample_data(phyloseq_obj_css)$SampleName
+```
+
+---
+
+## Alpha diversity
+
+```r
+phyloseq_obj_css_round <- phyloseq_obj_css
+otu_table(phyloseq_obj_css_round) <- round(otu_table(phyloseq_obj_css), 0)
+
+p1 <- plot_richness(
+  phyloseq_obj_css_round,
+  x = "Longitude", color = "Zone",
+  measures = "Observed"
+)
+
+p1
+```
+
+---
+
+## Beta diversity
+
+```r
+ord <- ordinate(phyloseq_obj_css, "PCoA", "bray")
+
+plot_ordination(phyloseq_obj_css, ord, color = "Zone") +
+  geom_point(size = 3)
+```
+
+---
+
+## Tassonomia (Genus)
+
+```r
+physeq_perc <- transform_sample_counts(
+  phyloseq_obj_css,
+  function(x) 100 * x / sum(x)
+)
+
+glom <- tax_glom(physeq_perc, taxrank = "Genus")
+data_glom <- psmelt(glom)
+data_glom$Zone <- factor(as.character(data_glom$Zone),
+                         levels = c("ANW","ANC","ANE"))
+
+mycolors <- readRDS("R_RStudio/mycolors(1).rds")
+
+ggplot(data_glom, aes(x = Sample, y = Abundance, fill = Genus)) +
+  facet_grid(~ Zone, scales = "free") +
+  geom_bar(stat = "identity", position = "fill") +
+  scale_fill_manual(values = mycolors) +
+  theme(axis.text.x = element_text(angle = 90),
+        legend.position = "none")
+```

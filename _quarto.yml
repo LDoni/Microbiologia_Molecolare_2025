@@ -1,0 +1,30 @@
+project:
+  type: website
+  render:
+    - index.qmd
+    - bash_intro.qmd
+    - ampwrap.qmd
+    - intro_r.qmd
+    - biostatistics.qmd
+
+website:
+  title: "Microbiologia Molecolare 2025"
+  navbar:
+    left:
+      - text: "Home"
+        href: index.qmd
+      - text: "Intro BASH"
+        href: bash_intro.qmd
+      - text: "AmpWrap"
+        href: ampwrap.qmd
+      - text: "Intro R"
+        href: intro_r.qmd
+      - text: "Analisi biostatistica"
+        href: biostatistics.qmd
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-location: left
+    code-copy: true

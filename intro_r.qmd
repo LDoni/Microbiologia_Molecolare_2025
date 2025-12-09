@@ -1,0 +1,70 @@
+---
+title: "Introduzione a R"
+---
+
+# Obiettivo
+
+In questa sezione introdurremo:
+
+- oggetti di base di R;
+- importazione dati;
+- manipolazione semplice.
+
+Useremo i file nella cartella `R_RStudio/`:
+
+- `introduzione_R.R`
+- `gene_annotations500.txt`
+
+---
+
+## Impostare la working directory
+
+```r
+setwd("~/Microbiologia_Molecolare_2025")
+getwd()
+```
+
+---
+
+## Operazioni base
+
+```r
+x <- c(1, 3, 5, 7, 9)
+mean(x)
+sd(x)
+length(x)
+```
+
+Data frame:
+
+```r
+df <- data.frame(
+  sample = c("S1","S2","S3"),
+  value  = c(10.5, 8.2, 9.7)
+)
+
+df
+str(df)
+```
+
+---
+
+## Importare un file di testo
+
+```r
+gene_ann <- read.delim("R_RStudio/gene_annotations500.txt",
+                       header = TRUE, sep = "\t")
+
+head(gene_ann)
+str(gene_ann)
+```
+
+---
+
+## Script introduttivo
+
+Lo script completo è in:
+
+```
+R_RStudio/introduzione_R.R
+```
