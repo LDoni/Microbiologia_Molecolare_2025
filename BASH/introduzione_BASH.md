@@ -83,9 +83,7 @@ awk '$1 ~ /chr2|chr3/ { print $0 "\t" $3 - $2 }' file #if first column contain "
 awk '$1 ~ /chr1/ && $3 - $2 > 10 '{print}' file #if both the first column  contain "chr1" AND $3-$2>0 , print all columns
 awk '{if ($1~">") print $0; else print length}' "fasta_file #print length instead of sequence in fasta file
 ```
-![awk](https://raw.githubusercontent.com/MariangelaIannello/didattica/main/images/awk.png)
 ---
-
 ## Sed
 ```
 sed 's/Locus/Transcript/' file #for each line subtitute "Locus" with "Transcripts" at first occurrance
