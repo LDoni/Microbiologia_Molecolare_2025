@@ -111,20 +111,13 @@ echo "$var1" #print ciao
 echo '$var1' #print var1
 ```
 ---
-
-## Command substitution 
-Command substitution runs a Unix command inline and returns the output as a string that can be used in another command.
-```
-echo "$(cat file.fasta)"
-echo "There are $(grep -c '^>' input.fasta) entries in my FASTA file." # show the string "There are 416 entries in my FASTA file."
-```
 ---
 ## For loop
 ```
 for i in *.fasta; do echo $i; done
-for i in *.fasta; do mv $i ${i::-5}”_for_trimming”; done
+for i in *.fasta; do mv $i ${i::-5}”_filtered”; done
 for i in *.fasta; do mv $i ${i:1:3}”.fasta” ; done
-for i in *fasta; do sed ‘s/>Locus/>/’ > $i”_editname” ; done
+for i in *fastq; do sed ‘s/@/>/’ > $i”_editname” ; done
 for i in *fasta; do grep –c”>” $i ; done > counts
 for i in *fasta; do program1 $i > “output_”$i; done
 for i in */ ; do cd $i; cp *.fasta ../; cd ..; done
@@ -209,28 +202,8 @@ Conda is a package manager based on python. Each conda environment can only have
 ```
 conda create --name <ENV_NAME> python=2.7
 ```
-### Good practices in bioinformatics :
-
-  1. **Work in a robust and reproducible way**
-  2. **Document each step**
-  3. **Check everything between computational steps, errors can be silent**
-  4. **Code should be readable and organized in a logical way**
-  5. **Files, file names and folders organized in a logical way**
-  6. **Humans doing rote activities tend to make many mistakes, have your computer do as much of this rote work as possible**
-  7. **Internet is your best friend and mentor, google everything that you don't understand!**
-  8. **If an error rise first of all try to solve the problem by yourself:** a) read the error message carefully; b) read again the help of the software; c) check for typos, they are everywhere; d) GOOGLE it!
-
-
-### Some usefull online resources :
-
-  1. **Stack Overflow**
-  2. **BioStars**
-  3. **Issue page of GitHub**.
-  
----
-
-
-
+```
+```
 # Esercizi
 Andare nella directory in cui sono presenti le raw reads, e listare i file presenti:
 ```
@@ -352,3 +325,26 @@ Poi visualizziamolo:
 ```
 cat ciao.txt
 ```
+
+
+
+
+### Good practices in bioinformatics :
+
+  1. **Work in a robust and reproducible way**
+  2. **Document each step**
+  3. **Check everything between computational steps, errors can be silent**
+  4. **Code should be readable and organized in a logical way**
+  5. **Files, file names and folders organized in a logical way**
+  6. **Humans doing rote activities tend to make many mistakes, have your computer do as much of this rote work as possible**
+  7. **Internet is your best friend and mentor, google everything that you don't understand!**
+  8. **If an error rise first of all try to solve the problem by yourself:** a) read the error message carefully; b) read again the help of the software; c) check for typos, they are everywhere; d) GOOGLE it!
+
+
+### Some usefull online resources :
+
+  1. **Stack Overflow**
+  2. **BioStars**
+  3. **Issue page of GitHub**.
+  
+---
