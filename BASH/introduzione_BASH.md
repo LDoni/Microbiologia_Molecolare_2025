@@ -271,6 +271,13 @@ zcat S1_10_L001_R1_001.fastq.gz | wc -l
 ```
 echo $(( $(zcat S1_10_L001_R1_001.fastq.gz | wc -l) / 4 ))
 ```
+Oppure possiamo usare grep -c
+```
+zcat test_S1_R1.fastq.gz | grep -c "^@"
+```
+`^@` matcha solo righe che iniziano con @
+Corrispondono?
+
 - Lunghezza della prima read
 ```
 zcat S1_10_L001_R1_001.fastq.gz | sed -n '2p' | awk '{print length}'
@@ -308,35 +315,35 @@ for f in *.fastq.gz; do
     mv "$f" "$new"
 done
 ```
-` echo "$f"`  -> stampa il nome del file ad esempio ` S1_10_L001_R1_001.fastq.gz` 
+`echo "$f"`  -> stampa il nome del file ad esempio `S1_10_L001_R1_001.fastq.gz` 
 
 La pipe passa l’output del comando precedente come input al comando successivo, cioè a cut. 
 
-` cut`  taglia una stringa in campi. 
-` -d'_'`  dice che il delimitatore è _ (underscore).
-` -f1`  dice: "prendi il primo campo".
+`cut`  taglia una stringa in campi. 
+`-d'_'`  dice che il delimitatore è _ (underscore).
+`-f1`  dice: "prendi il primo campo".
 
 Applicato a S1_10_L001_R1_001.fastq.gz, diventa S1 (perchè i campi sono S1, 10, L001, R1 e 001.fastq.gz)
-Questa stringa viene assegnata a sample con ` sample=$(...)` 
+Questa stringa viene assegnata a sample con `sample=$(...)` 
 
-Quindi per ` S1_10_L001_R1_001.fastq.gz`  → sample="S1"
+Quindi per `S1_10_L001_R1_001.fastq.gz`  → sample="S1"
 
-` read=$(echo "$f" | grep -o "R[12]")` 
+`read=$(echo "$f" | grep -o "R[12]")` 
 per estrarre R1 o R2 dal nome del file.
-` grep`  cerca un pattern nel testo, ` -o`  stampa solo la parte che matcha il pattern, non l’intera riga.
-` "R[12]"`  è una regular expression: 
+`grep`  cerca un pattern nel testo, `-o`  stampa solo la parte che matcha il pattern, non l’intera riga.
+`"R[12]"`  è una regular expression: 
 R = lettera R. [12] = un carattere che può essere 1 oppure 2
-per il file ` R1`  → ` read="R1"` 
-` new="test_${sample}_${read}.fastq.gz"` Per costruire il nuovo nome del file.
-` "test_"`  è una stringa fissa.
+per il file `R1`  → `read="R1"` 
+`new="test_${sample}_${read}.fastq.gz"` Per costruire il nuovo nome del file.
+`"test_"`  è una stringa fissa.
 
-` ${sample}`  viene sostituito con il contenuto della variabile sample (es. S1).
+`${sample}`  viene sostituito con il contenuto della variabile sample (es. S1).
 
-` ${read}`  viene sostituito con R1 o R2.
-se ` sample="S1"`  e ` read="R1"`  → ` new="test_S1_R1.fastq.gz"` 
-` mv`  è il comando per rinominare file.
+`${read}`  viene sostituito con R1 o R2.
+se `sample="S1"`  e `read="R1"`  → `new="test_S1_R1.fastq.gz"` 
+`mv`  è il comando per rinominare file.
 
-` done`  segna la fine del ciclo for
+`done`  segna la fine del ciclo for
 
 
 - Aggiungere un prefisso a tutti gli header
@@ -349,7 +356,7 @@ zcat S1_R1.fastq.gz \
 ```
 zcat S1_R1.fastq.gz | head -n 20 > subset_S1_R1.fastq
 ```
-Con il ` >`  creiamo o sovrascriviamo. Se invece vogliamo aggiungere una nuova riga ad un file di testo possiamo usare ` >>` 
+Con il `>`  creiamo o sovrascriviamo. Se invece vogliamo aggiungere una nuova riga ad un file di testo possiamo usare `>>` 
 
 Ad esempio, creiamo un file di testo, e scriviamo all'interno una parola.
 ```
