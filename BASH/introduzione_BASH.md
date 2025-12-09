@@ -111,7 +111,6 @@ echo "$var1" #print ciao
 echo '$var1' #print var1
 ```
 ---
----
 ## For loop
 ```
 for i in *.fasta; do echo $i; done
@@ -138,7 +137,7 @@ for i in *output; do grep ">" $i; done > list_of_sequences
 ```
 We need now to make the .sh file executable
 ```
-chmod 777 namescript.sh
+chmod +x namescript.sh
 ```
 To execute the bash script
 ```
@@ -158,19 +157,27 @@ To execute it
 bash fake_script.sh file1.fasta
 ```
 
-This is the script get_sequences_from_list_of_loci.sh
+This is the script get_reads_from_list.sh
 ```
 #!/bin/bash
-#retrieve sequences from a list of loci 
-#$1=list of loci to grep in a fasta file
-#$2=fasta file
+# Retrieve FASTQ reads from a list of read IDs
+# $1 = list of read IDs
+# $2 = FASTQ file (.fastq.gz)
 
+list="$1"
+fastq="$2"
 
-file="$1" ; name=$(cat $file) ; for locus in $name ; do grep -w -A1 $locus "$2" ; done > "$1".fasta
+# loop through every ID in the list
+while read id; do
+
+    # print the header and the following 3 lines (the full FASTQ read)
+    zcat "$fastq" | grep -A3 -w "^$id"
+
+done < "$list" > "${list}.fastq"
 ```
 Execute the script
 ```
-bash get_sequences_from_list_of_loci.sh list_file M_musculus.fasta
+bash get_reads_from_list.sh list_file S1_10_L001_R1_001.fastq.gz
 ```
 ## Conda
 ```
