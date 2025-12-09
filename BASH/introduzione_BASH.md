@@ -125,14 +125,14 @@ for i in */ ; do cd $i; cp *.fasta ../; cd ..; done
 
 Bash scripts are indicated with the .sh extention (python scripts with .py, perl scripts with .pl). 
 
-Create bash script with vi:
+Create bash script with nano:
 
 ```
 #!/bin/bash
 mkdir test
-for i in *fasta; do mv $i test; done
+for i in *fastq; do mv $i test; done
 cd test
-for i in *fasta; do program1 $i > $i"_output"; done
+for i in *fastq; do program1 $i > $i"_output"; done
 for i in *output; do grep ">" $i; done > list_of_sequences
 ```
 We need now to make the .sh file executable
@@ -143,21 +143,13 @@ To execute the bash script
 ```
 bash namescript.sh
 ```
-## Bash script with variables
 
-fake_script.sh
+Questo è lo script get_reads_from_list.sh
+Possiamo scaricare nel terminale sia lo script che il file list_id che ci servirà per provarlo con wget:
 ```
-#!/bin/bash
-#$1=fasta file
-
-cp "$1" ../data
+wget https://github.com/LDoni/Microbiologia_Molecolare_2025/blob/main/BASH/get_reads_from_list.sh
+wget https://github.com/LDoni/Microbiologia_Molecolare_2025/blob/main/BASH/list_ids
 ```
-To execute it
-```
-bash fake_script.sh file1.fasta
-```
-
-This is the script get_reads_from_list.sh
 ```
 #!/bin/bash
 # Retrieve FASTQ reads from a list of read IDs
@@ -175,7 +167,7 @@ while read id; do
 
 done < "$list" > "${list}.fastq"
 ```
-Execute the script
+Eseguiamo lo script e guardiamo il risultato:
 ```
 bash get_reads_from_list.sh list_ids S1_10_L001_R1_001.fastq.gz
 cat list_ids.fastq
