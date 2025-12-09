@@ -1,15 +1,12 @@
 ---
-title: "Pretrattamento con AmpWrap"
+title: "Pretrattamento con [AmpWrap](https://github.com/LDoni/AmpWrap)"
 ---
 
-## AmpWrap per il pretrattamento delle letture amplicon
+## [AmpWrap](https://academic.oup.com/bioinformaticsadvances/advance-article/doi/10.1093/bioadv/vbaf312/8363213?searchresult=1) per il pretrattamento delle raw reads generate tramite sequenziamento Illumina del 16S rRNA gene
 
-Per il pretrattamento useremo AmpWrap:
 
-https://github.com/LDoni/AmpWrap
 
 Useremo il modulo Illumina.
-
 ---
 
 ## Workflow AmpWrap (Illumina)
@@ -40,11 +37,17 @@ ampwrap short --help
 ```
 
 ---
+## Attivare ambiente Conda
+```bash
+conda activate ampwrap
+```
+
+
 
 ## Uso di base
 
 ```bash
-ampwrap short           -i input_directory           -a forward_primer           -A reverse_primer           -l amplicon_length
+ampwrap short -i input_directory -a forward_primer -A reverse_primer -l amplicon_length
 ```
 
 ---
@@ -65,7 +68,7 @@ wget --no-check-certificate 'https://drive.usercontent.google.com/download?expor
 ## Esecuzione AmpWrap
 
 ```bash
-ampwrap short           -i raw_fastqc           -a GTGYCAGCMGCCGCGGTAA           -A CCGYCAATTYMTTTRAGTTT           -l 372           -o short_test_output
+ampwrap short -i raw_fastqc -a GTGYCAGCMGCCGCGGTAA -A CCGYCAATTYMTTTRAGTTT -l 372 -o short_test_output
 ```
 
 ---
@@ -77,5 +80,5 @@ FastQC / MultiQC: aprire i report HTML generati.
 Final report:
 
 ```bash
-cat short_test_output/final_report.txt
+cat ......../final_report.txt
 ```
