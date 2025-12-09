@@ -121,7 +121,7 @@ for i in *fasta; do grep –c”>” $i ; done > counts
 for i in *fasta; do program1 $i > “output_”$i; done
 for i in */ ; do cd $i; cp *.fasta ../; cd ..; done
 ```
-## Bash script (VEDIAMO)
+## Bash script
 
 Bash scripts are indicated with the .sh extention (python scripts with .py, perl scripts with .pl). 
 
@@ -177,7 +177,8 @@ done < "$list" > "${list}.fastq"
 ```
 Execute the script
 ```
-bash get_reads_from_list.sh list_file S1_10_L001_R1_001.fastq.gz
+bash get_reads_from_list.sh list_ids S1_10_L001_R1_001.fastq.gz
+cat list_ids.fastq
 ```
 ## Conda
 ```
