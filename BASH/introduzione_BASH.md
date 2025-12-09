@@ -99,6 +99,8 @@ sed '/Locus/d' file #delete any row containing "Locus"
 ```
 grep "word" file1 | sed 's/ /\t/g' | program1 > file2 #sed use as input the output of grep; when using pipe the "original" input has to be specified only in the first command
 ```
+Se una riga contiene “word”, viene stampata. La pipe manda l’output di grep come input a sed. Questo comando sostituisce ogni spazio `" "` con un tab `\t` in tutta la riga (`g` = global)
+
 ## Variables
 A variable in bash can be anything, a number, a character, a string of characters, a file, a folder.
 Variables are in bash are indicated with $
