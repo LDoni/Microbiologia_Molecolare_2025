@@ -184,13 +184,6 @@ A good practice is to create AND install necessary packages at the same moment :
 conda create --name <ENV_NAME> -c <CONDA_CHANNEL> <PACKAGE_NAME>
 ```
 
-Conda is a package manager based on python. Each conda environment can only have **ONE** specific version of python installed. Now the default version is the latest 3.X but some old software can be run only in python 2.7. To create a python 2.7 environment :
-
-```
-conda create --name <ENV_NAME> python=2.7
-```
-```
-```
 # Esercizi
 Andare nella directory in cui sono presenti le raw reads, e listare i file presenti:
 ```
