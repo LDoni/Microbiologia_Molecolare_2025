@@ -77,7 +77,6 @@ awk '{print $NF}' file #print last column
 awk '{print $4"\t"$1}' file #change orders of column and use tab as field separator in the output
 awk -F";" '{print $3,$4}' file #fiels separator is ";"
 awk '$1==$2 {print}' file #if first column = second column, print all columns
-awk '$1 ~ /chr2|chr3/ { print $0 "\t" $3 - $2 }' file #if first column contain "chr2" or "chr3", print all columns, and a column with the difference between $3 and $2
 awk '$1 ~ /chr1/ && $3 - $2 > 10 '{print}' file #if both the first column  contain "chr1" AND $3-$2>0 , print all columns
 awk '{if ($1~">") print $0; else print length}' "fasta_file #print length instead of sequence in fasta file
 ```
