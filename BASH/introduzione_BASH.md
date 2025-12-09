@@ -92,25 +92,6 @@ sed -i 's/Locus/Transcript/g' file # overwrite input with the output
 sed '/Locus/d' file #delete any row containing "Locus"
 ```
 
-> $ echo "chr1:28427874-28425431" | \
-sed -E 's/^(chr[^:]+):([0-9]+)-([0-9]+)/\1\t\2\t\3/'
-
-> chr1 28427874 28425431
-
-The first component of this
-regular expression is ^\(chr[^:]+\):. This matches the text that begins at the start of
-the line (the anchor ^ enforces this), and then captures everything between \( and \).
-The pattern used for capturing begins with “chr” and matches one or more characters
-that are not “:”, our delimiter. We match until the first “:” through a character class
-defined by everything that’s not “:”, [^:]+.
-The second and third components of this regular expression are the same: match and
-capture more than one number. Finally, our replacement is these three captured
-groups, interspersed with tabs, \t.
-
-> $ echo "chr1:abRsZtjf-dhThdbUdj" | \
-sed -E 's/^(chr[^:]+):([a-zA-Z]+)-([a-zA-Z]+)/\1\t\2\t\3/'
-
-> chr1 abRsZtjf dhThdbUdj
 ## Concatenate commands and programs
 ### Pipe | 
 | connects the standard output of one process to the standard input of another
