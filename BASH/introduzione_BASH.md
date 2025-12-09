@@ -162,15 +162,8 @@ conda env list # see list of environments
 conda activate "environment_name" # activate environment_name
 conda list # see packages installed in that environment_name
 conda deactivate # close environment 
-```
-Some usefull conda commands:
-
-```
 conda create --name <ENV_NAME> #Create a target conda environment
-conda activate <ENV_NAME> #Activate a target environment
-conda deactivate #Deactivate your current environment
 conda info --envs #print a list of conda environments
-conda list #print a lost of packages installed in your current environment
 conda install -c <CONDA_CHANNEL> <PACKAGE_NAME> #install a conda package
 ```
 
