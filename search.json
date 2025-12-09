@@ -1,0 +1,212 @@
+[
+  {
+    "objectID": "biostatistics.html",
+    "href": "biostatistics.html",
+    "title": "Analisi biostatistica (SEA4BLUE)",
+    "section": "",
+    "text": "Sail4Blue samples were collected in the North Atlantic Ocean, from Florida to the Azores. DNA was extracted from 8–10 L seawater filters stored at RT.\n\n  \n\n\n\n\n\n\nSteps\n\nInspect read quality profiles Remove adaptors Quality filter and trimming Sample inference Merge paired reads Remove chimeras\n\n\n\nOutputs\n\nASVs table & representative sequences\n\n\n\nInputs for phyloseq\n\nASVs table + sequences + taxonomy + metadata\n\n\n\n\n\nhttps://posit.cloud/content/6858169\n\n\n\n\nlibrary(MiscMetabar)\nlibrary(formattable)\nlibrary(phyloseq)\nlibrary(ggplot2)\nlibrary(dplyr)\nlibrary(metagenomeSeq)\nlibrary(ggrepel)\nlibrary(ranacapa)\nlibrary(ggside)\nlibrary(ggpubr)\nlibrary(grid)\n\n\n\n\nps &lt;- read_pq(path = \"sea4blue_phyloseq\")\nps\n\n\n\n\nsample_data(ps)\n\n\n\n\ncalculate_rarefaction_curves &lt;- function(psdata, measures, depths) {\n  require('plyr')\n  require('reshape2')\n  estimate_rarified_richness &lt;- function(psdata, measures, depth) {\n    if (max(sample_sums(psdata)) &lt; depth) return()\n    psdata &lt;- prune_samples(sample_sums(psdata) &gt;= depth, psdata)\n    rar &lt;- rarefy_even_depth(psdata, depth, verbose = FALSE)\n    alpha &lt;- estimate_richness(rar, measures = measures)\n    melt(as.matrix(alpha), varnames = c('Sample','Measure'),\n         value.name = 'Alpha_diversity')\n  }\n  names(depths) &lt;- depths\n  out &lt;- ldply(depths, estimate_rarified_richness,\n               psdata = psdata, measures = measures)\n  out$Depth &lt;- as.numeric(levels(out$Depth))[out$Depth]\n  out\n}\nrarefaction_curve_data &lt;- calculate_rarefaction_curves(\n  ps, \"Observed\",\n  depths = rep(c(1,10,100,1000,1:100*10000), each = 10)\n)\n\n\n\n\nphyloseq_obj &lt;- ps\n\nphyloseq_obj &lt;- phyloseq_obj %&gt;%\n  subset_taxa(Family != \"Mitochondria\" | is.na(Family)) %&gt;%\n  subset_taxa(Order != \"Chloroplast\" | is.na(Order))\n\ndoubleton &lt;- genefilter_sample(\n  phyloseq_obj,\n  filterfun_sample(function(x) x &gt; 1),\n  A = 1\n)\n\ndoubleton &lt;- prune_taxa(doubleton, phyloseq_obj)\n\ndoubleton &lt;- subset_samples(doubleton,\n                            !(SampleName %in% c(\"Positive\",\"Negative\")))\ndata.metagenomeSeq &lt;- phyloseq_to_metagenomeSeq(doubleton)\np &lt;- cumNormStat(data.metagenomeSeq)\ndata.cumnorm &lt;- cumNorm(data.metagenomeSeq, p)\ndata.CSS &lt;- MRcounts(data.cumnorm, norm = TRUE, log = TRUE)\n\nphyloseq_obj_css &lt;- phyloseq_obj\notu_table(phyloseq_obj_css) &lt;- otu_table(data.CSS, taxa_are_rows = TRUE)\nsample_names(phyloseq_obj_css) &lt;- sample_data(phyloseq_obj_css)$SampleName\n\n\n\n\nphyloseq_obj_css_round &lt;- phyloseq_obj_css\notu_table(phyloseq_obj_css_round) &lt;- round(otu_table(phyloseq_obj_css), 0)\n\np1 &lt;- plot_richness(\n  phyloseq_obj_css_round,\n  x = \"Longitude\", color = \"Zone\",\n  measures = \"Observed\"\n)\n\np1\n\n\n\n\nord &lt;- ordinate(phyloseq_obj_css, \"PCoA\", \"bray\")\n\nplot_ordination(phyloseq_obj_css, ord, color = \"Zone\") +\n  geom_point(size = 3)\n\n\n\n\nphyseq_perc &lt;- transform_sample_counts(\n  phyloseq_obj_css,\n  function(x) 100 * x / sum(x)\n)\n\nglom &lt;- tax_glom(physeq_perc, taxrank = \"Genus\")\ndata_glom &lt;- psmelt(glom)\ndata_glom$Zone &lt;- factor(as.character(data_glom$Zone),\n                         levels = c(\"ANW\",\"ANC\",\"ANE\"))\n\nmycolors &lt;- readRDS(\"R_RStudio/mycolors(1).rds\")\n\nggplot(data_glom, aes(x = Sample, y = Abundance, fill = Genus)) +\n  facet_grid(~ Zone, scales = \"free\") +\n  geom_bar(stat = \"identity\", position = \"fill\") +\n  scale_fill_manual(values = mycolors) +\n  theme(axis.text.x = element_text(angle = 90),\n        legend.position = \"none\")"
+  },
+  {
+    "objectID": "biostatistics.html#dada2-pre-processing-summary",
+    "href": "biostatistics.html#dada2-pre-processing-summary",
+    "title": "Analisi biostatistica (SEA4BLUE)",
+    "section": "",
+    "text": "Steps\n\nInspect read quality profiles Remove adaptors Quality filter and trimming Sample inference Merge paired reads Remove chimeras\n\n\n\nOutputs\n\nASVs table & representative sequences\n\n\n\nInputs for phyloseq\n\nASVs table + sequences + taxonomy + metadata"
+  },
+  {
+    "objectID": "biostatistics.html#apri-il-progetto-su-rcloud",
+    "href": "biostatistics.html#apri-il-progetto-su-rcloud",
+    "title": "Analisi biostatistica (SEA4BLUE)",
+    "section": "",
+    "text": "https://posit.cloud/content/6858169"
+  },
+  {
+    "objectID": "biostatistics.html#pacchetti",
+    "href": "biostatistics.html#pacchetti",
+    "title": "Analisi biostatistica (SEA4BLUE)",
+    "section": "",
+    "text": "library(MiscMetabar)\nlibrary(formattable)\nlibrary(phyloseq)\nlibrary(ggplot2)\nlibrary(dplyr)\nlibrary(metagenomeSeq)\nlibrary(ggrepel)\nlibrary(ranacapa)\nlibrary(ggside)\nlibrary(ggpubr)\nlibrary(grid)"
+  },
+  {
+    "objectID": "biostatistics.html#import-dati",
+    "href": "biostatistics.html#import-dati",
+    "title": "Analisi biostatistica (SEA4BLUE)",
+    "section": "",
+    "text": "ps &lt;- read_pq(path = \"sea4blue_phyloseq\")\nps"
+  },
+  {
+    "objectID": "biostatistics.html#metadata",
+    "href": "biostatistics.html#metadata",
+    "title": "Analisi biostatistica (SEA4BLUE)",
+    "section": "",
+    "text": "sample_data(ps)"
+  },
+  {
+    "objectID": "biostatistics.html#funzione-per-rarefaction-curves",
+    "href": "biostatistics.html#funzione-per-rarefaction-curves",
+    "title": "Analisi biostatistica (SEA4BLUE)",
+    "section": "",
+    "text": "calculate_rarefaction_curves &lt;- function(psdata, measures, depths) {\n  require('plyr')\n  require('reshape2')\n  estimate_rarified_richness &lt;- function(psdata, measures, depth) {\n    if (max(sample_sums(psdata)) &lt; depth) return()\n    psdata &lt;- prune_samples(sample_sums(psdata) &gt;= depth, psdata)\n    rar &lt;- rarefy_even_depth(psdata, depth, verbose = FALSE)\n    alpha &lt;- estimate_richness(rar, measures = measures)\n    melt(as.matrix(alpha), varnames = c('Sample','Measure'),\n         value.name = 'Alpha_diversity')\n  }\n  names(depths) &lt;- depths\n  out &lt;- ldply(depths, estimate_rarified_richness,\n               psdata = psdata, measures = measures)\n  out$Depth &lt;- as.numeric(levels(out$Depth))[out$Depth]\n  out\n}\nrarefaction_curve_data &lt;- calculate_rarefaction_curves(\n  ps, \"Observed\",\n  depths = rep(c(1,10,100,1000,1:100*10000), each = 10)\n)"
+  },
+  {
+    "objectID": "biostatistics.html#normalizzazione-css",
+    "href": "biostatistics.html#normalizzazione-css",
+    "title": "Analisi biostatistica (SEA4BLUE)",
+    "section": "",
+    "text": "phyloseq_obj &lt;- ps\n\nphyloseq_obj &lt;- phyloseq_obj %&gt;%\n  subset_taxa(Family != \"Mitochondria\" | is.na(Family)) %&gt;%\n  subset_taxa(Order != \"Chloroplast\" | is.na(Order))\n\ndoubleton &lt;- genefilter_sample(\n  phyloseq_obj,\n  filterfun_sample(function(x) x &gt; 1),\n  A = 1\n)\n\ndoubleton &lt;- prune_taxa(doubleton, phyloseq_obj)\n\ndoubleton &lt;- subset_samples(doubleton,\n                            !(SampleName %in% c(\"Positive\",\"Negative\")))\ndata.metagenomeSeq &lt;- phyloseq_to_metagenomeSeq(doubleton)\np &lt;- cumNormStat(data.metagenomeSeq)\ndata.cumnorm &lt;- cumNorm(data.metagenomeSeq, p)\ndata.CSS &lt;- MRcounts(data.cumnorm, norm = TRUE, log = TRUE)\n\nphyloseq_obj_css &lt;- phyloseq_obj\notu_table(phyloseq_obj_css) &lt;- otu_table(data.CSS, taxa_are_rows = TRUE)\nsample_names(phyloseq_obj_css) &lt;- sample_data(phyloseq_obj_css)$SampleName"
+  },
+  {
+    "objectID": "biostatistics.html#alpha-diversity",
+    "href": "biostatistics.html#alpha-diversity",
+    "title": "Analisi biostatistica (SEA4BLUE)",
+    "section": "",
+    "text": "phyloseq_obj_css_round &lt;- phyloseq_obj_css\notu_table(phyloseq_obj_css_round) &lt;- round(otu_table(phyloseq_obj_css), 0)\n\np1 &lt;- plot_richness(\n  phyloseq_obj_css_round,\n  x = \"Longitude\", color = \"Zone\",\n  measures = \"Observed\"\n)\n\np1"
+  },
+  {
+    "objectID": "biostatistics.html#beta-diversity",
+    "href": "biostatistics.html#beta-diversity",
+    "title": "Analisi biostatistica (SEA4BLUE)",
+    "section": "",
+    "text": "ord &lt;- ordinate(phyloseq_obj_css, \"PCoA\", \"bray\")\n\nplot_ordination(phyloseq_obj_css, ord, color = \"Zone\") +\n  geom_point(size = 3)"
+  },
+  {
+    "objectID": "biostatistics.html#tassonomia-genus",
+    "href": "biostatistics.html#tassonomia-genus",
+    "title": "Analisi biostatistica (SEA4BLUE)",
+    "section": "",
+    "text": "physeq_perc &lt;- transform_sample_counts(\n  phyloseq_obj_css,\n  function(x) 100 * x / sum(x)\n)\n\nglom &lt;- tax_glom(physeq_perc, taxrank = \"Genus\")\ndata_glom &lt;- psmelt(glom)\ndata_glom$Zone &lt;- factor(as.character(data_glom$Zone),\n                         levels = c(\"ANW\",\"ANC\",\"ANE\"))\n\nmycolors &lt;- readRDS(\"R_RStudio/mycolors(1).rds\")\n\nggplot(data_glom, aes(x = Sample, y = Abundance, fill = Genus)) +\n  facet_grid(~ Zone, scales = \"free\") +\n  geom_bar(stat = \"identity\", position = \"fill\") +\n  scale_fill_manual(values = mycolors) +\n  theme(axis.text.x = element_text(angle = 90),\n        legend.position = \"none\")"
+  },
+  {
+    "objectID": "ampwrap.html",
+    "href": "ampwrap.html",
+    "title": "Pretrattamento con AmpWrap",
+    "section": "",
+    "text": "Per il pretrattamento useremo AmpWrap:\nhttps://github.com/LDoni/AmpWrap\nUseremo il modulo Illumina."
+  },
+  {
+    "objectID": "ampwrap.html#ampwrap-per-il-pretrattamento-delle-letture-amplicon",
+    "href": "ampwrap.html#ampwrap-per-il-pretrattamento-delle-letture-amplicon",
+    "title": "Pretrattamento con AmpWrap",
+    "section": "",
+    "text": "Per il pretrattamento useremo AmpWrap:\nhttps://github.com/LDoni/AmpWrap\nUseremo il modulo Illumina."
+  },
+  {
+    "objectID": "ampwrap.html#workflow-ampwrap-illumina",
+    "href": "ampwrap.html#workflow-ampwrap-illumina",
+    "title": "Pretrattamento con AmpWrap",
+    "section": "Workflow AmpWrap (Illumina)",
+    "text": "Workflow AmpWrap (Illumina)\n\nInitial quality control con FastQC.\nReport multi-campione con MultiQC.\nRimozione primer con Cutadapt (--discard-untrimmed).\nPost-cutadapt FastQC + MultiQC.\nDeterminazione parametri ottimali con FIGARO.\nInferenza delle ASVs con DADA2."
+  },
+  {
+    "objectID": "ampwrap.html#schema-del-workflow",
+    "href": "ampwrap.html#schema-del-workflow",
+    "title": "Pretrattamento con AmpWrap",
+    "section": "Schema del workflow",
+    "text": "Schema del workflow"
+  },
+  {
+    "objectID": "ampwrap.html#help-del-comando",
+    "href": "ampwrap.html#help-del-comando",
+    "title": "Pretrattamento con AmpWrap",
+    "section": "Help del comando",
+    "text": "Help del comando\nampwrap short --help"
+  },
+  {
+    "objectID": "ampwrap.html#uso-di-base",
+    "href": "ampwrap.html#uso-di-base",
+    "title": "Pretrattamento con AmpWrap",
+    "section": "Uso di base",
+    "text": "Uso di base\nampwrap short           -i input_directory           -a forward_primer           -A reverse_primer           -l amplicon_length"
+  },
+  {
+    "objectID": "ampwrap.html#scaricare-i-dati-di-esempio",
+    "href": "ampwrap.html#scaricare-i-dati-di-esempio",
+    "title": "Pretrattamento con AmpWrap",
+    "section": "Scaricare i dati di esempio",
+    "text": "Scaricare i dati di esempio\nmkdir -p raw_fastqc\n\nwget --no-check-certificate 'https://drive.usercontent.google.com/download?export=download&id=16nTZKwVmxrFkrT-26-IZtlMetjqDTO3r&confirm=t' -O raw_fastqc/S2_11_L001_R2_001.fastq.gz\nwget --no-check-certificate 'https://drive.usercontent.google.com/download?export=download&id=1zHKpcZwgNRCe9_h8BqAJZJsG1OyFRW8_&confirm=t' -O raw_fastqc/S2_11_L001_R1_001.fastq.gz\nwget --no-check-certificate 'https://drive.usercontent.google.com/download?export=download&id=1oQ2yNHI1JPuu2-NOq3IMdUBq2It8U3P9&confirm=t' -O raw_fastqc/S1_10_L001_R2_001.fastq.gz\nwget --no-check-certificate 'https://drive.usercontent.google.com/download?export=download&id=1RmrDN98kDsxc40pVI2rpmP4LRNCYlvxT&confirm=t' -O raw_fastqc/S1_10_L001_R1_001.fastq.gz"
+  },
+  {
+    "objectID": "ampwrap.html#esecuzione-ampwrap",
+    "href": "ampwrap.html#esecuzione-ampwrap",
+    "title": "Pretrattamento con AmpWrap",
+    "section": "Esecuzione AmpWrap",
+    "text": "Esecuzione AmpWrap\nampwrap short           -i raw_fastqc           -a GTGYCAGCMGCCGCGGTAA           -A CCGYCAATTYMTTTRAGTTT           -l 372           -o short_test_output"
+  },
+  {
+    "objectID": "ampwrap.html#analisi-output",
+    "href": "ampwrap.html#analisi-output",
+    "title": "Pretrattamento con AmpWrap",
+    "section": "Analisi output",
+    "text": "Analisi output\nFastQC / MultiQC: aprire i report HTML generati.\nFinal report:\ncat short_test_output/final_report.txt"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Microbiologia Molecolare 2025 - Practical",
+    "section": "",
+    "text": "Benvenuti\nQuesto sito contiene il materiale del laboratorio di Microbiologia Molecolare 2025.\nLe diverse parti del laboratorio sono organizzate in 4 schede principali:\n\nIntro BASH – comandi di base della shell e lavoro da terminale.\nAmpWrap – pretrattamento delle letture Illumina amplicon con il workflow AmpWrap.\nIntro R – primi passi in R e RStudio.\nAnalisi biostatistica – analisi di dati di metabarcoding (progetto SEA4BLUE) con phyloseq e altri pacchetti.\n\nUsate la barra di navigazione in alto per spostarvi tra le varie sezioni durante la lezione."
+  },
+  {
+    "objectID": "bash_intro.html",
+    "href": "bash_intro.html",
+    "title": "Introduzione a BASH",
+    "section": "",
+    "text": "In questa sezione vedremo:\n\nChe cos’è la shell e perché la usiamo in bioinformatica.\nCome muoversi tra directory e file.\nCome usare comandi di base per ispezionare dati e lanciare programmi.\n\n\n\n\nComandi fondamentali:\npwd\nls\nls -l\ncd ..\ncd nome_dir\n\n\n\n\nmkdir prova_bash\ncd prova_bash\necho \"ciao mondo\" &gt; file1.txt\ncat file1.txt\nRedirezione e pipe:\nls -l &gt; elenco.txt\ncat elenco.txt | head\n\n\n\n\nCreiamo uno script:\nnano script.sh\nContenuto:\n#!/usr/bin/env bash\necho \"Questo è il nostro primo script BASH\"\npwd\nls\nRendiamolo eseguibile ed eseguiamolo:\nchmod +x script.sh\n./script.sh"
+  },
+  {
+    "objectID": "bash_intro.html#lavorare-da-terminale",
+    "href": "bash_intro.html#lavorare-da-terminale",
+    "title": "Introduzione a BASH",
+    "section": "",
+    "text": "Comandi fondamentali:\npwd\nls\nls -l\ncd ..\ncd nome_dir"
+  },
+  {
+    "objectID": "bash_intro.html#creare-e-ispezionare-file-e-cartelle",
+    "href": "bash_intro.html#creare-e-ispezionare-file-e-cartelle",
+    "title": "Introduzione a BASH",
+    "section": "",
+    "text": "mkdir prova_bash\ncd prova_bash\necho \"ciao mondo\" &gt; file1.txt\ncat file1.txt\nRedirezione e pipe:\nls -l &gt; elenco.txt\ncat elenco.txt | head"
+  },
+  {
+    "objectID": "bash_intro.html#esecuzione-di-script",
+    "href": "bash_intro.html#esecuzione-di-script",
+    "title": "Introduzione a BASH",
+    "section": "",
+    "text": "Creiamo uno script:\nnano script.sh\nContenuto:\n#!/usr/bin/env bash\necho \"Questo è il nostro primo script BASH\"\npwd\nls\nRendiamolo eseguibile ed eseguiamolo:\nchmod +x script.sh\n./script.sh"
+  },
+  {
+    "objectID": "intro_r.html",
+    "href": "intro_r.html",
+    "title": "Introduzione a R",
+    "section": "",
+    "text": "In questa sezione introdurremo:\n\noggetti di base di R;\nimportazione dati;\nmanipolazione semplice.\n\nUseremo i file nella cartella R_RStudio/:\n\nintroduzione_R.R\ngene_annotations500.txt\n\n\n\n\nsetwd(\"~/Microbiologia_Molecolare_2025\")\ngetwd()\n\n\n\n\nx &lt;- c(1, 3, 5, 7, 9)\nmean(x)\nsd(x)\nlength(x)\nData frame:\ndf &lt;- data.frame(\n  sample = c(\"S1\",\"S2\",\"S3\"),\n  value  = c(10.5, 8.2, 9.7)\n)\n\ndf\nstr(df)\n\n\n\n\ngene_ann &lt;- read.delim(\"R_RStudio/gene_annotations500.txt\",\n                       header = TRUE, sep = \"\\t\")\n\nhead(gene_ann)\nstr(gene_ann)\n\n\n\n\nLo script completo è in:\nR_RStudio/introduzione_R.R"
+  },
+  {
+    "objectID": "intro_r.html#impostare-la-working-directory",
+    "href": "intro_r.html#impostare-la-working-directory",
+    "title": "Introduzione a R",
+    "section": "",
+    "text": "setwd(\"~/Microbiologia_Molecolare_2025\")\ngetwd()"
+  },
+  {
+    "objectID": "intro_r.html#operazioni-base",
+    "href": "intro_r.html#operazioni-base",
+    "title": "Introduzione a R",
+    "section": "",
+    "text": "x &lt;- c(1, 3, 5, 7, 9)\nmean(x)\nsd(x)\nlength(x)\nData frame:\ndf &lt;- data.frame(\n  sample = c(\"S1\",\"S2\",\"S3\"),\n  value  = c(10.5, 8.2, 9.7)\n)\n\ndf\nstr(df)"
+  },
+  {
+    "objectID": "intro_r.html#importare-un-file-di-testo",
+    "href": "intro_r.html#importare-un-file-di-testo",
+    "title": "Introduzione a R",
+    "section": "",
+    "text": "gene_ann &lt;- read.delim(\"R_RStudio/gene_annotations500.txt\",\n                       header = TRUE, sep = \"\\t\")\n\nhead(gene_ann)\nstr(gene_ann)"
+  },
+  {
+    "objectID": "intro_r.html#script-introduttivo",
+    "href": "intro_r.html#script-introduttivo",
+    "title": "Introduzione a R",
+    "section": "",
+    "text": "Lo script completo è in:\nR_RStudio/introduzione_R.R"
+  }
+]
