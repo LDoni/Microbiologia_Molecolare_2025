@@ -62,7 +62,6 @@ grep –A10 "word" file # print rows containing pattern "word" and the 10 rows a
 grep –B10 "word" file # print rows containing pattern "word" and the 10 rows before
 grep –C10 "word" file # print rows containing pattern "word" and the 10 rows after and before
 grep "Locus10[12]" file #print Locus101 and Locus102 
-grep -E "(Locus101|Locus102)" file #print Locus101 and Locus102 
 ```
 > special characters: 
 > * ^ starting with ; grep "^>" file #print lines starting with ">"
