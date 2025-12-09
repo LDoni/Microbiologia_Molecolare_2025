@@ -1,19 +1,26 @@
+---
+title: "Introduzione a BASH"
+format: html
+---
+
 # Bash
 
 ## Paths, files and directories
-Open linux or mac terminal
-```
-pwd #print working directory
-cd #change directory (relative or absolute path)
-cd .. # bring you back one directory up
-cd ~ #cd home
-ls #print list of elements in directory
-ls –lh # print sizes in human readable format
-man list # (or any command, gives the manual for that command)
-history #dispay last commands
-ls *.fasta #list all fasta files
-mkdir newfoldername# make new directory
-```
+
+Open Linux or macOS terminal:
+
+```bash
+pwd                   # print working directory
+cd                    # change directory
+cd ..                 # go up one directory
+cd ~                  # go to home
+ls                    # list directory contents
+ls -lh                # human readable sizes
+man ls                # manual of a command
+history               # list recent commands
+ls *.fasta            # list all fasta files
+mkdir newfoldername   # create directory
+
 ## Edit files
 ` nano nomefile #create new empty file`
 
@@ -22,7 +29,7 @@ Ctrl+S to save
 Ctrl+X to exit
 
 Ctrl+W to search
-```
+```bash
 cp filename pathwheretocopy #copy file somewhere using absolute or relative path of where to copy
 mv filename pathwheretocopy #mv file somewhere using absolute or relative path of where to copy
 mv filename new_filename #rename file
@@ -38,7 +45,7 @@ rm * #remove every file in that directory
 cp –r foldername #copy folder
 mv foldername pathwheretomove #move folder
 rm –r foldername #remove folder
-```
+
 > tip: be VERY careful with rm, once you removed something there is no way to undo it; remember bash is case sensitive, the file, folder or scritp "Data" is different from "data".
 ---
 ## Merge and sort files
