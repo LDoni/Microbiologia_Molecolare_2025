@@ -80,5 +80,7 @@ FastQC / MultiQC: aprire i report HTML generati.
 Final report:
 
 ```bash
-cat ......../final_report.txt
+   cd results/
+   ls -ltrh
+   cat final_report.txt
 ```
