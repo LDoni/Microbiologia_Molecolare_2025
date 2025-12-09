@@ -125,24 +125,7 @@ for i in */ ; do cd $i; cp *.fasta ../; cd ..; done
 
 Bash scripts are indicated with the .sh extention (python scripts with .py, perl scripts with .pl). 
 
-Create bash script with nano:
-
-```
-#!/bin/bash
-mkdir test
-for i in *fastq; do mv $i test; done
-cd test
-for i in *fastq; do program1 $i > $i"_output"; done
-for i in *output; do grep ">" $i; done > list_of_sequences
-```
-We need now to make the .sh file executable
-```
-chmod +x namescript.sh
-```
-To execute the bash script
-```
-bash namescript.sh
-```
+Possiamo creare scripts con nano e inserire nella prima riga lo shebang `#!/bin/bash` che specifica all'interprete del sistema operativo quale programma utilizzare per eseguire lo script
 
 Questo è lo script get_reads_from_list.sh
 Possiamo scaricare nel terminale sia lo script che il file list_id che ci servirà per provarlo con wget:
@@ -166,6 +149,10 @@ while read id; do
     zcat "$fastq" | grep -A3 -w "^$id"
 
 done < "$list" > "${list}.fastq"
+```
+Rendiamo lo script eseguibile con:
+```
+chmod +x get_reads_from_list.sh
 ```
 Eseguiamo lo script e guardiamo il risultato:
 ```
