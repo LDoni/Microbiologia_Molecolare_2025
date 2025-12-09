@@ -111,8 +111,7 @@ echo '$var1' #print var1
 ## For loop
 ```
 for i in *.fasta; do echo $i; done
-for i in *.fasta; do mv $i ${i::-5}”_filtered”; done
-for i in *.fasta; do mv $i ${i:1:3}”.fasta” ; done
+for i in *.fasta; do mv "$i" "${i}_filtered"; done
 for i in *fastq; do sed ‘s/@/>/’ > $i”_editname” ; done
 for i in *fasta; do grep –c”>” $i ; done > counts
 for i in *fasta; do program1 $i > “output_”$i; done
