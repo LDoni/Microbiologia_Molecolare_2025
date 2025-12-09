@@ -1,16 +1,16 @@
 ---
-title: "Microbiologia Molecolare 2025 - Practical"
+title: "Microbiologia Molecolare 2025"
 ---
 
 # Benvenuti
 
 Questo sito contiene il materiale del laboratorio di **Microbiologia Molecolare 2025**.
 
-Le diverse parti del laboratorio sono organizzate in 4 schede principali:
+Le diverse parti del laboratorio sono organizzate in 4 pagine principali:
 
-1. **Intro BASH** – comandi di base della shell e lavoro da terminale.
-2. **AmpWrap** – pretrattamento delle letture Illumina amplicon con il workflow AmpWrap.
-3. **Intro R** – primi passi in R e RStudio.
-4. **Analisi biostatistica** – analisi di dati di metabarcoding (progetto SEA4BLUE) con phyloseq e altri pacchetti.
+1. **Intro BASH** - comandi di base della shell e lavoro da terminale.
+2. **AmpWrap** - pretrattamento delle raw reads con il workflow AmpWrap per il metabarcoding 16S rRNA gene.
+3. **Intro R** - primi passi in R e RStudio.
+4. **Analisi biostatistica** - analisi biostatistica di dati di metabarcoding (progetto SEA4BLUE).
 
 Usate la barra di navigazione in alto per spostarvi tra le varie sezioni durante la lezione.
