@@ -49,7 +49,6 @@ sort file #sort the file, careful to computational sorting of file
 sort –h file #human numeric sort
 sort -k1,1 -k2,2n file #sort by first column adn then numerically by second column
 sort -k1,1 -k2,2nr file #sort by first column adn then numerically by second column in reversed order
-sort -k1,1V -k2,2n file #as before but human sorted
 paste file1 file2 #merge lines of files
 ```
 ## Grep
