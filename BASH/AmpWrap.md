@@ -1,4 +1,5 @@
 ### AmpWrap Analysis
+https://github.com/LDoni/AmpWrap
 
 ### Reviewing the Results
 #### 1. Initial Quality Control with FastQC and Summary Report with MultiQC
