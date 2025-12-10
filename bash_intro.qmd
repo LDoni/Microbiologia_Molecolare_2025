@@ -298,22 +298,5 @@ zcat S1_R1.fastq.gz | head -n 20 > subset_S1_R1.fastq
 
 ---
 
-# Good practices in Bioinformatics
 
-1. Work in a robust and reproducible way  
-2. Document everything  
-3. Check results between steps  
-4. Write readable code  
-5. Organize folders logically  
-6. Automate repetitive tasks  
-7. Use online resources  
-8. Debug by: reading errors, checking help, fixing typos, googling  
-
----
-
-# Useful Online Resources
-
-- Stack Overflow  
-- BioStars  
-- GitHub Issues  
 

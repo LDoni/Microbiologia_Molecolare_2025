@@ -4,7 +4,7 @@
     "href": "biostatistics.html",
     "title": "Analisi biostatistica (SEA4BLUE)",
     "section": "",
-    "text": "Sail4Blue samples were collected in the North Atlantic Ocean, from Florida to the Azores. DNA was extracted from 8–10 L seawater filters stored at RT.\n\n  \n\n\n\n\n\n\nSteps\n\nInspect read quality profiles Remove adaptors Quality filter and trimming Sample inference Merge paired reads Remove chimeras\n\n\n\nOutputs\n\nASVs table & representative sequences\n\n\n\nInputs for phyloseq\n\nASVs table + sequences + taxonomy + metadata\n\n\n\n\n\nhttps://posit.cloud/content/6858169\n\n\n\n\nlibrary(MiscMetabar)\nlibrary(formattable)\nlibrary(phyloseq)\nlibrary(ggplot2)\nlibrary(dplyr)\nlibrary(metagenomeSeq)\nlibrary(ggrepel)\nlibrary(ranacapa)\nlibrary(ggside)\nlibrary(ggpubr)\nlibrary(grid)\n\n\n\n\nps &lt;- read_pq(path = \"sea4blue_phyloseq\")\nps\n\n\n\n\nsample_data(ps)\n\n\n\n\ncalculate_rarefaction_curves &lt;- function(psdata, measures, depths) {\n  require('plyr')\n  require('reshape2')\n  estimate_rarified_richness &lt;- function(psdata, measures, depth) {\n    if (max(sample_sums(psdata)) &lt; depth) return()\n    psdata &lt;- prune_samples(sample_sums(psdata) &gt;= depth, psdata)\n    rar &lt;- rarefy_even_depth(psdata, depth, verbose = FALSE)\n    alpha &lt;- estimate_richness(rar, measures = measures)\n    melt(as.matrix(alpha), varnames = c('Sample','Measure'),\n         value.name = 'Alpha_diversity')\n  }\n  names(depths) &lt;- depths\n  out &lt;- ldply(depths, estimate_rarified_richness,\n               psdata = psdata, measures = measures)\n  out$Depth &lt;- as.numeric(levels(out$Depth))[out$Depth]\n  out\n}\nrarefaction_curve_data &lt;- calculate_rarefaction_curves(\n  ps, \"Observed\",\n  depths = rep(c(1,10,100,1000,1:100*10000), each = 10)\n)\n\n\n\n\nphyloseq_obj &lt;- ps\n\nphyloseq_obj &lt;- phyloseq_obj %&gt;%\n  subset_taxa(Family != \"Mitochondria\" | is.na(Family)) %&gt;%\n  subset_taxa(Order != \"Chloroplast\" | is.na(Order))\n\ndoubleton &lt;- genefilter_sample(\n  phyloseq_obj,\n  filterfun_sample(function(x) x &gt; 1),\n  A = 1\n)\n\ndoubleton &lt;- prune_taxa(doubleton, phyloseq_obj)\n\ndoubleton &lt;- subset_samples(doubleton,\n                            !(SampleName %in% c(\"Positive\",\"Negative\")))\ndata.metagenomeSeq &lt;- phyloseq_to_metagenomeSeq(doubleton)\np &lt;- cumNormStat(data.metagenomeSeq)\ndata.cumnorm &lt;- cumNorm(data.metagenomeSeq, p)\ndata.CSS &lt;- MRcounts(data.cumnorm, norm = TRUE, log = TRUE)\n\nphyloseq_obj_css &lt;- phyloseq_obj\notu_table(phyloseq_obj_css) &lt;- otu_table(data.CSS, taxa_are_rows = TRUE)\nsample_names(phyloseq_obj_css) &lt;- sample_data(phyloseq_obj_css)$SampleName\n\n\n\n\nphyloseq_obj_css_round &lt;- phyloseq_obj_css\notu_table(phyloseq_obj_css_round) &lt;- round(otu_table(phyloseq_obj_css), 0)\n\np1 &lt;- plot_richness(\n  phyloseq_obj_css_round,\n  x = \"Longitude\", color = \"Zone\",\n  measures = \"Observed\"\n)\n\np1\n\n\n\n\nord &lt;- ordinate(phyloseq_obj_css, \"PCoA\", \"bray\")\n\nplot_ordination(phyloseq_obj_css, ord, color = \"Zone\") +\n  geom_point(size = 3)\n\n\n\n\nphyseq_perc &lt;- transform_sample_counts(\n  phyloseq_obj_css,\n  function(x) 100 * x / sum(x)\n)\n\nglom &lt;- tax_glom(physeq_perc, taxrank = \"Genus\")\ndata_glom &lt;- psmelt(glom)\ndata_glom$Zone &lt;- factor(as.character(data_glom$Zone),\n                         levels = c(\"ANW\",\"ANC\",\"ANE\"))\n\nmycolors &lt;- readRDS(\"R_RStudio/mycolors(1).rds\")\n\nggplot(data_glom, aes(x = Sample, y = Abundance, fill = Genus)) +\n  facet_grid(~ Zone, scales = \"free\") +\n  geom_bar(stat = \"identity\", position = \"fill\") +\n  scale_fill_manual(values = mycolors) +\n  theme(axis.text.x = element_text(angle = 90),\n        legend.position = \"none\")"
+    "text": "Sail4Blue samples were collected in North Atlantic Ocean, from Florida to the Azores (longitudinal transect), during May and June 2022 as illustrated in the figure above. The samples were collected using the eDNA Citizen Scientist Sampler with the Self-preserving eDNA Filter. Each sample corresponds to 8 to 10 liters of filtered water. The filters were stored at room temperature (RT), and DNA was extracted using the DNeasy PowerWater kit by Qiagen.\n\n\n\nThe 16S rRNA gene V4 region was amplified starting with 5 ng of each sample.\n\n\n\n\n\nWhat are the “pre-processing” steps needed to clean the raw reads?\n\n Inspect read quality profiles Remove Adaptors Quality filter and trimming Sample Inference Merge paired reads Remove chimeras\n\n\n\n\nWhat are the outputs of DADA2?\n\n ASVs table & Representative Sequences\n\n\n\n\nWhat are the inputs for Phyloseq?\n\n ASVs table + Representative Sequences + taxonomy table + metadata\n\n\n\n\n\n\n#remove all data in the environmnet\n\nrm(list = ls())\n\n\n\n#load packages\nlibrary(maps)\nlibrary(formattable) \nlibrary(phyloseq) \nlibrary(ggplot2) \nlibrary(dplyr)  \nlibrary(metagenomeSeq)\nlibrary(ggrepel) \nlibrary(ranacapa) \nlibrary(ggside) \nlibrary(ggpubr) \nlibrary(grid) \nlibrary(gridBase)\nlibrary(MiscMetabar)\n\n\n\n\n\n\n# do you remember how to set the working directory?\n#import data for the phyloseq object ( ASVs table, Tax table, metadata table)\nps &lt;- readRDS(\"phyloseq.rds\")\n\n# do you remember how to set the working directory?\n\nps\n\n# the metadata \nsample_data(ps)\n\nhead(t(otu_table(ps)))\n\n\n\n\n\n\n######################################################## \n####### LET'S VISUALIZE TRANSECT SAMPLING LOCATIONS #### \n######################################################## \n\n#prendiamo le coordinate dal metadata dell'oggetto phyloseq \nsamdf &lt;- as.data.frame(sample_data(ps))\n\n# Ordina i campioni per giorno di navigazione (per il transetto)\nsamdf &lt;- samdf[order(samdf$NavigationDay), ]\n\n\n#mappa del mondo\nworld &lt;- map_data(\"world\")\n\n# Limiti fissi per centrare sull'Atlantico (per zoommmarci sopra)\nlon_min &lt;- -85\nlon_max &lt;- -5\nlat_min &lt;- 20\nlat_max &lt;- 45\n\nggplot() +\n  geom_polygon(\n    data = world,\n    aes(x = long, y = lat, group = group),\n    fill = \"grey90\", color = \"grey60\"\n  ) +\n  geom_path(\n    data = samdf,\n    aes(x = Longitude, y = Latitude, group = 1),\n    color = \"black\", linewidth = 1\n  ) +\n  geom_point(\n    data = samdf,\n    aes(x = Longitude, y = Latitude, color = Zone),\n    size = 3\n  ) +\n  coord_quickmap(\n    xlim = c(lon_min, lon_max),\n    ylim = c(lat_min, lat_max)\n  ) +\n  labs(\n    x = \"Longitude\",\n    y = \"Latitude\",\n    color = \"Zone\"  ) +\n  theme_minimal()\n\nrm(list = ls())\n\n\n\n\n\n\n\n\n\n\n\n##################################################\n####### LET'S VISUAALIZE RAREFACTION CURVES ###### \n##################################################\nps &lt;- readRDS(\"phyloseq.rds\")\n\nset.seed(42)\n\n#### define  the function calculate_rarefaction_curves\n\ncalculate_rarefaction_curves &lt;- function(psdata, measures, depths) {\n  require('plyr') # ldply\n  require('reshape2') # melt\n\n  estimate_rarified_richness &lt;- function(psdata, measures, depth) {\n    if(max(sample_sums(psdata)) &lt; depth) return()\n    psdata &lt;- prune_samples(sample_sums(psdata) &gt;= depth, psdata)\n\n    rarified_psdata &lt;- rarefy_even_depth(psdata, depth, verbose = FALSE)\n\n    alpha_diversity &lt;- estimate_richness(rarified_psdata, measures = measures)\n\n    # as.matrix forces the use of melt.array, which includes the Sample names (rownames)\n    molten_alpha_diversity &lt;- melt(as.matrix(alpha_diversity), varnames = c('Sample', 'Measure'), value.name = 'Alpha_diversity')\n\n    molten_alpha_diversity\n  }\n\n  names(depths) &lt;- depths # this enables automatic addition of the Depth to the output by ldply\n  rarefaction_curve_data &lt;- ldply(depths, estimate_rarified_richness, psdata = psdata, measures = measures, .id = 'Depth', .progress = ifelse(interactive(), 'none', 'none'))\n\n  # convert Depth from factor to numeric\n  rarefaction_curve_data$Depth &lt;- as.numeric(levels(rarefaction_curve_data$Depth))[rarefaction_curve_data$Depth]\n\n  rarefaction_curve_data\n}\n\n\n#### use the function calculate_rarefaction_curves on ps\nrarefaction_curve_data &lt;- calculate_rarefaction_curves(ps, c('Observed'), rep(c(1, 10, 100, 1000, 1:100 * 10000), each = 10))\n#print the summary\nsummary(rarefaction_curve_data)\n\n\n# do some calculations  and merge the data for plotting \nrarefaction_curve_data_summary &lt;- ddply(rarefaction_curve_data, c('Depth', 'Sample', 'Measure'), summarise, Alpha_diversity_mean = mean(Alpha_diversity), Alpha_diversity_sd = sd(Alpha_diversity))\n\nrarefaction_curve_data_summary_verbose &lt;- merge(rarefaction_curve_data_summary, \n                                                data.frame(sample_data(ps)), \n                                                by.x = 'Sample', by.y = 'row.names')\n\n\n### plot with ggplot\n\nggplot(data=rarefaction_curve_data_summary_verbose, aes(x = Depth, \n                                                        y = Alpha_diversity_mean, \n                                                        group = Sample, color = Zone)) +\n  geom_line(aes(group = Sample), size = 1) +\n  geom_point(size = 2.5) +\n  geom_label_repel(data = rarefaction_curve_data_summary_verbose %&gt;% \n      group_by(Sample) %&gt;% \n      filter(Alpha_diversity_mean == max(Alpha_diversity_mean)), \n    aes(Depth, Alpha_diversity_mean,  label = ( Sample)),\n    color = \"black\"  )+ggtitle(\"Rarefaction Curves\")\n\n\n\n## there is something strange with sample 16 and 17 could you guess why\n#change labels for the plot!\n\nggplot(data=rarefaction_curve_data_summary_verbose, aes(x = Depth, \n                                                        y = Alpha_diversity_mean, \n                                                        group = Sample, color = Zone)) +\n  geom_line(aes(group = Sample), size = 1) +\n  geom_point(size = 2.5) +\n  geom_label_repel(data = rarefaction_curve_data_summary_verbose %&gt;% \n                     group_by(Sample) %&gt;% \n                     filter(Alpha_diversity_mean == max(Alpha_diversity_mean)), \n                   aes(Depth, Alpha_diversity_mean,  label = ( SampleName )), #changing the parameter of the labels\n                   color = \"black\"  )+ggtitle(\"Rarefaction Curves\")\n\ndo you see some patterns??????? ### Rarefaction curves – risultati\n\n\n\n\n\n\n\n\n\n\n\n\nphyloseq_obj&lt;-ps\n#search for Mitochondria\ngrep(pattern = \"Mitochondria\", tax_table(phyloseq_obj)) \n#search for Chloroplast\ngrep(pattern = \"Chloroplast\", tax_table(phyloseq_obj)) \n\n#remove Chloroplast and Mitochondria from phyloseq_obj\nphyloseq_obj &lt;- phyloseq_obj %&gt;% subset_taxa( Family!= \"Mitochondria\" | is.na(Family) & Order!=\"Chloroplast\" | is.na(Order) ) \n\n#search for Mitochondria\ngrep(pattern = \"Mitochondria\", tax_table(phyloseq_obj)) \n#search for Chloroplast\ngrep(pattern = \"Chloroplast\", tax_table(phyloseq_obj))\n\n## All were removed\n\n\nphyloseq_obj\n\n\n#filtering singletons\ndoubleton &lt;- genefilter_sample(phyloseq_obj, filterfun_sample(function(x) x &gt; 1), A=1)\ndoubleton &lt;- prune_taxa(doubleton, phyloseq_obj) \ndoubleton\n\n## rimuovo i pos e neg\n\nsample_variables(doubleton)\n\n\n#rimuovo i positivi e negativi\ndoubleton = subset_samples(doubleton,!( SampleName==\"Positive\" | SampleName==\"Negative\"))\n#check it\nsample_data(doubleton)$SampleName\n\n\n\n\n# transforming \ndata.metagenomeSeq = phyloseq_to_metagenomeSeq(doubleton)\n\np = cumNormStat(data.metagenomeSeq) #default is 0.5\ndata.cumnorm = cumNorm(data.metagenomeSeq, p=p)\n#data.cumnorm\ndata.CSS = MRcounts(data.cumnorm, norm=TRUE, log=TRUE)\nhead(data.CSS)\ndim(data.CSS)  # make sure the data are in a correct formal: number of samples in rows\nphyloseq_obj_css &lt;- phyloseq_obj\notu_table(phyloseq_obj_css) &lt;- otu_table(data.CSS, taxa_are_rows = T)\n\nphyloseq_obj_css\n\n#change sample names to the correct ones\nsample_names(phyloseq_obj_css)&lt;-sample_data(phyloseq_obj_css)$SampleName \n\nsample_names(phyloseq_obj_css)\n\n\n############ this is the phyloseq object normalized\nphyloseq_obj_css\n\n\n\n\n\n\n#######################################\n#######     ALPHA DIVERSITY      ###### \n#######################################\n\n\n# round normalized counts for alpha diversity\nphyloseq_obj_css_round &lt;- phyloseq_obj_css\notu_table(phyloseq_obj_css_round) &lt;- round(otu_table(phyloseq_obj_css), digits = 0)\n\n# check it out\nhead(otu_table(phyloseq_obj_css))\nhead(otu_table(phyloseq_obj_css_round))\n\n\n\n\n#let's focus on richeness (number of species) and let's check its variation along the longitudinal transect\n\nplot_richness(phyloseq_obj_css_round,x=\"Longitude\",color = \"Zone\",measures=c(\"Observed\"))\np1&lt;-plot_richness(phyloseq_obj_css_round,x=\"Longitude\",color = \"Zone\",measures=c(\"Observed\"))\n\n#change the order of \nnewSTorder = c( \"ANW\",\"ANC\",\"ANE\")\np1$data$Zone&lt;- as.character(p1$data$Zone)\np1$data$Zone &lt;- factor(p1$data$Zone, levels=newSTorder) \n\n\n\n#plot\nggplot(p1$data,aes(Longitude,value))+\n  theme_bw()+theme(plot.title = element_text(hjust = 0.5))+\n  geom_point(aes(colour = Zone),alpha =0.45)+\n  scale_color_manual(values=c(\"#4280fc\", \"#ffb452\",\"#f7170a\",\"#000000\"))+\n  geom_ysideboxplot(aes(x=Zone,y=value,colour = Zone), orientation = \"x\")+\n  theme(        ggside.panel.scale.y = .4)+scale_ysidex_discrete()+\n  geom_smooth(aes(colour = variable ),linewidth=1.5)+ ylab('Richness') \n\n\n\n#let's add the richness to our metadata, maybe it will be useful later...\nsample_data(phyloseq_obj_css)$Richness&lt;-p1$data$value\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n#######################################\n#######     BETA DIVERSITY      #######\n#######################################\n\n\n\n\n### calculate bray-curtis dissimilarity among our samples\n\notu.ord &lt;- ordinate(physeq = phyloseq_obj_css, \"PCoA\", distance = \"bray\")\n\n\n#plot ordination\n\nplot_ordination(phyloseq_obj_css, otu.ord,  color=\"Zone\",axes =c(1,2))+\n  scale_color_manual(values = c(\"#4280fc\", \"#ffb452\",\"#f7170a\"))+ geom_point(size=3)+ \n  geom_text_repel(aes(label=SampleName),max.overlaps = Inf, show.legend = FALSE)+ \n  theme_void()+\n  theme_bw() + \n  geom_xsidedensity(aes(y=stat(density),fill=Zone), alpha = 0.5, show.legend = FALSE) +\n  geom_ysidedensity(aes(x=stat(density),fill=Zone), alpha = 0.5, show.legend = FALSE) +\n  scale_xsidey_continuous(breaks = NULL, labels = \"\", expand = expansion(c(0,.1))) +\n  scale_ysidex_continuous(breaks = NULL, labels = \"\", expand = expansion(c(0,.1))) +\n  scale_ysidex_discrete()+\n  ggside::theme_ggside_void()  +\n  scale_fill_manual(values = c(\"#4280fc\", \"#ffb452\",\"#f7170a\"))+\n  ggtitle(\"Beta Diversity based on Bray-Curitis\")\n\n\n#what do you think about it?\n\n#why sample 1 is so different from the others of the \"same zone\"\n\n\n\n\n\n\n\n\n\n\n\n\n#let's check the composition of the communities with a barplot\n\n\n#we have to transform the counts to %\nphyseq_perc=transform_sample_counts(phyloseq_obj_css,function(x) 100 * x/sum(x))\n\n\n\n#Turn all ASVs into genus counts\n\n\nglom &lt;- tax_glom(physeq_perc, taxrank = 'Genus')\nglom # should list # taxa as # phyla\ndata_glom&lt;- psmelt(glom) # create dataframe from phyloseq object\n\ndata_glom$Zone &lt;- as.character(data_glom$Zone) #convert to character\ndata_glom$Zone  &lt;- factor(data_glom$Zone , levels =c(\"ANW\",\"ANC\",\"ANE\"))\n\n\n\n\n\n\n#load the colors\ncolor = grDevices::colors()[grep('gr(a|e)y', grDevices::colors(), invert = T)]\n\n\n## barplot all genera\nggplot(data=data_glom, aes(x=Sample, y=Abundance, fill=Genus)) + \n  facet_grid(~Zone, scales = \"free\")+\n  geom_bar(aes(), stat=\"identity\", position=\"fill\",width = 0.7) +\n  scale_fill_manual(values = sample(color, length(unique(data_glom$Genus))))+\n  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),legend.position=\"none\")\n\n\n\n\ncan you see any difference ???\n\ngenus.sum = tapply(taxa_sums(glom), tax_table(glom)[, \"Genus\"], sum, na.rm=TRUE)\ntopGenera = names(sort(genus.sum, TRUE))[1:20]\n\n## check how the top 20 taxa are changing across the samples\nggplot(data=data_glom, aes(x=Sample, y=Abundance, fill=Genus)) + \n  facet_grid(~Zone, scales = \"free\")+\n  geom_bar(aes(), stat=\"identity\", position=\"fill\",width = 0.7) +\n  scale_fill_manual(values = sample(color, length(unique(data_glom$Genus))), breaks = topGenera)+\n  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))\n\n\n\n\n\n#let's do a RDA to see how the communities are affected by the longitude\n\n\n#calculate the ordination based on the effect of richness and longitude\nRDA = ordinate(phyloseq_obj_css ~ Richness + Longitude, \"RDA\")\n\n# plot it\np2 = plot_ordination(phyloseq_obj_css, RDA, color = \"Zone\", )+ \n  theme_bw() +geom_text_repel(aes(label = SampleName, color = Zone), max.overlaps = Inf, show.legend = FALSE) + geom_point(size = 4)+\n  scale_color_manual(values = c(\"#4280fc\", \"#ffb452\", \"#f7170a\"))\np2\n\n\n\n\n\n# Now add the environmental variables as arrows\narrowmat = vegan::scores(RDA, display = \"bp\")\n# Add labels, make a data.frame\narrowdf &lt;- data.frame(labels = rownames(arrowmat), arrowmat)\n# Define the arrow aesthetic mapping\narrow_map = aes(xend = RDA1, yend = RDA2, x = 0, y = 0, shape = NULL, color = NULL, \n                label = labels)\nlabel_map = aes(x = 1.7 * RDA1, y = 1.7 * RDA2, shape = NULL, color = NULL, \n                label = labels)\n# Make a new graphic\narrowhead = arrow(length = unit(0.05, \"npc\"))\np3 = p2 + geom_segment(arrow_map, size = 1, data = arrowdf, color = \"black\", \n                       arrow = arrowhead) + geom_text(label_map, size = 4, data = arrowdf)\np3"
   },
   {
     "objectID": "biostatistics.html#dada2-pre-processing-summary",
@@ -60,14 +60,14 @@
     "href": "biostatistics.html#alpha-diversity",
     "title": "Analisi biostatistica (SEA4BLUE)",
     "section": "",
-    "text": "phyloseq_obj_css_round &lt;- phyloseq_obj_css\notu_table(phyloseq_obj_css_round) &lt;- round(otu_table(phyloseq_obj_css), 0)\n\np1 &lt;- plot_richness(\n  phyloseq_obj_css_round,\n  x = \"Longitude\", color = \"Zone\",\n  measures = \"Observed\"\n)\n\np1"
+    "text": "#######################################\n#######     ALPHA DIVERSITY      ###### \n#######################################\n\n\n# round normalized counts for alpha diversity\nphyloseq_obj_css_round &lt;- phyloseq_obj_css\notu_table(phyloseq_obj_css_round) &lt;- round(otu_table(phyloseq_obj_css), digits = 0)\n\n# check it out\nhead(otu_table(phyloseq_obj_css))\nhead(otu_table(phyloseq_obj_css_round))\n\n\n\n\n#let's focus on richeness (number of species) and let's check its variation along the longitudinal transect\n\nplot_richness(phyloseq_obj_css_round,x=\"Longitude\",color = \"Zone\",measures=c(\"Observed\"))\np1&lt;-plot_richness(phyloseq_obj_css_round,x=\"Longitude\",color = \"Zone\",measures=c(\"Observed\"))\n\n#change the order of \nnewSTorder = c( \"ANW\",\"ANC\",\"ANE\")\np1$data$Zone&lt;- as.character(p1$data$Zone)\np1$data$Zone &lt;- factor(p1$data$Zone, levels=newSTorder) \n\n\n\n#plot\nggplot(p1$data,aes(Longitude,value))+\n  theme_bw()+theme(plot.title = element_text(hjust = 0.5))+\n  geom_point(aes(colour = Zone),alpha =0.45)+\n  scale_color_manual(values=c(\"#4280fc\", \"#ffb452\",\"#f7170a\",\"#000000\"))+\n  geom_ysideboxplot(aes(x=Zone,y=value,colour = Zone), orientation = \"x\")+\n  theme(        ggside.panel.scale.y = .4)+scale_ysidex_discrete()+\n  geom_smooth(aes(colour = variable ),linewidth=1.5)+ ylab('Richness') \n\n\n\n#let's add the richness to our metadata, maybe it will be useful later...\nsample_data(phyloseq_obj_css)$Richness&lt;-p1$data$value"
   },
   {
     "objectID": "biostatistics.html#beta-diversity",
     "href": "biostatistics.html#beta-diversity",
     "title": "Analisi biostatistica (SEA4BLUE)",
     "section": "",
-    "text": "ord &lt;- ordinate(phyloseq_obj_css, \"PCoA\", \"bray\")\n\nplot_ordination(phyloseq_obj_css, ord, color = \"Zone\") +\n  geom_point(size = 3)"
+    "text": "#######################################\n#######     BETA DIVERSITY      #######\n#######################################\n\n\n\n\n### calculate bray-curtis dissimilarity among our samples\n\notu.ord &lt;- ordinate(physeq = phyloseq_obj_css, \"PCoA\", distance = \"bray\")\n\n\n#plot ordination\n\nplot_ordination(phyloseq_obj_css, otu.ord,  color=\"Zone\",axes =c(1,2))+\n  scale_color_manual(values = c(\"#4280fc\", \"#ffb452\",\"#f7170a\"))+ geom_point(size=3)+ \n  geom_text_repel(aes(label=SampleName),max.overlaps = Inf, show.legend = FALSE)+ \n  theme_void()+\n  theme_bw() + \n  geom_xsidedensity(aes(y=stat(density),fill=Zone), alpha = 0.5, show.legend = FALSE) +\n  geom_ysidedensity(aes(x=stat(density),fill=Zone), alpha = 0.5, show.legend = FALSE) +\n  scale_xsidey_continuous(breaks = NULL, labels = \"\", expand = expansion(c(0,.1))) +\n  scale_ysidex_continuous(breaks = NULL, labels = \"\", expand = expansion(c(0,.1))) +\n  scale_ysidex_discrete()+\n  ggside::theme_ggside_void()  +\n  scale_fill_manual(values = c(\"#4280fc\", \"#ffb452\",\"#f7170a\"))+\n  ggtitle(\"Beta Diversity based on Bray-Curitis\")\n\n\n#what do you think about it?\n\n#why sample 1 is so different from the others of the \"same zone\""
   },
   {
     "objectID": "biostatistics.html#tassonomia-genus",
@@ -116,7 +116,7 @@
     "href": "ampwrap.html#uso-di-base",
     "title": "Pretrattamento con AmpWrap",
     "section": "Uso di base",
-    "text": "Uso di base\nampwrap short           -i input_directory           -a forward_primer           -A reverse_primer           -l amplicon_length"
+    "text": "Uso di base\nampwrap short -i input_directory -a forward_primer -A reverse_primer -l amplicon_length"
   },
   {
     "objectID": "ampwrap.html#scaricare-i-dati-di-esempio",
@@ -130,49 +130,182 @@
     "href": "ampwrap.html#esecuzione-ampwrap",
     "title": "Pretrattamento con AmpWrap",
     "section": "Esecuzione AmpWrap",
-    "text": "Esecuzione AmpWrap\nampwrap short           -i raw_fastqc           -a GTGYCAGCMGCCGCGGTAA           -A CCGYCAATTYMTTTRAGTTT           -l 372           -o short_test_output"
+    "text": "Esecuzione AmpWrap\nampwrap short -i raw_fastqc -a GTGYCAGCMGCCGCGGTAA -A CCGYCAATTYMTTTRAGTTT -l 372 -o short_test_output"
   },
   {
     "objectID": "ampwrap.html#analisi-output",
     "href": "ampwrap.html#analisi-output",
     "title": "Pretrattamento con AmpWrap",
     "section": "Analisi output",
-    "text": "Analisi output\nFastQC / MultiQC: aprire i report HTML generati.\nFinal report:\ncat short_test_output/final_report.txt"
+    "text": "Analisi output\nFastQC / MultiQC: aprire i report HTML generati.\nFinal report:\ncat ......../final_report.txt"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Microbiologia Molecolare 2025",
+    "section": "",
+    "text": "Benvenuti\nQuesto sito contiene il materiale del laboratorio di Microbiologia Molecolare 2025.\nLe diverse parti del laboratorio sono organizzate in 4 pagine principali:\n\nIntro BASH - comandi di base della shell e lavoro da terminale.\nAmpWrap - pretrattamento delle raw reads con il workflow AmpWrap per il metabarcoding 16S rRNA gene.\nIntro R - primi passi in R e RStudio.\nAnalisi biostatistica - analisi biostatistica di dati di metabarcoding (progetto SEA4BLUE).\n\nUsate la barra di navigazione in alto per spostarvi tra le varie sezioni durante la lezione."
   },
   {
     "objectID": "bash_intro.html",
     "href": "bash_intro.html",
-    "title": "Introduzione a BASH",
+    "title": "BASH per Bioinformatica",
     "section": "",
-    "text": "In questa sezione vedremo:\n\nChe cos’è la shell e perché la usiamo in bioinformatica.\nCome muoversi tra directory e file.\nCome usare comandi di base per ispezionare dati e lanciare programmi.\n\n\n\n\nComandi fondamentali:\npwd\nls\nls -l\ncd ..\ncd nome_dir\n\n\n\n\nmkdir prova_bash\ncd prova_bash\necho \"ciao mondo\" &gt; file1.txt\ncat file1.txt\nRedirezione e pipe:\nls -l &gt; elenco.txt\ncat elenco.txt | head\n\n\n\n\nCreiamo uno script:\nnano script.sh\nContenuto:\n#!/usr/bin/env bash\necho \"Questo è il nostro primo script BASH\"\npwd\nls\nRendiamolo eseguibile ed eseguiamolo:\nchmod +x script.sh\n./script.sh"
+    "text": "Open linux or mac terminal\npwd #print working directory\ncd #change directory (relative or absolute path)\ncd .. # bring you back one directory up\ncd ~ #cd home\nls #print list of elements in directory\nls -lh # print sizes in human readable format\nman list # (or any command, gives the manual for that command)\nhistory #display last commands\nls *.fasta #list all fasta files\nmkdir newfoldername #make new directory\n\n\n\nnano nomefile #create new empty file\n\nCtrl+S to save\n\nCtrl+X to exit\n\nCtrl+W to search\n\ncp filename pathwheretocopy\nmv filename pathwheretocopy\nmv filename new_filename\nless filename\ncat filename\nhead filename\ntail filename\nhead -n5 filename\nwc filename\nwc -l filename\nrm file\nrm *\ncp -r foldername\nmv foldername pathwheretomove\nrm -r foldername\n\nTIP: Be VERY careful with rm: once removed, files cannot be restored.\nRemember: Bash is case sensitive.\n\n\n\n\n\ncat file1 file2 file3 …\ncat file1 file2 file3 &gt; merged_file\nsort file\nsort -h file\nsort -k1,1 -k2,2n file\nsort -k1,1 -k2,2nr file\npaste file1 file2\n\n\n\n\ngrep \"word\" file\ngrep -w \"word\" file\ngrep -v \"word\" file\ngrep -i \"word\" file\ngrep -c \"word\" file\ngrep -A10 \"word\" file\ngrep -B10 \"word\" file\ngrep -C10 \"word\" file\ngrep \"Locus10[12]\" file\n\n\n\n^ beginning of line → grep \"^&gt;\" file\n$ end of line → grep \"&gt;$\" file\n\n\nRegular expressions match text patterns.\n\n\n\n\n\n\nawk '{print $1}' file\nawk '{print $0}' file\nawk '{print $NF}' file\nawk '{print $4\" \"$1}' file\nawk -F\";\" '{print $3,$4}'\nawk '$1==$2 {print}'\nawk '$1 ~ /chr1/ && $3-$2&gt;10 {print}'\nawk '{if ($1~\"&gt;\") print $0; else print length}' fasta_file\n\n\n\n\nsed 's/Locus/Transcript/' file\nsed 's/Locus/Transcript/g' file\nsed -i 's/Locus/Transcript/g' file\nsed '/Locus/d' file\n\n\n\n\nThe pipe sends the output of one program as input to the next.\ngrep \"word\" file1 | sed 's/ /   /g' | program1 &gt; file2\n\n\n\n\nvar1=\"ciao\"\necho $var1\necho \"$var1\"\necho '$var1'\n\n\n\n\nfor i in *.fasta; do echo $i; done\nfor i in *.fasta; do mv \"$i\" \"${i}_filtered\"; done\nfor i in *fastq; do sed 's/@/&gt;/' \"$i\" &gt; \"${i}_editname\"; done\nfor i in *fasta; do grep -c \"&gt;\" \"$i\"; done &gt; counts\nfor i in *fasta; do program1 \"$i\" &gt; \"output_$i\"; done\nfor i in */ ; do cd \"$i\"; cp *.fasta ../; cd ..; done"
   },
   {
-    "objectID": "bash_intro.html#lavorare-da-terminale",
-    "href": "bash_intro.html#lavorare-da-terminale",
-    "title": "Introduzione a BASH",
+    "objectID": "bash_intro.html#paths-files-and-directories",
+    "href": "bash_intro.html#paths-files-and-directories",
+    "title": "BASH per Bioinformatica",
     "section": "",
-    "text": "Comandi fondamentali:\npwd\nls\nls -l\ncd ..\ncd nome_dir"
+    "text": "Open linux or mac terminal\npwd #print working directory\ncd #change directory (relative or absolute path)\ncd .. # bring you back one directory up\ncd ~ #cd home\nls #print list of elements in directory\nls -lh # print sizes in human readable format\nman list # (or any command, gives the manual for that command)\nhistory #display last commands\nls *.fasta #list all fasta files\nmkdir newfoldername #make new directory"
   },
   {
-    "objectID": "bash_intro.html#creare-e-ispezionare-file-e-cartelle",
-    "href": "bash_intro.html#creare-e-ispezionare-file-e-cartelle",
-    "title": "Introduzione a BASH",
+    "objectID": "bash_intro.html#edit-files",
+    "href": "bash_intro.html#edit-files",
+    "title": "BASH per Bioinformatica",
     "section": "",
-    "text": "mkdir prova_bash\ncd prova_bash\necho \"ciao mondo\" &gt; file1.txt\ncat file1.txt\nRedirezione e pipe:\nls -l &gt; elenco.txt\ncat elenco.txt | head"
+    "text": "nano nomefile #create new empty file\n\nCtrl+S to save\n\nCtrl+X to exit\n\nCtrl+W to search\n\ncp filename pathwheretocopy\nmv filename pathwheretocopy\nmv filename new_filename\nless filename\ncat filename\nhead filename\ntail filename\nhead -n5 filename\nwc filename\nwc -l filename\nrm file\nrm *\ncp -r foldername\nmv foldername pathwheretomove\nrm -r foldername\n\nTIP: Be VERY careful with rm: once removed, files cannot be restored.\nRemember: Bash is case sensitive."
   },
   {
-    "objectID": "bash_intro.html#esecuzione-di-script",
-    "href": "bash_intro.html#esecuzione-di-script",
-    "title": "Introduzione a BASH",
+    "objectID": "bash_intro.html#merge-and-sort-files",
+    "href": "bash_intro.html#merge-and-sort-files",
+    "title": "BASH per Bioinformatica",
     "section": "",
-    "text": "Creiamo uno script:\nnano script.sh\nContenuto:\n#!/usr/bin/env bash\necho \"Questo è il nostro primo script BASH\"\npwd\nls\nRendiamolo eseguibile ed eseguiamolo:\nchmod +x script.sh\n./script.sh"
+    "text": "cat file1 file2 file3 …\ncat file1 file2 file3 &gt; merged_file\nsort file\nsort -h file\nsort -k1,1 -k2,2n file\nsort -k1,1 -k2,2nr file\npaste file1 file2"
+  },
+  {
+    "objectID": "bash_intro.html#grep",
+    "href": "bash_intro.html#grep",
+    "title": "BASH per Bioinformatica",
+    "section": "",
+    "text": "grep \"word\" file\ngrep -w \"word\" file\ngrep -v \"word\" file\ngrep -i \"word\" file\ngrep -c \"word\" file\ngrep -A10 \"word\" file\ngrep -B10 \"word\" file\ngrep -C10 \"word\" file\ngrep \"Locus10[12]\" file\n\n\n\n^ beginning of line → grep \"^&gt;\" file\n$ end of line → grep \"&gt;$\" file\n\n\nRegular expressions match text patterns."
+  },
+  {
+    "objectID": "bash_intro.html#awk",
+    "href": "bash_intro.html#awk",
+    "title": "BASH per Bioinformatica",
+    "section": "",
+    "text": "awk '{print $1}' file\nawk '{print $0}' file\nawk '{print $NF}' file\nawk '{print $4\" \"$1}' file\nawk -F\";\" '{print $3,$4}'\nawk '$1==$2 {print}'\nawk '$1 ~ /chr1/ && $3-$2&gt;10 {print}'\nawk '{if ($1~\"&gt;\") print $0; else print length}' fasta_file"
+  },
+  {
+    "objectID": "bash_intro.html#sed",
+    "href": "bash_intro.html#sed",
+    "title": "BASH per Bioinformatica",
+    "section": "",
+    "text": "sed 's/Locus/Transcript/' file\nsed 's/Locus/Transcript/g' file\nsed -i 's/Locus/Transcript/g' file\nsed '/Locus/d' file"
+  },
+  {
+    "objectID": "bash_intro.html#pipe",
+    "href": "bash_intro.html#pipe",
+    "title": "BASH per Bioinformatica",
+    "section": "",
+    "text": "The pipe sends the output of one program as input to the next.\ngrep \"word\" file1 | sed 's/ /   /g' | program1 &gt; file2"
+  },
+  {
+    "objectID": "bash_intro.html#variables",
+    "href": "bash_intro.html#variables",
+    "title": "BASH per Bioinformatica",
+    "section": "",
+    "text": "var1=\"ciao\"\necho $var1\necho \"$var1\"\necho '$var1'"
+  },
+  {
+    "objectID": "bash_intro.html#for-loop",
+    "href": "bash_intro.html#for-loop",
+    "title": "BASH per Bioinformatica",
+    "section": "",
+    "text": "for i in *.fasta; do echo $i; done\nfor i in *.fasta; do mv \"$i\" \"${i}_filtered\"; done\nfor i in *fastq; do sed 's/@/&gt;/' \"$i\" &gt; \"${i}_editname\"; done\nfor i in *fasta; do grep -c \"&gt;\" \"$i\"; done &gt; counts\nfor i in *fasta; do program1 \"$i\" &gt; \"output_$i\"; done\nfor i in */ ; do cd \"$i\"; cp *.fasta ../; cd ..; done"
+  },
+  {
+    "objectID": "bash_intro.html#listare-i-file",
+    "href": "bash_intro.html#listare-i-file",
+    "title": "BASH per Bioinformatica",
+    "section": "1. Listare i file",
+    "text": "1. Listare i file\nls -l"
+  },
+  {
+    "objectID": "bash_intro.html#visualizzare-le-prime-8-righe",
+    "href": "bash_intro.html#visualizzare-le-prime-8-righe",
+    "title": "BASH per Bioinformatica",
+    "section": "2. Visualizzare le prime 8 righe",
+    "text": "2. Visualizzare le prime 8 righe\nzcat S1_10_L001_R1_001.fastq.gz | head -n 8"
+  },
+  {
+    "objectID": "bash_intro.html#scorrere-il-file",
+    "href": "bash_intro.html#scorrere-il-file",
+    "title": "BASH per Bioinformatica",
+    "section": "3. Scorrere il file",
+    "text": "3. Scorrere il file\nzcat S1_10_L001_R1_001.fastq.gz | less -S"
+  },
+  {
+    "objectID": "bash_intro.html#contare-le-linee",
+    "href": "bash_intro.html#contare-le-linee",
+    "title": "BASH per Bioinformatica",
+    "section": "4. Contare le linee",
+    "text": "4. Contare le linee\nzcat S1_10_L001_R1_001.fastq.gz | wc -l"
+  },
+  {
+    "objectID": "bash_intro.html#numero-di-reads",
+    "href": "bash_intro.html#numero-di-reads",
+    "title": "BASH per Bioinformatica",
+    "section": "5. Numero di reads",
+    "text": "5. Numero di reads\necho $(( $(zcat S1_10_L001_R1_001.fastq.gz | wc -l) / 4 ))\n\nAlternativa:\nzcat test_S1_R1.fastq.gz | grep -c \"^@\""
+  },
+  {
+    "objectID": "bash_intro.html#lunghezza-della-prima-read",
+    "href": "bash_intro.html#lunghezza-della-prima-read",
+    "title": "BASH per Bioinformatica",
+    "section": "6. Lunghezza della prima read",
+    "text": "6. Lunghezza della prima read\nzcat S1_10_L001_R1_001.fastq.gz | sed -n '2p' | awk '{print length}'\nOppure:\nseq=$(zcat S1_10_L001_R1_001.fastq.gz | sed -n '2p')\necho ${#seq}"
+  },
+  {
+    "objectID": "bash_intro.html#lunghezza-di-ogni-read",
+    "href": "bash_intro.html#lunghezza-di-ogni-read",
+    "title": "BASH per Bioinformatica",
+    "section": "7. Lunghezza di ogni read",
+    "text": "7. Lunghezza di ogni read\nzcat S1_10_L001_R1_001.fastq.gz | awk 'NR%4==2 {print length}'"
+  },
+  {
+    "objectID": "bash_intro.html#lunghezza-media",
+    "href": "bash_intro.html#lunghezza-media",
+    "title": "BASH per Bioinformatica",
+    "section": "8. Lunghezza media",
+    "text": "8. Lunghezza media\nzcat S1_10_L001_R1_001.fastq.gz  | awk 'NR%4==2 { total+=length; n++ } END { print total/n }'"
+  },
+  {
+    "objectID": "bash_intro.html#cercare-una-sequenza",
+    "href": "bash_intro.html#cercare-una-sequenza",
+    "title": "BASH per Bioinformatica",
+    "section": "9. Cercare una sequenza",
+    "text": "9. Cercare una sequenza\nzcat S1_10_L001_R1_001.fastq.gz | grep -c \"ACGTACG\""
+  },
+  {
+    "objectID": "bash_intro.html#rinominare-file",
+    "href": "bash_intro.html#rinominare-file",
+    "title": "BASH per Bioinformatica",
+    "section": "10. Rinominare file",
+    "text": "10. Rinominare file\nfor f in *.fastq.gz; do\n    sample=$(echo \"$f\" | cut -d'_' -f1)\n    read=$(echo \"$f\" | grep -o \"R[12]\")\n    new=\"test_${sample}_${read}.fastq.gz\"\n    mv \"$f\" \"$new\"\ndone"
+  },
+  {
+    "objectID": "bash_intro.html#aggiungere-un-prefisso-agli-header",
+    "href": "bash_intro.html#aggiungere-un-prefisso-agli-header",
+    "title": "BASH per Bioinformatica",
+    "section": "11. Aggiungere un prefisso agli header",
+    "text": "11. Aggiungere un prefisso agli header\nzcat S1_R1.fastq.gz  | awk 'NR%4==1{print \"@S1_\" substr($0,2)} NR%4!=1{print}'  | gzip &gt; S1_R1_renamed.fastq.gz"
+  },
+  {
+    "objectID": "bash_intro.html#reindirizzare-output",
+    "href": "bash_intro.html#reindirizzare-output",
+    "title": "BASH per Bioinformatica",
+    "section": "12. Reindirizzare output",
+    "text": "12. Reindirizzare output\nzcat S1_R1.fastq.gz | head -n 20 &gt; subset_S1_R1.fastq"
   },
   {
     "objectID": "intro_r.html",
     "href": "intro_r.html",
     "title": "Introduzione a R",
     "section": "",
-    "text": "In questa sezione introdurremo:\n\noggetti di base di R;\nimportazione dati;\nmanipolazione semplice.\n\nUseremo i file nella cartella R_RStudio/:\n\nintroduzione_R.R\ngene_annotations500.txt\n\n\n\n\nsetwd(\"~/Microbiologia_Molecolare_2025\")\ngetwd()\n\n\n\n\nx &lt;- c(1, 3, 5, 7, 9)\nmean(x)\nsd(x)\nlength(x)\nData frame:\ndf &lt;- data.frame(\n  sample = c(\"S1\",\"S2\",\"S3\"),\n  value  = c(10.5, 8.2, 9.7)\n)\n\ndf\nstr(df)\n\n\n\n\ngene_ann &lt;- read.delim(\"R_RStudio/gene_annotations500.txt\",\n                       header = TRUE, sep = \"\\t\")\n\nhead(gene_ann)\nstr(gene_ann)\n\n\n\n\nLo script completo è in:\nR_RStudio/introduzione_R.R"
+    "text": "Accedere a RCloud\nhttps://posit.cloud/content/11506963\nIn questa sezione vedremo:\n\noggetti di base di R;\nimportazione dati;\nmanipolazione semplice.\n\nUseremo i file nella cartella IntroductionR/:\n\nintroduzionR.R\ngene_annotations500.txt\n\n\n\n\n\n## DOVE SIAMO NEL COMPUTER? \n\n\ngetwd()     # mostra la working directory attuale\n?getwd()    # help della funzione\n\n# andare alla cartella \"IntroductionR\"\nsetwd(\"IntroductionR/\")\ngetwd()\n\n# cosa contiene la cartella?\nlist.files()\n\n\n\n\n\nCALCOLI DI BASE\n\n4 + 4\n4 / 2\n4 * 4\n2 ^ 4   # elevamento a potenza\n5/0\n\n# tipi di dati di base\n42        # numerico (numeric)\n\"ciao\"    # testo (character) --&gt; sempre tra virgolette sennò cerca una variabile\nTRUE      # logico (logical)\n\nOPERATORI LOGICI\n\n2 + 2 == 5   # uguale?\n-1.9 &gt; -2\n4 &gt; 7!TRUE         # NOT\n\nVARIABILI\n\n# assegnazione con &lt;- o =\nx = 7\nx &lt;- 7\n\nx\nx + 3\n2 ^ x\nx * x\n\n# tipo di dato\n\nclass(x)\n\n\nw &lt;- \"europa\"\nclass(w)\n\nw &lt;- europa #perché?\n\n w * 2 \n\nSEQUENCES E rep\n\n1:10\nseq(1, 20, by = 2)\nrep(5, times = 3)\n\n\n\n\n\nVettori\n\n# C() = concatenazione\ny &lt;- c(5, 6, 7)\ny\ny*5\ny*w\n\nlogical_vec &lt;- c(TRUE, FALSE, TRUE)\nchar_vec &lt;- c(\"a\", \"b\", \"c\")\n\nData Frames\n\n# creiamo un secondo vettore\nz &lt;- c(8, 9, 10)\n\nour_table &lt;- data.frame(y, z)\nour_table\nclass(our_table)\n\n# struttura dell’oggetto: molto utile!\nstr(our_table)\n\n\n\n\n\n\ny       # il vettore intero\ny[1]    # primo elemento\ny[2]\ny[3]\n\ny[-1]   # tutto tranne il primo\n\n# multipli\ny[c(1,3)]\n\n# condizionale\ny[y &gt;= 6]\ny[!y &gt;= 6]   # ! = NOT\n\n\n### subset per tabelle\nour_table\nour_table[2, 2]\n\nour_table[, 2]   # tutte le righe, solo colonna 2\nour_table[3, ]   # solo riga 3\n\n# nomi colonne\ncolnames(our_table)\n\n# con il nome della colonna\nour_table$z\nour_table[c(2,3), \"z\"]\n\n\n\n\n\n\nmean(y)\nsum(y)\nlength(y)\nmin(y)\nmax(y)\n\n\n\n\n\n\n?read.table\n\n# puoi anche usare file.choose(), molto utile per principianti\n# gene_annotations_tab &lt;- read.table(file.choose(), sep=\"\\t\", header=TRUE)\n\ngene_annotations_tab &lt;- read.table(\"gene_annotations500.txt\",\n                                   sep = \"\\t\",\n                                   header = TRUE)\n\nhead(gene_annotations_tab)\ncolnames(gene_annotations_tab)\ndim(gene_annotations_tab)\n\n# struttura\nstr(gene_annotations_tab)\n\nLAVORARE CON GLI NA\n\nhead(gene_annotations_tab$KO_ID)\nis.na(head(gene_annotations_tab$KO_ID))\n\n# contare quanti NA\nsum(is.na(gene_annotations_tab$KO_ID))\n\n# rimuovere righe con NA in KO_ID\nKEGG_only_tab &lt;- gene_annotations_tab[!is.na(gene_annotations_tab$KO_ID), ]\n\ndim(gene_annotations_tab)\ndim(KEGG_only_tab)\n\nSALVARE UN FILE\n\n?write.table\n\nwrite.table(KEGG_only_tab,\n            \"KEGG_annotated.csv\",\n            sep = \",\",\n            row.names = FALSE,\n            quote = FALSE)\n\nlist.files()   # verifica che sia stato creato\n\n\n\n\n\n\n# Scatterplot con personalizzazioni base\nplot(\n  y, z,\n  main = \"Relazione tra y e z\",\n  xlab = \"Valori di y\",\n  ylab = \"Valori di z\",\n  pch = 19,        # punto pieno\n  col = \"blue\",    # colore\n  cex = 1.5        # grandezza dei punti\n)\n\n# Istogramma più carino\nhist(y,\n  main = \"Distribuzione dei valori di y\",\n  xlab = \"Valore\",\n  col = \"lightgreen\",\n  border = \"white\",\n  breaks = 5\n)\n\n################################\n#   LO STESSO CON ggplot2      #\n################################\n\n# installiamo il pacchetto la prima volta\n\n\n#install.packages(\"ggplot2\")\n\nlibrary(ggplot2)\n\n# trasformiamo y e z in un dataframe\ndf &lt;- data.frame(y = y, z = z)\n\n# scatterplot\nggplot(df, aes(x = y, y = z)) +\n  geom_point(size = 3, color = \"red\") +\n  labs(\n    title = \"Relazione tra y e z (ggplot2)\",\n    x = \"Valori di y\",\n    y = \"Valori di z\"\n  ) +\n  theme_minimal()\n\n# istogramma\nggplot(df, aes(x = y)) +\n  geom_histogram(\n    bins = 5,\n    fill = \"purple\",\n    color = \"white\"\n  ) +\n  labs(\n    title = \"Distribuzione dei valori di y (ggplot2)\",\n    x = \"Valore di y\"\n  ) +\n  theme_minimal()"
   },
   {
     "objectID": "intro_r.html#impostare-la-working-directory",
@@ -203,10 +336,115 @@
     "text": "Lo script completo è in:\nR_RStudio/introduzione_R.R"
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Microbiologia Molecolare 2025 - Practical",
+    "objectID": "biostatistics.html#analisi-in-r-script-completo",
+    "href": "biostatistics.html#analisi-in-r-script-completo",
+    "title": "Analisi biostatistica (SEA4BLUE)",
     "section": "",
-    "text": "Benvenuti\nQuesto sito contiene il materiale del laboratorio di Microbiologia Molecolare 2025.\nLe diverse parti del laboratorio sono organizzate in 4 schede principali:\n\nIntro BASH – comandi di base della shell e lavoro da terminale.\nAmpWrap – pretrattamento delle letture Illumina amplicon con il workflow AmpWrap.\nIntro R – primi passi in R e RStudio.\nAnalisi biostatistica – analisi di dati di metabarcoding (progetto SEA4BLUE) con phyloseq e altri pacchetti.\n\nUsate la barra di navigazione in alto per spostarvi tra le varie sezioni durante la lezione."
+    "text": "#remove all data in the environmnet\n\nrm(list = ls())\n\n\n\n#load packages\nlibrary(maps)\nlibrary(formattable) \nlibrary(phyloseq) \nlibrary(ggplot2) \nlibrary(dplyr)  \nlibrary(metagenomeSeq)\nlibrary(ggrepel) \nlibrary(ranacapa) \nlibrary(ggside) \nlibrary(ggpubr) \nlibrary(grid) \nlibrary(gridBase)\nlibrary(MiscMetabar)"
+  },
+  {
+    "objectID": "ampwrap.html#ampwrap-per-il-pretrattamento-delle-raw-reads-metabarcoding-16s-rrna-gene",
+    "href": "ampwrap.html#ampwrap-per-il-pretrattamento-delle-raw-reads-metabarcoding-16s-rrna-gene",
+    "title": "Pretrattamento con AmpWrap",
+    "section": "",
+    "text": "Per il pretrattamento useremo AmpWrap:\nhttps://github.com/LDoni/AmpWrap\nUseremo il modulo Illumina."
+  },
+  {
+    "objectID": "intro_r.html#introduzione-a-r",
+    "href": "intro_r.html#introduzione-a-r",
+    "title": "Introduzione a R",
+    "section": "",
+    "text": "## DOVE SIAMO NEL COMPUTER? \n\n\ngetwd()     # mostra la working directory attuale\n?getwd()    # help della funzione\n\n# andare alla cartella \"IntroductionR\"\nsetwd(\"IntroductionR/\")\ngetwd()\n\n# cosa contiene la cartella?\nlist.files()"
+  },
+  {
+    "objectID": "intro_r.html#operazioni-di-base",
+    "href": "intro_r.html#operazioni-di-base",
+    "title": "Introduzione a R",
+    "section": "",
+    "text": "CALCOLI DI BASE\n\n4 + 4\n4 / 2\n4 * 4\n2 ^ 4   # elevamento a potenza\n5/0\n\n# tipi di dati di base\n42        # numerico (numeric)\n\"ciao\"    # testo (character) --&gt; sempre tra virgolette sennò cerca una variabile\nTRUE      # logico (logical)\n\nOPERATORI LOGICI\n\n2 + 2 == 5   # uguale?\n-1.9 &gt; -2\n4 &gt; 7!TRUE         # NOT\n\nVARIABILI\n\n# assegnazione con &lt;- o =\nx = 7\nx &lt;- 7\n\nx\nx + 3\n2 ^ x\nx * x\n\n# tipo di dato\n\nclass(x)\n\n\nw &lt;- \"europa\"\nclass(w)\n\nw &lt;- europa #perché?\n\n w * 2 \n\nSEQUENCES E rep\n\n1:10\nseq(1, 20, by = 2)\nrep(5, times = 3)"
+  },
+  {
+    "objectID": "intro_r.html#variabili",
+    "href": "intro_r.html#variabili",
+    "title": "Introduzione a R",
+    "section": "",
+    "text": "gene_ann &lt;- read.delim(\"R_RStudio/gene_annotations500.txt\",\n                       header = TRUE, sep = \"\\t\")\n\nhead(gene_ann)\nstr(gene_ann)"
+  },
+  {
+    "objectID": "intro_r.html#oggetti-r",
+    "href": "intro_r.html#oggetti-r",
+    "title": "Introduzione a R",
+    "section": "",
+    "text": "Vettori\n\n# C() = concatenazione\ny &lt;- c(5, 6, 7)\ny\ny*5\ny*w\n\nlogical_vec &lt;- c(TRUE, FALSE, TRUE)\nchar_vec &lt;- c(\"a\", \"b\", \"c\")\n\nData Frames\n\n# creiamo un secondo vettore\nz &lt;- c(8, 9, 10)\n\nour_table &lt;- data.frame(y, z)\nour_table\nclass(our_table)\n\n# struttura dell’oggetto: molto utile!\nstr(our_table)"
+  },
+  {
+    "objectID": "intro_r.html#indexing",
+    "href": "intro_r.html#indexing",
+    "title": "Introduzione a R",
+    "section": "",
+    "text": "y       # il vettore intero\ny[1]    # primo elemento\ny[2]\ny[3]\n\ny[-1]   # tutto tranne il primo\n\n# multipli\ny[c(1,3)]\n\n# condizionale\ny[y &gt;= 6]\ny[!y &gt;= 6]   # ! = NOT\n\n\n### subset per tabelle\nour_table\nour_table[2, 2]\n\nour_table[, 2]   # tutte le righe, solo colonna 2\nour_table[3, ]   # solo riga 3\n\n# nomi colonne\ncolnames(our_table)\n\n# con il nome della colonna\nour_table$z\nour_table[c(2,3), \"z\"]"
+  },
+  {
+    "objectID": "intro_r.html#funzioni-utili-di-base",
+    "href": "intro_r.html#funzioni-utili-di-base",
+    "title": "Introduzione a R",
+    "section": "",
+    "text": "mean(y)\nsum(y)\nlength(y)\nmin(y)\nmax(y)"
+  },
+  {
+    "objectID": "intro_r.html#leggere-e-scrivere-file-su-disco",
+    "href": "intro_r.html#leggere-e-scrivere-file-su-disco",
+    "title": "Introduzione a R",
+    "section": "",
+    "text": "?read.table\n\n# puoi anche usare file.choose(), molto utile per principianti\n# gene_annotations_tab &lt;- read.table(file.choose(), sep=\"\\t\", header=TRUE)\n\ngene_annotations_tab &lt;- read.table(\"gene_annotations500.txt\",\n                                   sep = \"\\t\",\n                                   header = TRUE)\n\nhead(gene_annotations_tab)\ncolnames(gene_annotations_tab)\ndim(gene_annotations_tab)\n\n# struttura\nstr(gene_annotations_tab)\n\nLAVORARE CON GLI NA\n\nhead(gene_annotations_tab$KO_ID)\nis.na(head(gene_annotations_tab$KO_ID))\n\n# contare quanti NA\nsum(is.na(gene_annotations_tab$KO_ID))\n\n# rimuovere righe con NA in KO_ID\nKEGG_only_tab &lt;- gene_annotations_tab[!is.na(gene_annotations_tab$KO_ID), ]\n\ndim(gene_annotations_tab)\ndim(KEGG_only_tab)\n\nSALVARE UN FILE\n\n?write.table\n\nwrite.table(KEGG_only_tab,\n            \"KEGG_annotated.csv\",\n            sep = \",\",\n            row.names = FALSE,\n            quote = FALSE)\n\nlist.files()   # verifica che sia stato creato"
+  },
+  {
+    "objectID": "intro_r.html#grafici-base-plot",
+    "href": "intro_r.html#grafici-base-plot",
+    "title": "Introduzione a R",
+    "section": "",
+    "text": "# Scatterplot con personalizzazioni base\nplot(\n  y, z,\n  main = \"Relazione tra y e z\",\n  xlab = \"Valori di y\",\n  ylab = \"Valori di z\",\n  pch = 19,        # punto pieno\n  col = \"blue\",    # colore\n  cex = 1.5        # grandezza dei punti\n)\n\n# Istogramma più carino\nhist(y,\n  main = \"Distribuzione dei valori di y\",\n  xlab = \"Valore\",\n  col = \"lightgreen\",\n  border = \"white\",\n  breaks = 5\n)\n\n################################\n#   LO STESSO CON ggplot2      #\n################################\n\n# installiamo il pacchetto la prima volta\n\n\n#install.packages(\"ggplot2\")\n\nlibrary(ggplot2)\n\n# trasformiamo y e z in un dataframe\ndf &lt;- data.frame(y = y, z = z)\n\n# scatterplot\nggplot(df, aes(x = y, y = z)) +\n  geom_point(size = 3, color = \"red\") +\n  labs(\n    title = \"Relazione tra y e z (ggplot2)\",\n    x = \"Valori di y\",\n    y = \"Valori di z\"\n  ) +\n  theme_minimal()\n\n# istogramma\nggplot(df, aes(x = y)) +\n  geom_histogram(\n    bins = 5,\n    fill = \"purple\",\n    color = \"white\"\n  ) +\n  labs(\n    title = \"Distribuzione dei valori di y (ggplot2)\",\n    x = \"Valore di y\"\n  ) +\n  theme_minimal()"
+  },
+  {
+    "objectID": "biostatistics.html#the-data-we-will-use-has-already-been-pre-processed-with-dada2-and-the-taxonomy-was-assigned-using-silva-db",
+    "href": "biostatistics.html#the-data-we-will-use-has-already-been-pre-processed-with-dada2-and-the-taxonomy-was-assigned-using-silva-db",
+    "title": "Analisi biostatistica (SEA4BLUE)",
+    "section": "",
+    "text": "What are the “pre-processing” steps needed to clean the raw reads?\n\n Inspect read quality profiles Remove Adaptors Quality filter and trimming Sample Inference Merge paired reads Remove chimeras\n\n\n\n\nWhat are the outputs of DADA2?\n\n ASVs table & Representative Sequences\n\n\n\n\nWhat are the inputs for Phyloseq?\n\n ASVs table + Representative Sequences + taxonomy table + metadata"
+  },
+  {
+    "objectID": "biostatistics.html#import-dati-phyloseq",
+    "href": "biostatistics.html#import-dati-phyloseq",
+    "title": "Analisi biostatistica (SEA4BLUE)",
+    "section": "",
+    "text": "# do you remember how to set the working directory?\n#import data for the phyloseq object ( ASVs table, Tax table, metadata table)\nps &lt;- readRDS(\"phyloseq.rds\")\n\n# do you remember how to set the working directory?\n\nps\n\n# the metadata \nsample_data(ps)\n\nhead(t(otu_table(ps)))"
+  },
+  {
+    "objectID": "biostatistics.html#mappa-siti-di-campionamento",
+    "href": "biostatistics.html#mappa-siti-di-campionamento",
+    "title": "Analisi biostatistica (SEA4BLUE)",
+    "section": "",
+    "text": "######################################################## \n####### LET'S VISUALIZE TRANSECT SAMPLING LOCATIONS #### \n######################################################## \n\n#prendiamo le coordinate dal metadata dell'oggetto phyloseq \nsamdf &lt;- as.data.frame(sample_data(ps))\n\n# Ordina i campioni per giorno di navigazione (per il transetto)\nsamdf &lt;- samdf[order(samdf$NavigationDay), ]\n\n\n#mappa del mondo\nworld &lt;- map_data(\"world\")\n\n# Limiti fissi per centrare sull'Atlantico (per zoommmarci sopra)\nlon_min &lt;- -85\nlon_max &lt;- -5\nlat_min &lt;- 20\nlat_max &lt;- 45\n\nggplot() +\n  geom_polygon(\n    data = world,\n    aes(x = long, y = lat, group = group),\n    fill = \"grey90\", color = \"grey60\"\n  ) +\n  geom_path(\n    data = samdf,\n    aes(x = Longitude, y = Latitude, group = 1),\n    color = \"black\", linewidth = 1\n  ) +\n  geom_point(\n    data = samdf,\n    aes(x = Longitude, y = Latitude, color = Zone),\n    size = 3\n  ) +\n  coord_quickmap(\n    xlim = c(lon_min, lon_max),\n    ylim = c(lat_min, lat_max)\n  ) +\n  labs(\n    x = \"Longitude\",\n    y = \"Latitude\",\n    color = \"Zone\"  ) +\n  theme_minimal()\n\nrm(list = ls())"
+  },
+  {
+    "objectID": "biostatistics.html#lets-visualize-rarefaction-curves",
+    "href": "biostatistics.html#lets-visualize-rarefaction-curves",
+    "title": "Analisi biostatistica (SEA4BLUE)",
+    "section": "",
+    "text": "##################################################\n####### LET'S VISUAALIZE RAREFACTION CURVES ###### \n##################################################\nps &lt;- readRDS(\"phyloseq.rds\")\n\nset.seed(42)\n\n#### define  the function calculate_rarefaction_curves\n\ncalculate_rarefaction_curves &lt;- function(psdata, measures, depths) {\n  require('plyr') # ldply\n  require('reshape2') # melt\n\n  estimate_rarified_richness &lt;- function(psdata, measures, depth) {\n    if(max(sample_sums(psdata)) &lt; depth) return()\n    psdata &lt;- prune_samples(sample_sums(psdata) &gt;= depth, psdata)\n\n    rarified_psdata &lt;- rarefy_even_depth(psdata, depth, verbose = FALSE)\n\n    alpha_diversity &lt;- estimate_richness(rarified_psdata, measures = measures)\n\n    # as.matrix forces the use of melt.array, which includes the Sample names (rownames)\n    molten_alpha_diversity &lt;- melt(as.matrix(alpha_diversity), varnames = c('Sample', 'Measure'), value.name = 'Alpha_diversity')\n\n    molten_alpha_diversity\n  }\n\n  names(depths) &lt;- depths # this enables automatic addition of the Depth to the output by ldply\n  rarefaction_curve_data &lt;- ldply(depths, estimate_rarified_richness, psdata = psdata, measures = measures, .id = 'Depth', .progress = ifelse(interactive(), 'none', 'none'))\n\n  # convert Depth from factor to numeric\n  rarefaction_curve_data$Depth &lt;- as.numeric(levels(rarefaction_curve_data$Depth))[rarefaction_curve_data$Depth]\n\n  rarefaction_curve_data\n}\n\n\n#### use the function calculate_rarefaction_curves on ps\nrarefaction_curve_data &lt;- calculate_rarefaction_curves(ps, c('Observed'), rep(c(1, 10, 100, 1000, 1:100 * 10000), each = 10))\n#print the summary\nsummary(rarefaction_curve_data)\n\n\n# do some calculations  and merge the data for plotting \nrarefaction_curve_data_summary &lt;- ddply(rarefaction_curve_data, c('Depth', 'Sample', 'Measure'), summarise, Alpha_diversity_mean = mean(Alpha_diversity), Alpha_diversity_sd = sd(Alpha_diversity))\n\nrarefaction_curve_data_summary_verbose &lt;- merge(rarefaction_curve_data_summary, \n                                                data.frame(sample_data(ps)), \n                                                by.x = 'Sample', by.y = 'row.names')\n\n\n### plot with ggplot\n\nggplot(data=rarefaction_curve_data_summary_verbose, aes(x = Depth, \n                                                        y = Alpha_diversity_mean, \n                                                        group = Sample, color = Zone)) +\n  geom_line(aes(group = Sample), size = 1) +\n  geom_point(size = 2.5) +\n  geom_label_repel(data = rarefaction_curve_data_summary_verbose %&gt;% \n      group_by(Sample) %&gt;% \n      filter(Alpha_diversity_mean == max(Alpha_diversity_mean)), \n    aes(Depth, Alpha_diversity_mean,  label = ( Sample)),\n    color = \"black\"  )+ggtitle(\"Rarefaction Curves\")\n\n\n\n## there is something strange with sample 16 and 17 could you guess why\n#change labels for the plot!\n\nggplot(data=rarefaction_curve_data_summary_verbose, aes(x = Depth, \n                                                        y = Alpha_diversity_mean, \n                                                        group = Sample, color = Zone)) +\n  geom_line(aes(group = Sample), size = 1) +\n  geom_point(size = 2.5) +\n  geom_label_repel(data = rarefaction_curve_data_summary_verbose %&gt;% \n                     group_by(Sample) %&gt;% \n                     filter(Alpha_diversity_mean == max(Alpha_diversity_mean)), \n                   aes(Depth, Alpha_diversity_mean,  label = ( SampleName )), #changing the parameter of the labels\n                   color = \"black\"  )+ggtitle(\"Rarefaction Curves\")\n\ndo you see some patterns??????? ### Rarefaction curves – risultati"
+  },
+  {
+    "objectID": "biostatistics.html#normalization",
+    "href": "biostatistics.html#normalization",
+    "title": "Analisi biostatistica (SEA4BLUE)",
+    "section": "",
+    "text": "phyloseq_obj&lt;-ps\n#search for Mitochondria\ngrep(pattern = \"Mitochondria\", tax_table(phyloseq_obj)) \n#search for Chloroplast\ngrep(pattern = \"Chloroplast\", tax_table(phyloseq_obj)) \n\n#remove Chloroplast and Mitochondria from phyloseq_obj\nphyloseq_obj &lt;- phyloseq_obj %&gt;% subset_taxa( Family!= \"Mitochondria\" | is.na(Family) & Order!=\"Chloroplast\" | is.na(Order) ) \n\n#search for Mitochondria\ngrep(pattern = \"Mitochondria\", tax_table(phyloseq_obj)) \n#search for Chloroplast\ngrep(pattern = \"Chloroplast\", tax_table(phyloseq_obj))\n\n## All were removed\n\n\nphyloseq_obj\n\n\n#filtering singletons\ndoubleton &lt;- genefilter_sample(phyloseq_obj, filterfun_sample(function(x) x &gt; 1), A=1)\ndoubleton &lt;- prune_taxa(doubleton, phyloseq_obj) \ndoubleton\n\n## rimuovo i pos e neg\n\nsample_variables(doubleton)\n\n\n#rimuovo i positivi e negativi\ndoubleton = subset_samples(doubleton,!( SampleName==\"Positive\" | SampleName==\"Negative\"))\n#check it\nsample_data(doubleton)$SampleName\n\n\n\n\n# transforming \ndata.metagenomeSeq = phyloseq_to_metagenomeSeq(doubleton)\n\np = cumNormStat(data.metagenomeSeq) #default is 0.5\ndata.cumnorm = cumNorm(data.metagenomeSeq, p=p)\n#data.cumnorm\ndata.CSS = MRcounts(data.cumnorm, norm=TRUE, log=TRUE)\nhead(data.CSS)\ndim(data.CSS)  # make sure the data are in a correct formal: number of samples in rows\nphyloseq_obj_css &lt;- phyloseq_obj\notu_table(phyloseq_obj_css) &lt;- otu_table(data.CSS, taxa_are_rows = T)\n\nphyloseq_obj_css\n\n#change sample names to the correct ones\nsample_names(phyloseq_obj_css)&lt;-sample_data(phyloseq_obj_css)$SampleName \n\nsample_names(phyloseq_obj_css)\n\n\n############ this is the phyloseq object normalized\nphyloseq_obj_css"
+  },
+  {
+    "objectID": "biostatistics.html#community-composition-genus-e-rda",
+    "href": "biostatistics.html#community-composition-genus-e-rda",
+    "title": "Analisi biostatistica (SEA4BLUE)",
+    "section": "",
+    "text": "#let's check the composition of the communities with a barplot\n\n\n#we have to transform the counts to %\nphyseq_perc=transform_sample_counts(phyloseq_obj_css,function(x) 100 * x/sum(x))\n\n\n\n#Turn all ASVs into genus counts\n\n\nglom &lt;- tax_glom(physeq_perc, taxrank = 'Genus')\nglom # should list # taxa as # phyla\ndata_glom&lt;- psmelt(glom) # create dataframe from phyloseq object\n\ndata_glom$Zone &lt;- as.character(data_glom$Zone) #convert to character\ndata_glom$Zone  &lt;- factor(data_glom$Zone , levels =c(\"ANW\",\"ANC\",\"ANE\"))\n\n\n\n\n\n\n#load the colors\ncolor = grDevices::colors()[grep('gr(a|e)y', grDevices::colors(), invert = T)]\n\n\n## barplot all genera\nggplot(data=data_glom, aes(x=Sample, y=Abundance, fill=Genus)) + \n  facet_grid(~Zone, scales = \"free\")+\n  geom_bar(aes(), stat=\"identity\", position=\"fill\",width = 0.7) +\n  scale_fill_manual(values = sample(color, length(unique(data_glom$Genus))))+\n  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),legend.position=\"none\")\n\n\n\n\ncan you see any difference ???\n\ngenus.sum = tapply(taxa_sums(glom), tax_table(glom)[, \"Genus\"], sum, na.rm=TRUE)\ntopGenera = names(sort(genus.sum, TRUE))[1:20]\n\n## check how the top 20 taxa are changing across the samples\nggplot(data=data_glom, aes(x=Sample, y=Abundance, fill=Genus)) + \n  facet_grid(~Zone, scales = \"free\")+\n  geom_bar(aes(), stat=\"identity\", position=\"fill\",width = 0.7) +\n  scale_fill_manual(values = sample(color, length(unique(data_glom$Genus))), breaks = topGenera)+\n  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))\n\n\n\n\n\n#let's do a RDA to see how the communities are affected by the longitude\n\n\n#calculate the ordination based on the effect of richness and longitude\nRDA = ordinate(phyloseq_obj_css ~ Richness + Longitude, \"RDA\")\n\n# plot it\np2 = plot_ordination(phyloseq_obj_css, RDA, color = \"Zone\", )+ \n  theme_bw() +geom_text_repel(aes(label = SampleName, color = Zone), max.overlaps = Inf, show.legend = FALSE) + geom_point(size = 4)+\n  scale_color_manual(values = c(\"#4280fc\", \"#ffb452\", \"#f7170a\"))\np2\n\n\n\n\n\n# Now add the environmental variables as arrows\narrowmat = vegan::scores(RDA, display = \"bp\")\n# Add labels, make a data.frame\narrowdf &lt;- data.frame(labels = rownames(arrowmat), arrowmat)\n# Define the arrow aesthetic mapping\narrow_map = aes(xend = RDA1, yend = RDA2, x = 0, y = 0, shape = NULL, color = NULL, \n                label = labels)\nlabel_map = aes(x = 1.7 * RDA1, y = 1.7 * RDA2, shape = NULL, color = NULL, \n                label = labels)\n# Make a new graphic\narrowhead = arrow(length = unit(0.05, \"npc\"))\np3 = p2 + geom_segment(arrow_map, size = 1, data = arrowdf, color = \"black\", \n                       arrow = arrowhead) + geom_text(label_map, size = 4, data = arrowdf)\np3"
   }
 ]

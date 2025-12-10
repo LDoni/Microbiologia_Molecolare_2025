@@ -159,7 +159,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#ampwrap-per-il-pretrattamento-delle-letture-amplicon" id="toc-ampwrap-per-il-pretrattamento-delle-letture-amplicon" class="nav-link active" data-scroll-target="#ampwrap-per-il-pretrattamento-delle-letture-amplicon">AmpWrap per il pretrattamento delle letture amplicon</a></li>
+  <li><a href="#ampwrap-per-il-pretrattamento-delle-raw-reads-metabarcoding-16s-rrna-gene" id="toc-ampwrap-per-il-pretrattamento-delle-raw-reads-metabarcoding-16s-rrna-gene" class="nav-link active" data-scroll-target="#ampwrap-per-il-pretrattamento-delle-raw-reads-metabarcoding-16s-rrna-gene">AmpWrap per il pretrattamento delle raw reads (metabarcoding 16S rRNA gene)</a></li>
   <li><a href="#workflow-ampwrap-illumina" id="toc-workflow-ampwrap-illumina" class="nav-link" data-scroll-target="#workflow-ampwrap-illumina">Workflow AmpWrap (Illumina)</a></li>
   <li><a href="#schema-del-workflow" id="toc-schema-del-workflow" class="nav-link" data-scroll-target="#schema-del-workflow">Schema del workflow</a></li>
   <li><a href="#help-del-comando" id="toc-help-del-comando" class="nav-link" data-scroll-target="#help-del-comando">Help del comando</a></li>
@@ -196,8 +196,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="ampwrap-per-il-pretrattamento-delle-letture-amplicon" class="level2">
-<h2 class="anchored" data-anchor-id="ampwrap-per-il-pretrattamento-delle-letture-amplicon">AmpWrap per il pretrattamento delle letture amplicon</h2>
+<section id="ampwrap-per-il-pretrattamento-delle-raw-reads-metabarcoding-16s-rrna-gene" class="level2">
+<h2 class="anchored" data-anchor-id="ampwrap-per-il-pretrattamento-delle-raw-reads-metabarcoding-16s-rrna-gene">AmpWrap per il pretrattamento delle raw reads (metabarcoding 16S rRNA gene)</h2>
 <p>Per il pretrattamento useremo AmpWrap:</p>
 <p>https://github.com/LDoni/AmpWrap</p>
 <p>Useremo il modulo Illumina.</p>
@@ -229,7 +229,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="uso-di-base" class="level2">
 <h2 class="anchored" data-anchor-id="uso-di-base">Uso di base</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ampwrap</span> short           <span class="at">-i</span> input_directory           <span class="at">-a</span> forward_primer           <span class="at">-A</span> reverse_primer           <span class="at">-l</span> amplicon_length</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ampwrap</span> short <span class="at">-i</span> input_directory <span class="at">-a</span> forward_primer <span class="at">-A</span> reverse_primer <span class="at">-l</span> amplicon_length</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
 <section id="scaricare-i-dati-di-esempio" class="level2">
@@ -244,14 +244,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="esecuzione-ampwrap" class="level2">
 <h2 class="anchored" data-anchor-id="esecuzione-ampwrap">Esecuzione AmpWrap</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ampwrap</span> short           <span class="at">-i</span> raw_fastqc           <span class="at">-a</span> GTGYCAGCMGCCGCGGTAA           <span class="at">-A</span> CCGYCAATTYMTTTRAGTTT           <span class="at">-l</span> 372           <span class="at">-o</span> short_test_output</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ampwrap</span> short <span class="at">-i</span> raw_fastqc <span class="at">-a</span> GTGYCAGCMGCCGCGGTAA <span class="at">-A</span> CCGYCAATTYMTTTRAGTTT <span class="at">-l</span> 372 <span class="at">-o</span> short_test_output</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
 <section id="analisi-output" class="level2">
 <h2 class="anchored" data-anchor-id="analisi-output">Analisi output</h2>
 <p>FastQC / MultiQC: aprire i report HTML generati.</p>
 <p>Final report:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> short_test_output/final_report.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> ......../final_report.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 
 </section>
