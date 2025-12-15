@@ -118,21 +118,15 @@ zcat S1_10_L001_R1_001.fastq.gz | awk 'NR%4==2 {print length}'
 zcat S1_10_L001_R1_001.fastq.gz  | awk 'NR%4==2 { total+=length; n++ } END { print total/n }'
 ```
 
-## Rinominiamo tutti i files
+## Rinominiamo tutti i files in un formato più semplice:
 
 ```bash
-for f in *.fastq.gz; do
+for f in *.fastq.gz
+do
     sample=$(echo "$f" | cut -d'_' -f1)
-    read=$(echo "$f" | grep -o "R[12]")
-    new="test_${sample}_${read}.fastq.gz"
-    mv "$f" "$new"
+    read=$(echo "$f" | cut -d'_' -f4)
+    mv "$f" "${sample}_${read}.fastq.gz"
 done
-```
-
-## Aggiungiamo un prefisso agli header
-
-```bash
-zcat S1_R1.fastq.gz  | awk 'NR%4==1{print "@S1_" substr($0,2)} NR%4!=1{print}'  | gzip > S1_R1_renamed.fastq.gz
 ```
 
 ## Reindirizziamo  l'output
@@ -140,6 +134,25 @@ zcat S1_R1.fastq.gz  | awk 'NR%4==1{print "@S1_" substr($0,2)} NR%4!=1{print}'  
 ```bash
 zcat S1_R1.fastq.gz | head -n 20 > subset_S1_R1.fastq
 ```
+## Apriamo il nuovo file con un editor di testo
+
+```bash
+nano subset_S1_R1.fastq
+```
+
+# Conda
+
+```bash
+conda init bash
+conda env list
+conda activate myenv
+conda list
+conda deactivate
+conda create --name envname
+conda install -c conda-forge package
+conda create --name envname -c conda-forge package
+```
+
 
 ---
 
@@ -327,17 +340,3 @@ cat list_ids.fastq
 ```
 
 ---
-
-# Conda
-
-```bash
-conda init bash
-conda env list
-conda activate myenv
-conda list
-conda deactivate
-conda create --name envname
-conda install -c conda-forge package
-conda create --name envname -c conda-forge package
-```
-
