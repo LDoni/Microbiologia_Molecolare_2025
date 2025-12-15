@@ -5,6 +5,144 @@ format: html
 
 # Bash
 
+# Apriamo il terminale
+
+## Capiamo dove ci troviamo nel terminale
+
+```bash
+pwd
+```
+## Guardiamo che files sono presenti nella directory in cui ci troviamo:
+
+```bash
+ls
+ls -ltrh
+man list
+```
+
+## Entriamo nella cartella esercizi_fastq e listiamo i file presenti
+
+```bash
+cd esercizi_fastq
+ls -ltrh
+```
+## Creiamo una nuova cartella
+
+```bash
+mkdir directory_prova_fastq
+```
+## Copiamo un file fastq
+
+```bash
+cp S1_10_L001_R1_001.fastq.gz primo_file.fastq
+```
+
+## Rinominiamo questo file
+
+```bash
+mv primo_file.fastq file_prova_fastq
+```
+## Spostiamolo nella cartella prova_fastq che abbiamo creato
+
+```bash
+mv file_prova_fastq /directory_prova_fastq
+```
+## Torniamo alla directory precedente
+
+```bash
+cd ..
+ls *.gz
+```
+
+## Visualizziamo le prime 8 righe
+
+```bash
+zcat S1_10_L001_R1_001.fastq.gz | head -n 8
+```
+Oppure possiamo usare:
+
+```bash
+gunzip -c S1_10_L001_R1_001.fastq.gz | head -n 8
+```
+## Per scorrere il file
+
+```bash
+zcat S1_10_L001_R1_001.fastq.gz | less -S
+```
+
+## Contiamo le righe
+
+```bash
+zcat S1_10_L001_R1_001.fastq.gz | wc -l
+```
+
+## Contiamo il numero di reads
+
+```bash
+zcat test_S1_R1.fastq.gz | grep -c "^@"
+```
+Oppure possiamo usare:
+
+```bash
+echo $(( $(zcat S1_10_L001_R1_001.fastq.gz | wc -l) / 4 ))
+```
+
+## Cerchiamo una sequenza
+
+```bash
+zcat S1_10_L001_R1_001.fastq.gz | grep -c "ACGTACG"
+```
+
+## Contiamo la lunghezza della prima read:
+
+```bash
+zcat S1_10_L001_R1_001.fastq.gz | sed -n '2p' | awk '{print length}'
+```
+
+Oppure:
+
+```bash
+seq=$(zcat S1_10_L001_R1_001.fastq.gz | sed -n '2p')
+echo ${#seq}
+```
+
+## Calcoliamo la lunghezza di ogni read
+
+```bash
+zcat S1_10_L001_R1_001.fastq.gz | awk 'NR%4==2 {print length}'
+```
+
+## Calcoliamo la lunghezza media
+
+```bash
+zcat S1_10_L001_R1_001.fastq.gz  | awk 'NR%4==2 { total+=length; n++ } END { print total/n }'
+```
+
+## Rinominiamo tutti i files
+
+```bash
+for f in *.fastq.gz; do
+    sample=$(echo "$f" | cut -d'_' -f1)
+    read=$(echo "$f" | grep -o "R[12]")
+    new="test_${sample}_${read}.fastq.gz"
+    mv "$f" "$new"
+done
+```
+
+## Aggiungiamo un prefisso agli header
+
+```bash
+zcat S1_R1.fastq.gz  | awk 'NR%4==1{print "@S1_" substr($0,2)} NR%4!=1{print}'  | gzip > S1_R1_renamed.fastq.gz
+```
+
+## Reindirizziamo  l'output
+
+```bash
+zcat S1_R1.fastq.gz | head -n 20 > subset_S1_R1.fastq
+```
+
+---
+
 ## Paths, files and directories
 Open linux or mac terminal
 
@@ -20,6 +158,7 @@ history #display last commands
 ls *.fasta #list all fasta files
 mkdir newfoldername #make new directory
 ```
+---
 
 ## Edit files
 `nano nomefile`  #create new empty file
@@ -201,102 +340,4 @@ conda create --name envname
 conda install -c conda-forge package
 conda create --name envname -c conda-forge package
 ```
-
----
-
-# Esercizi
-
-## 1. Listare i file
-
-```bash
-ls -l
-```
-
-## 2. Visualizzare le prime 8 righe
-
-```bash
-zcat S1_10_L001_R1_001.fastq.gz | head -n 8
-```
-
-## 3. Scorrere il file
-
-```bash
-zcat S1_10_L001_R1_001.fastq.gz | less -S
-```
-
-## 4. Contare le linee
-
-```bash
-zcat S1_10_L001_R1_001.fastq.gz | wc -l
-```
-
-## 5. Numero di reads
-
-```bash
-echo $(( $(zcat S1_10_L001_R1_001.fastq.gz | wc -l) / 4 ))
-```
-
-### Alternativa:
-
-```bash
-zcat test_S1_R1.fastq.gz | grep -c "^@"
-```
-
-## 6. Lunghezza della prima read
-
-```bash
-zcat S1_10_L001_R1_001.fastq.gz | sed -n '2p' | awk '{print length}'
-```
-
-Oppure:
-
-```bash
-seq=$(zcat S1_10_L001_R1_001.fastq.gz | sed -n '2p')
-echo ${#seq}
-```
-
-## 7. Lunghezza di ogni read
-
-```bash
-zcat S1_10_L001_R1_001.fastq.gz | awk 'NR%4==2 {print length}'
-```
-
-## 8. Lunghezza media
-
-```bash
-zcat S1_10_L001_R1_001.fastq.gz  | awk 'NR%4==2 { total+=length; n++ } END { print total/n }'
-```
-
-## 9. Cercare una sequenza
-
-```bash
-zcat S1_10_L001_R1_001.fastq.gz | grep -c "ACGTACG"
-```
-
-## 10. Rinominare file
-
-```bash
-for f in *.fastq.gz; do
-    sample=$(echo "$f" | cut -d'_' -f1)
-    read=$(echo "$f" | grep -o "R[12]")
-    new="test_${sample}_${read}.fastq.gz"
-    mv "$f" "$new"
-done
-```
-
-## 11. Aggiungere un prefisso agli header
-
-```bash
-zcat S1_R1.fastq.gz  | awk 'NR%4==1{print "@S1_" substr($0,2)} NR%4!=1{print}'  | gzip > S1_R1_renamed.fastq.gz
-```
-
-## 12. Reindirizzare output
-
-```bash
-zcat S1_R1.fastq.gz | head -n 20 > subset_S1_R1.fastq
-```
-
----
-
-
 
