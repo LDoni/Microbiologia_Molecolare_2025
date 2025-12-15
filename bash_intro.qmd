@@ -16,8 +16,8 @@ pwd
 
 ```bash
 ls
+ls --help
 ls -ltrh
-man list
 ```
 
 ## Entriamo nella cartella esercizi_fastq e listiamo i file presenti
