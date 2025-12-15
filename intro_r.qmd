@@ -6,8 +6,7 @@ title: "Introduzione a R"
 
 Accedere a RCloud
 
-https://posit.cloud/content/11506963
-
+https://posit.cloud/content/11605322
 
 In questa sezione vedremo:
 
