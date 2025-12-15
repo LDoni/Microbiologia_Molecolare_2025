@@ -159,7 +159,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#bash" id="toc-bash" class="nav-link active" data-scroll-target="#bash">Bash</a>
+  <li><a href="#bash" id="toc-bash" class="nav-link active" data-scroll-target="#bash">Bash</a></li>
+  <li><a href="#apriamo-il-terminale" id="toc-apriamo-il-terminale" class="nav-link" data-scroll-target="#apriamo-il-terminale">Apriamo il terminale</a>
+  <ul class="collapse">
+  <li><a href="#capiamo-dove-ci-troviamo-nel-terminale" id="toc-capiamo-dove-ci-troviamo-nel-terminale" class="nav-link" data-scroll-target="#capiamo-dove-ci-troviamo-nel-terminale">Capiamo dove ci troviamo nel terminale</a></li>
+  <li><a href="#guardiamo-che-files-sono-presenti-nella-directory-in-cui-ci-troviamo" id="toc-guardiamo-che-files-sono-presenti-nella-directory-in-cui-ci-troviamo" class="nav-link" data-scroll-target="#guardiamo-che-files-sono-presenti-nella-directory-in-cui-ci-troviamo">Guardiamo che files sono presenti nella directory in cui ci troviamo:</a></li>
+  <li><a href="#entriamo-nella-cartella-esercizi_fastq-e-listiamo-i-file-presenti" id="toc-entriamo-nella-cartella-esercizi_fastq-e-listiamo-i-file-presenti" class="nav-link" data-scroll-target="#entriamo-nella-cartella-esercizi_fastq-e-listiamo-i-file-presenti">Entriamo nella cartella esercizi_fastq e listiamo i file presenti</a></li>
+  <li><a href="#creiamo-una-nuova-cartella" id="toc-creiamo-una-nuova-cartella" class="nav-link" data-scroll-target="#creiamo-una-nuova-cartella">Creiamo una nuova cartella</a></li>
+  <li><a href="#copiamo-un-file-fastq" id="toc-copiamo-un-file-fastq" class="nav-link" data-scroll-target="#copiamo-un-file-fastq">Copiamo un file fastq</a></li>
+  <li><a href="#rinominiamo-questo-file" id="toc-rinominiamo-questo-file" class="nav-link" data-scroll-target="#rinominiamo-questo-file">Rinominiamo questo file</a></li>
+  <li><a href="#spostiamolo-nella-cartella-prova_fastq-che-abbiamo-creato" id="toc-spostiamolo-nella-cartella-prova_fastq-che-abbiamo-creato" class="nav-link" data-scroll-target="#spostiamolo-nella-cartella-prova_fastq-che-abbiamo-creato">Spostiamolo nella cartella prova_fastq che abbiamo creato</a></li>
+  <li><a href="#torniamo-alla-directory-precedente" id="toc-torniamo-alla-directory-precedente" class="nav-link" data-scroll-target="#torniamo-alla-directory-precedente">Torniamo alla directory precedente</a></li>
+  <li><a href="#visualizziamo-le-prime-8-righe" id="toc-visualizziamo-le-prime-8-righe" class="nav-link" data-scroll-target="#visualizziamo-le-prime-8-righe">Visualizziamo le prime 8 righe</a></li>
+  <li><a href="#per-scorrere-il-file" id="toc-per-scorrere-il-file" class="nav-link" data-scroll-target="#per-scorrere-il-file">Per scorrere il file</a></li>
+  <li><a href="#contiamo-le-righe" id="toc-contiamo-le-righe" class="nav-link" data-scroll-target="#contiamo-le-righe">Contiamo le righe</a></li>
+  <li><a href="#contiamo-il-numero-di-reads" id="toc-contiamo-il-numero-di-reads" class="nav-link" data-scroll-target="#contiamo-il-numero-di-reads">Contiamo il numero di reads</a></li>
+  <li><a href="#cerchiamo-una-sequenza" id="toc-cerchiamo-una-sequenza" class="nav-link" data-scroll-target="#cerchiamo-una-sequenza">Cerchiamo una sequenza</a></li>
+  <li><a href="#contiamo-la-lunghezza-della-prima-read" id="toc-contiamo-la-lunghezza-della-prima-read" class="nav-link" data-scroll-target="#contiamo-la-lunghezza-della-prima-read">Contiamo la lunghezza della prima read:</a></li>
+  <li><a href="#calcoliamo-la-lunghezza-di-ogni-read" id="toc-calcoliamo-la-lunghezza-di-ogni-read" class="nav-link" data-scroll-target="#calcoliamo-la-lunghezza-di-ogni-read">Calcoliamo la lunghezza di ogni read</a></li>
+  <li><a href="#calcoliamo-la-lunghezza-media" id="toc-calcoliamo-la-lunghezza-media" class="nav-link" data-scroll-target="#calcoliamo-la-lunghezza-media">Calcoliamo la lunghezza media</a></li>
+  <li><a href="#rinominiamo-tutti-i-files-in-un-formato-più-semplice" id="toc-rinominiamo-tutti-i-files-in-un-formato-più-semplice" class="nav-link" data-scroll-target="#rinominiamo-tutti-i-files-in-un-formato-più-semplice">Rinominiamo tutti i files in un formato più semplice:</a></li>
+  <li><a href="#reindirizziamo-loutput" id="toc-reindirizziamo-loutput" class="nav-link" data-scroll-target="#reindirizziamo-loutput">Reindirizziamo l’output</a></li>
+  <li><a href="#apriamo-il-nuovo-file-con-un-editor-di-testo" id="toc-apriamo-il-nuovo-file-con-un-editor-di-testo" class="nav-link" data-scroll-target="#apriamo-il-nuovo-file-con-un-editor-di-testo">Apriamo il nuovo file con un editor di testo</a></li>
+  </ul></li>
+  <li><a href="#conda" id="toc-conda" class="nav-link" data-scroll-target="#conda">Conda</a>
   <ul class="collapse">
   <li><a href="#paths-files-and-directories" id="toc-paths-files-and-directories" class="nav-link" data-scroll-target="#paths-files-and-directories">Paths, files and directories</a></li>
   <li><a href="#edit-files" id="toc-edit-files" class="nav-link" data-scroll-target="#edit-files">Edit files</a></li>
@@ -175,25 +198,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#for-loop" id="toc-for-loop" class="nav-link" data-scroll-target="#for-loop">For loop</a></li>
   </ul></li>
   <li><a href="#bash-script" id="toc-bash-script" class="nav-link" data-scroll-target="#bash-script">Bash Script</a></li>
-  <li><a href="#conda" id="toc-conda" class="nav-link" data-scroll-target="#conda">Conda</a></li>
-  <li><a href="#esercizi" id="toc-esercizi" class="nav-link" data-scroll-target="#esercizi">Esercizi</a>
-  <ul class="collapse">
-  <li><a href="#listare-i-file" id="toc-listare-i-file" class="nav-link" data-scroll-target="#listare-i-file">1. Listare i file</a></li>
-  <li><a href="#visualizzare-le-prime-8-righe" id="toc-visualizzare-le-prime-8-righe" class="nav-link" data-scroll-target="#visualizzare-le-prime-8-righe">2. Visualizzare le prime 8 righe</a></li>
-  <li><a href="#scorrere-il-file" id="toc-scorrere-il-file" class="nav-link" data-scroll-target="#scorrere-il-file">3. Scorrere il file</a></li>
-  <li><a href="#contare-le-linee" id="toc-contare-le-linee" class="nav-link" data-scroll-target="#contare-le-linee">4. Contare le linee</a></li>
-  <li><a href="#numero-di-reads" id="toc-numero-di-reads" class="nav-link" data-scroll-target="#numero-di-reads">5. Numero di reads</a>
-  <ul class="collapse">
-  <li><a href="#alternativa" id="toc-alternativa" class="nav-link" data-scroll-target="#alternativa">Alternativa:</a></li>
-  </ul></li>
-  <li><a href="#lunghezza-della-prima-read" id="toc-lunghezza-della-prima-read" class="nav-link" data-scroll-target="#lunghezza-della-prima-read">6. Lunghezza della prima read</a></li>
-  <li><a href="#lunghezza-di-ogni-read" id="toc-lunghezza-di-ogni-read" class="nav-link" data-scroll-target="#lunghezza-di-ogni-read">7. Lunghezza di ogni read</a></li>
-  <li><a href="#lunghezza-media" id="toc-lunghezza-media" class="nav-link" data-scroll-target="#lunghezza-media">8. Lunghezza media</a></li>
-  <li><a href="#cercare-una-sequenza" id="toc-cercare-una-sequenza" class="nav-link" data-scroll-target="#cercare-una-sequenza">9. Cercare una sequenza</a></li>
-  <li><a href="#rinominare-file" id="toc-rinominare-file" class="nav-link" data-scroll-target="#rinominare-file">10. Rinominare file</a></li>
-  <li><a href="#aggiungere-un-prefisso-agli-header" id="toc-aggiungere-un-prefisso-agli-header" class="nav-link" data-scroll-target="#aggiungere-un-prefisso-agli-header">11. Aggiungere un prefisso agli header</a></li>
-  <li><a href="#reindirizzare-output" id="toc-reindirizzare-output" class="nav-link" data-scroll-target="#reindirizzare-output">12. Reindirizzare output</a></li>
-  </ul></li>
   </ul>
 </nav>
 </nav>
@@ -225,19 +229,127 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="bash" class="level1">
 <h1>Bash</h1>
+</section>
+<section id="apriamo-il-terminale" class="level1">
+<h1>Apriamo il terminale</h1>
+<section id="capiamo-dove-ci-troviamo-nel-terminale" class="level2">
+<h2 class="anchored" data-anchor-id="capiamo-dove-ci-troviamo-nel-terminale">Capiamo dove ci troviamo nel terminale</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="guardiamo-che-files-sono-presenti-nella-directory-in-cui-ci-troviamo" class="level2">
+<h2 class="anchored" data-anchor-id="guardiamo-che-files-sono-presenti-nella-directory-in-cui-ci-troviamo">Guardiamo che files sono presenti nella directory in cui ci troviamo:</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-ltrh</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">man</span> list</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="entriamo-nella-cartella-esercizi_fastq-e-listiamo-i-file-presenti" class="level2">
+<h2 class="anchored" data-anchor-id="entriamo-nella-cartella-esercizi_fastq-e-listiamo-i-file-presenti">Entriamo nella cartella esercizi_fastq e listiamo i file presenti</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> esercizi_fastq</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-ltrh</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="creiamo-una-nuova-cartella" class="level2">
+<h2 class="anchored" data-anchor-id="creiamo-una-nuova-cartella">Creiamo una nuova cartella</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> directory_prova_fastq</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="copiamo-un-file-fastq" class="level2">
+<h2 class="anchored" data-anchor-id="copiamo-un-file-fastq">Copiamo un file fastq</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> S1_10_L001_R1_001.fastq.gz primo_file.fastq</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="rinominiamo-questo-file" class="level2">
+<h2 class="anchored" data-anchor-id="rinominiamo-questo-file">Rinominiamo questo file</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> primo_file.fastq file_prova_fastq</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="spostiamolo-nella-cartella-prova_fastq-che-abbiamo-creato" class="level2">
+<h2 class="anchored" data-anchor-id="spostiamolo-nella-cartella-prova_fastq-che-abbiamo-creato">Spostiamolo nella cartella prova_fastq che abbiamo creato</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> file_prova_fastq /directory_prova_fastq</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="torniamo-alla-directory-precedente" class="level2">
+<h2 class="anchored" data-anchor-id="torniamo-alla-directory-precedente">Torniamo alla directory precedente</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ..</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="pp">*</span>.gz</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="visualizziamo-le-prime-8-righe" class="level2">
+<h2 class="anchored" data-anchor-id="visualizziamo-le-prime-8-righe">Visualizziamo le prime 8 righe</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zcat</span> S1_10_L001_R1_001.fastq.gz <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n</span> 8</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Oppure possiamo usare:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gunzip</span> <span class="at">-c</span> S1_10_L001_R1_001.fastq.gz <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n</span> 8</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="per-scorrere-il-file" class="level2">
+<h2 class="anchored" data-anchor-id="per-scorrere-il-file">Per scorrere il file</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zcat</span> S1_10_L001_R1_001.fastq.gz <span class="kw">|</span> <span class="fu">less</span> <span class="at">-S</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="contiamo-le-righe" class="level2">
+<h2 class="anchored" data-anchor-id="contiamo-le-righe">Contiamo le righe</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zcat</span> S1_10_L001_R1_001.fastq.gz <span class="kw">|</span> <span class="fu">wc</span> <span class="at">-l</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="contiamo-il-numero-di-reads" class="level2">
+<h2 class="anchored" data-anchor-id="contiamo-il-numero-di-reads">Contiamo il numero di reads</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zcat</span> test_S1_R1.fastq.gz <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-c</span> <span class="st">"^@"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Oppure possiamo usare:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="va">$((</span> <span class="va">$(</span><span class="fu">zcat</span> S1_10_L001_R1_001.fastq.gz <span class="kw">|</span> <span class="fu">wc</span> <span class="at">-l</span><span class="va">)</span> <span class="op">/</span> <span class="dv">4</span> <span class="va">))</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="cerchiamo-una-sequenza" class="level2">
+<h2 class="anchored" data-anchor-id="cerchiamo-una-sequenza">Cerchiamo una sequenza</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zcat</span> S1_10_L001_R1_001.fastq.gz <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-c</span> <span class="st">"ACGTACG"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="contiamo-la-lunghezza-della-prima-read" class="level2">
+<h2 class="anchored" data-anchor-id="contiamo-la-lunghezza-della-prima-read">Contiamo la lunghezza della prima read:</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zcat</span> S1_10_L001_R1_001.fastq.gz <span class="kw">|</span> <span class="fu">sed</span> <span class="at">-n</span> <span class="st">'2p'</span> <span class="kw">|</span> <span class="fu">awk</span> <span class="st">'{print length}'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Oppure:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="va">seq</span><span class="op">=</span><span class="va">$(</span><span class="fu">zcat</span> S1_10_L001_R1_001.fastq.gz <span class="kw">|</span> <span class="fu">sed</span> <span class="at">-n</span> <span class="st">'2p'</span><span class="va">)</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="va">${</span><span class="op">#</span><span class="va">seq}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="calcoliamo-la-lunghezza-di-ogni-read" class="level2">
+<h2 class="anchored" data-anchor-id="calcoliamo-la-lunghezza-di-ogni-read">Calcoliamo la lunghezza di ogni read</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zcat</span> S1_10_L001_R1_001.fastq.gz <span class="kw">|</span> <span class="fu">awk</span> <span class="st">'NR%4==2 {print length}'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="calcoliamo-la-lunghezza-media" class="level2">
+<h2 class="anchored" data-anchor-id="calcoliamo-la-lunghezza-media">Calcoliamo la lunghezza media</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zcat</span> S1_10_L001_R1_001.fastq.gz  <span class="kw">|</span> <span class="fu">awk</span> <span class="st">'NR%4==2 { total+=length; n++ } END { print total/n }'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="rinominiamo-tutti-i-files-in-un-formato-più-semplice" class="level2">
+<h2 class="anchored" data-anchor-id="rinominiamo-tutti-i-files-in-un-formato-più-semplice">Rinominiamo tutti i files in un formato più semplice:</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> f <span class="kw">in</span> <span class="pp">*</span>.fastq.gz</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="cf">do</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">sample</span><span class="op">=</span><span class="va">$(</span><span class="bu">echo</span> <span class="st">"</span><span class="va">$f</span><span class="st">"</span> <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-d</span><span class="st">'_'</span> <span class="at">-f1</span><span class="va">)</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">read</span><span class="op">=</span><span class="va">$(</span><span class="bu">echo</span> <span class="st">"</span><span class="va">$f</span><span class="st">"</span> <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-d</span><span class="st">'_'</span> <span class="at">-f4</span><span class="va">)</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mv</span> <span class="st">"</span><span class="va">$f</span><span class="st">"</span> <span class="st">"</span><span class="va">${sample}</span><span class="st">_</span><span class="va">${read}</span><span class="st">.fastq.gz"</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="reindirizziamo-loutput" class="level2">
+<h2 class="anchored" data-anchor-id="reindirizziamo-loutput">Reindirizziamo l’output</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zcat</span> S1_R1.fastq.gz <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n</span> 20 <span class="op">&gt;</span> subset_S1_R1.fastq</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="apriamo-il-nuovo-file-con-un-editor-di-testo" class="level2">
+<h2 class="anchored" data-anchor-id="apriamo-il-nuovo-file-con-un-editor-di-testo">Apriamo il nuovo file con un editor di testo</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nano</span> subset_S1_R1.fastq</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+<section id="conda" class="level1">
+<h1>Conda</h1>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> init bash</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> env list</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate myenv</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> list</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> deactivate</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> create <span class="at">--name</span> envname</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> install <span class="at">-c</span> conda-forge package</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> create <span class="at">--name</span> envname <span class="at">-c</span> conda-forge package</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
 <section id="paths-files-and-directories" class="level2">
 <h2 class="anchored" data-anchor-id="paths-files-and-directories">Paths, files and directories</h2>
 <p>Open linux or mac terminal</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span> <span class="co">#print working directory</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="co">#change directory (relative or absolute path)</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> .. <span class="co"># bring you back one directory up</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~ <span class="co">#cd home</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="co">#print list of elements in directory</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-lh</span> <span class="co"># print sizes in human readable format</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">man</span> list <span class="co"># (or any command, gives the manual for that command)</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="bu">history</span> <span class="co">#display last commands</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="pp">*</span>.fasta <span class="co">#list all fasta files</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> newfoldername <span class="co">#make new directory</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span> <span class="co">#print working directory</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="co">#change directory (relative or absolute path)</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> .. <span class="co"># bring you back one directory up</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~ <span class="co">#cd home</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="co">#print list of elements in directory</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-lh</span> <span class="co"># print sizes in human readable format</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="fu">man</span> list <span class="co"># (or any command, gives the manual for that command)</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="bu">history</span> <span class="co">#display last commands</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="pp">*</span>.fasta <span class="co">#list all fasta files</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> newfoldername <span class="co">#make new directory</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
 </section>
 <section id="edit-files" class="level2">
 <h2 class="anchored" data-anchor-id="edit-files">Edit files</h2>
@@ -249,21 +361,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
 <li>Ctrl+W to search</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> filename pathwheretocopy</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> filename pathwheretocopy</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> filename new_filename</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">less</span> filename</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> filename</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> filename</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span> filename</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> <span class="at">-n5</span> filename</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> filename</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> <span class="at">-l</span> filename</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> file</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> <span class="pp">*</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="at">-r</span> foldername</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> foldername pathwheretomove</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> <span class="at">-r</span> foldername</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> filename pathwheretocopy</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> filename pathwheretocopy</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> filename new_filename</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="fu">less</span> filename</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> filename</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> filename</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span> filename</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> <span class="at">-n5</span> filename</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> filename</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> <span class="at">-l</span> filename</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> file</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> <span class="pp">*</span></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="at">-r</span> foldername</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> foldername pathwheretomove</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> <span class="at">-r</span> foldername</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <blockquote class="blockquote">
 <p><strong>TIP:</strong> Be VERY careful with <code>rm</code>: once removed, files cannot be restored.<br>
 Remember: Bash is case sensitive.</p>
@@ -272,26 +384,26 @@ Remember: Bash is case sensitive.</p>
 </section>
 <section id="merge-and-sort-files" class="level2">
 <h2 class="anchored" data-anchor-id="merge-and-sort-files">Merge and sort files</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> file1 file2 file3 …</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> file1 file2 file3 <span class="op">&gt;</span> merged_file</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span> file</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span> <span class="at">-h</span> file</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span> <span class="at">-k1,1</span> <span class="at">-k2,2n</span> file</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span> <span class="at">-k1,1</span> <span class="at">-k2,2nr</span> file</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">paste</span> file1 file2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> file1 file2 file3 …</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> file1 file2 file3 <span class="op">&gt;</span> merged_file</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span> file</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span> <span class="at">-h</span> file</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span> <span class="at">-k1,1</span> <span class="at">-k2,2n</span> file</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span> <span class="at">-k1,1</span> <span class="at">-k2,2nr</span> file</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="fu">paste</span> file1 file2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
 <section id="grep" class="level2">
 <h2 class="anchored" data-anchor-id="grep">Grep</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="st">"word"</span> file</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-w</span> <span class="st">"word"</span> file</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-v</span> <span class="st">"word"</span> file</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-i</span> <span class="st">"word"</span> file</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> <span class="st">"word"</span> file</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-A10</span> <span class="st">"word"</span> file</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-B10</span> <span class="st">"word"</span> file</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-C10</span> <span class="st">"word"</span> file</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="st">"Locus10[12]"</span> file</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="st">"word"</span> file</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-w</span> <span class="st">"word"</span> file</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-v</span> <span class="st">"word"</span> file</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-i</span> <span class="st">"word"</span> file</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> <span class="st">"word"</span> file</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-A10</span> <span class="st">"word"</span> file</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-B10</span> <span class="st">"word"</span> file</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-C10</span> <span class="st">"word"</span> file</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="st">"Locus10[12]"</span> file</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <section id="special-characters" class="level3">
 <h3 class="anchored" data-anchor-id="special-characters">Special characters</h3>
 <ul>
@@ -306,46 +418,46 @@ Remember: Bash is case sensitive.</p>
 </section>
 <section id="awk" class="level2">
 <h2 class="anchored" data-anchor-id="awk">Awk</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="st">'{print $1}'</span> file</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="st">'{print $0}'</span> file</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="st">'{print $NF}'</span> file</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="st">'{print $4" "$1}'</span> file</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="at">-F</span><span class="st">";"</span> <span class="st">'{print $3,$4}'</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="st">'$1==$2 {print}'</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="st">'$1 ~ /chr1/ &amp;&amp; $3-$2&gt;10 {print}'</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="st">'{if ($1~"&gt;") print $0; else print length}'</span> fasta_file</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="st">'{print $1}'</span> file</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="st">'{print $0}'</span> file</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="st">'{print $NF}'</span> file</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="st">'{print $4" "$1}'</span> file</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="at">-F</span><span class="st">";"</span> <span class="st">'{print $3,$4}'</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="st">'$1==$2 {print}'</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="st">'$1 ~ /chr1/ &amp;&amp; $3-$2&gt;10 {print}'</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="st">'{if ($1~"&gt;") print $0; else print length}'</span> fasta_file</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
 <section id="sed" class="level2">
 <h2 class="anchored" data-anchor-id="sed">Sed</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="st">'s/Locus/Transcript/'</span> file</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="st">'s/Locus/Transcript/g'</span> file</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="at">-i</span> <span class="st">'s/Locus/Transcript/g'</span> file</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="st">'/Locus/d'</span> file</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="st">'s/Locus/Transcript/'</span> file</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="st">'s/Locus/Transcript/g'</span> file</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="at">-i</span> <span class="st">'s/Locus/Transcript/g'</span> file</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="st">'/Locus/d'</span> file</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
 <section id="pipe" class="level2">
 <h2 class="anchored" data-anchor-id="pipe">Pipe <code>|</code></h2>
 <p>The pipe sends the output of one program as input to the next.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="st">"word"</span> file1 <span class="kw">|</span> <span class="fu">sed</span> <span class="st">'s/ /   /g'</span> <span class="kw">|</span> <span class="ex">program1</span> <span class="op">&gt;</span> file2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="st">"word"</span> file1 <span class="kw">|</span> <span class="fu">sed</span> <span class="st">'s/ /   /g'</span> <span class="kw">|</span> <span class="ex">program1</span> <span class="op">&gt;</span> file2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
 <section id="variables" class="level2">
 <h2 class="anchored" data-anchor-id="variables">Variables</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="va">var1</span><span class="op">=</span><span class="st">"ciao"</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="va">$var1</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"</span><span class="va">$var1</span><span class="st">"</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">'$var1'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="va">var1</span><span class="op">=</span><span class="st">"ciao"</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="va">$var1</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"</span><span class="va">$var1</span><span class="st">"</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">'$var1'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
 <section id="for-loop" class="level2">
 <h2 class="anchored" data-anchor-id="for-loop">For loop</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="pp">*</span>.fasta<span class="kw">;</span> <span class="cf">do</span> <span class="bu">echo</span> <span class="va">$i</span><span class="kw">;</span> <span class="cf">done</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="pp">*</span>.fasta<span class="kw">;</span> <span class="cf">do</span> <span class="fu">mv</span> <span class="st">"</span><span class="va">$i</span><span class="st">"</span> <span class="st">"</span><span class="va">${i}</span><span class="st">_filtered"</span><span class="kw">;</span> <span class="cf">done</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="pp">*</span>fastq<span class="kw">;</span> <span class="cf">do</span> <span class="fu">sed</span> <span class="st">'s/@/&gt;/'</span> <span class="st">"</span><span class="va">$i</span><span class="st">"</span> <span class="op">&gt;</span> <span class="st">"</span><span class="va">${i}</span><span class="st">_editname"</span><span class="kw">;</span> <span class="cf">done</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="pp">*</span>fasta<span class="kw">;</span> <span class="cf">do</span> <span class="fu">grep</span> <span class="at">-c</span> <span class="st">"&gt;"</span> <span class="st">"</span><span class="va">$i</span><span class="st">"</span><span class="kw">;</span> <span class="cf">done</span> <span class="op">&gt;</span> counts</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="pp">*</span>fasta<span class="kw">;</span> <span class="cf">do</span> <span class="ex">program1</span> <span class="st">"</span><span class="va">$i</span><span class="st">"</span> <span class="op">&gt;</span> <span class="st">"output_</span><span class="va">$i</span><span class="st">"</span><span class="kw">;</span> <span class="cf">done</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="pp">*</span>/ <span class="kw">;</span> <span class="cf">do</span> <span class="bu">cd</span> <span class="st">"</span><span class="va">$i</span><span class="st">"</span><span class="kw">;</span> <span class="fu">cp</span> <span class="pp">*</span>.fasta ../<span class="kw">;</span> <span class="bu">cd</span> ..<span class="kw">;</span> <span class="cf">done</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="pp">*</span>.fasta<span class="kw">;</span> <span class="cf">do</span> <span class="bu">echo</span> <span class="va">$i</span><span class="kw">;</span> <span class="cf">done</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="pp">*</span>.fasta<span class="kw">;</span> <span class="cf">do</span> <span class="fu">mv</span> <span class="st">"</span><span class="va">$i</span><span class="st">"</span> <span class="st">"</span><span class="va">${i}</span><span class="st">_filtered"</span><span class="kw">;</span> <span class="cf">done</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="pp">*</span>fastq<span class="kw">;</span> <span class="cf">do</span> <span class="fu">sed</span> <span class="st">'s/@/&gt;/'</span> <span class="st">"</span><span class="va">$i</span><span class="st">"</span> <span class="op">&gt;</span> <span class="st">"</span><span class="va">${i}</span><span class="st">_editname"</span><span class="kw">;</span> <span class="cf">done</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="pp">*</span>fasta<span class="kw">;</span> <span class="cf">do</span> <span class="fu">grep</span> <span class="at">-c</span> <span class="st">"&gt;"</span> <span class="st">"</span><span class="va">$i</span><span class="st">"</span><span class="kw">;</span> <span class="cf">done</span> <span class="op">&gt;</span> counts</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="pp">*</span>fasta<span class="kw">;</span> <span class="cf">do</span> <span class="ex">program1</span> <span class="st">"</span><span class="va">$i</span><span class="st">"</span> <span class="op">&gt;</span> <span class="st">"output_</span><span class="va">$i</span><span class="st">"</span><span class="kw">;</span> <span class="cf">done</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="pp">*</span>/ <span class="kw">;</span> <span class="cf">do</span> <span class="bu">cd</span> <span class="st">"</span><span class="va">$i</span><span class="st">"</span><span class="kw">;</span> <span class="fu">cp</span> <span class="pp">*</span>.fasta ../<span class="kw">;</span> <span class="bu">cd</span> ..<span class="kw">;</span> <span class="cf">done</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
 </section>
@@ -353,103 +465,27 @@ Remember: Bash is case sensitive.</p>
 <h1>Bash Script</h1>
 <p>Bash scripts end with <code>.sh</code>.</p>
 <p>Create a script:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nano</span> get_reads_from_list.sh</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nano</span> get_reads_from_list.sh</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Content:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Retrieve FASTQ reads from a list of read IDs</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># $1 = list of read IDs</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># $2 = FASTQ file (.fastq.gz)</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="va">list</span><span class="op">=</span><span class="st">"</span><span class="va">$1</span><span class="st">"</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="va">fastq</span><span class="op">=</span><span class="st">"</span><span class="va">$2</span><span class="st">"</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="bu">read</span> <span class="va">id</span><span class="kw">;</span> <span class="cf">do</span></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">zcat</span> <span class="st">"</span><span class="va">$fastq</span><span class="st">"</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-A3</span> <span class="at">-w</span> <span class="st">"^</span><span class="va">$id</span><span class="st">"</span></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span> <span class="op">&lt;</span> <span class="st">"</span><span class="va">$list</span><span class="st">"</span> <span class="op">&gt;</span> <span class="st">"</span><span class="va">${list}</span><span class="st">.fastq"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Retrieve FASTQ reads from a list of read IDs</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="co"># $1 = list of read IDs</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="co"># $2 = FASTQ file (.fastq.gz)</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="va">list</span><span class="op">=</span><span class="st">"</span><span class="va">$1</span><span class="st">"</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="va">fastq</span><span class="op">=</span><span class="st">"</span><span class="va">$2</span><span class="st">"</span></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="bu">read</span> <span class="va">id</span><span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">zcat</span> <span class="st">"</span><span class="va">$fastq</span><span class="st">"</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-A3</span> <span class="at">-w</span> <span class="st">"^</span><span class="va">$id</span><span class="st">"</span></span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span> <span class="op">&lt;</span> <span class="st">"</span><span class="va">$list</span><span class="st">"</span> <span class="op">&gt;</span> <span class="st">"</span><span class="va">${list}</span><span class="st">.fastq"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Make executable:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> +x get_reads_from_list.sh</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> +x get_reads_from_list.sh</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Run:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> get_reads_from_list.sh list_ids S1_10_L001_R1_001.fastq.gz</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> list_ids.fastq</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<hr>
-</section>
-<section id="conda" class="level1">
-<h1>Conda</h1>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> init bash</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> env list</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate myenv</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> list</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> deactivate</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> create <span class="at">--name</span> envname</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> install <span class="at">-c</span> conda-forge package</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> create <span class="at">--name</span> envname <span class="at">-c</span> conda-forge package</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<hr>
-</section>
-<section id="esercizi" class="level1">
-<h1>Esercizi</h1>
-<section id="listare-i-file" class="level2">
-<h2 class="anchored" data-anchor-id="listare-i-file">1. Listare i file</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-l</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="visualizzare-le-prime-8-righe" class="level2">
-<h2 class="anchored" data-anchor-id="visualizzare-le-prime-8-righe">2. Visualizzare le prime 8 righe</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zcat</span> S1_10_L001_R1_001.fastq.gz <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n</span> 8</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="scorrere-il-file" class="level2">
-<h2 class="anchored" data-anchor-id="scorrere-il-file">3. Scorrere il file</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zcat</span> S1_10_L001_R1_001.fastq.gz <span class="kw">|</span> <span class="fu">less</span> <span class="at">-S</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="contare-le-linee" class="level2">
-<h2 class="anchored" data-anchor-id="contare-le-linee">4. Contare le linee</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zcat</span> S1_10_L001_R1_001.fastq.gz <span class="kw">|</span> <span class="fu">wc</span> <span class="at">-l</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="numero-di-reads" class="level2">
-<h2 class="anchored" data-anchor-id="numero-di-reads">5. Numero di reads</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="va">$((</span> <span class="va">$(</span><span class="fu">zcat</span> S1_10_L001_R1_001.fastq.gz <span class="kw">|</span> <span class="fu">wc</span> <span class="at">-l</span><span class="va">)</span> <span class="op">/</span> <span class="dv">4</span> <span class="va">))</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<section id="alternativa" class="level3">
-<h3 class="anchored" data-anchor-id="alternativa">Alternativa:</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zcat</span> test_S1_R1.fastq.gz <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-c</span> <span class="st">"^@"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-</section>
-<section id="lunghezza-della-prima-read" class="level2">
-<h2 class="anchored" data-anchor-id="lunghezza-della-prima-read">6. Lunghezza della prima read</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zcat</span> S1_10_L001_R1_001.fastq.gz <span class="kw">|</span> <span class="fu">sed</span> <span class="at">-n</span> <span class="st">'2p'</span> <span class="kw">|</span> <span class="fu">awk</span> <span class="st">'{print length}'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Oppure:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="va">seq</span><span class="op">=</span><span class="va">$(</span><span class="fu">zcat</span> S1_10_L001_R1_001.fastq.gz <span class="kw">|</span> <span class="fu">sed</span> <span class="at">-n</span> <span class="st">'2p'</span><span class="va">)</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="va">${</span><span class="op">#</span><span class="va">seq}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="lunghezza-di-ogni-read" class="level2">
-<h2 class="anchored" data-anchor-id="lunghezza-di-ogni-read">7. Lunghezza di ogni read</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zcat</span> S1_10_L001_R1_001.fastq.gz <span class="kw">|</span> <span class="fu">awk</span> <span class="st">'NR%4==2 {print length}'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="lunghezza-media" class="level2">
-<h2 class="anchored" data-anchor-id="lunghezza-media">8. Lunghezza media</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zcat</span> S1_10_L001_R1_001.fastq.gz  <span class="kw">|</span> <span class="fu">awk</span> <span class="st">'NR%4==2 { total+=length; n++ } END { print total/n }'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="cercare-una-sequenza" class="level2">
-<h2 class="anchored" data-anchor-id="cercare-una-sequenza">9. Cercare una sequenza</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zcat</span> S1_10_L001_R1_001.fastq.gz <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-c</span> <span class="st">"ACGTACG"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="rinominare-file" class="level2">
-<h2 class="anchored" data-anchor-id="rinominare-file">10. Rinominare file</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> f <span class="kw">in</span> <span class="pp">*</span>.fastq.gz<span class="kw">;</span> <span class="cf">do</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">sample</span><span class="op">=</span><span class="va">$(</span><span class="bu">echo</span> <span class="st">"</span><span class="va">$f</span><span class="st">"</span> <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-d</span><span class="st">'_'</span> <span class="at">-f1</span><span class="va">)</span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">read</span><span class="op">=</span><span class="va">$(</span><span class="bu">echo</span> <span class="st">"</span><span class="va">$f</span><span class="st">"</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-o</span> <span class="st">"R[12]"</span><span class="va">)</span></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">new</span><span class="op">=</span><span class="st">"test_</span><span class="va">${sample}</span><span class="st">_</span><span class="va">${read}</span><span class="st">.fastq.gz"</span></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mv</span> <span class="st">"</span><span class="va">$f</span><span class="st">"</span> <span class="st">"</span><span class="va">$new</span><span class="st">"</span></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="aggiungere-un-prefisso-agli-header" class="level2">
-<h2 class="anchored" data-anchor-id="aggiungere-un-prefisso-agli-header">11. Aggiungere un prefisso agli header</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zcat</span> S1_R1.fastq.gz  <span class="kw">|</span> <span class="fu">awk</span> <span class="st">'NR%4==1{print "@S1_" substr($0,2)} NR%4!=1{print}'</span>  <span class="kw">|</span> <span class="fu">gzip</span> <span class="op">&gt;</span> S1_R1_renamed.fastq.gz</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="reindirizzare-output" class="level2">
-<h2 class="anchored" data-anchor-id="reindirizzare-output">12. Reindirizzare output</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zcat</span> S1_R1.fastq.gz <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n</span> 20 <span class="op">&gt;</span> subset_S1_R1.fastq</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> get_reads_from_list.sh list_ids S1_10_L001_R1_001.fastq.gz</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> list_ids.fastq</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

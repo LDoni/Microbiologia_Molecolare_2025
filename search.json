@@ -140,158 +140,200 @@
     "text": "Benvenuti\nQuesto sito contiene il materiale del laboratorio di Microbiologia Molecolare 2025.\nLe diverse parti del laboratorio sono organizzate in 4 pagine principali:\n\nIntro BASH - comandi di base della shell e lavoro da terminale.\nAmpWrap - pretrattamento delle raw reads con il workflow AmpWrap per il metabarcoding 16S rRNA gene.\nIntro R - primi passi in R e RStudio.\nAnalisi biostatistica - analisi biostatistica di dati di metabarcoding (progetto SEA4BLUE).\n\nUsate la barra di navigazione in alto per spostarvi tra le varie sezioni durante la lezione."
   },
   {
-    "objectID": "bash_intro.html",
-    "href": "bash_intro.html",
+    "objectID": "bash_intro.html#capiamo-dove-ci-troviamo-nel-terminale",
+    "href": "bash_intro.html#capiamo-dove-ci-troviamo-nel-terminale",
     "title": "BASH per Bioinformatica",
-    "section": "",
-    "text": "Open linux or mac terminal\npwd #print working directory\ncd #change directory (relative or absolute path)\ncd .. # bring you back one directory up\ncd ~ #cd home\nls #print list of elements in directory\nls -lh # print sizes in human readable format\nman list # (or any command, gives the manual for that command)\nhistory #display last commands\nls *.fasta #list all fasta files\nmkdir newfoldername #make new directory\n\n\n\nnano nomefile #create new empty file\n\nCtrl+S to save\n\nCtrl+X to exit\n\nCtrl+W to search\n\ncp filename pathwheretocopy\nmv filename pathwheretocopy\nmv filename new_filename\nless filename\ncat filename\nhead filename\ntail filename\nhead -n5 filename\nwc filename\nwc -l filename\nrm file\nrm *\ncp -r foldername\nmv foldername pathwheretomove\nrm -r foldername\n\nTIP: Be VERY careful with rm: once removed, files cannot be restored.\nRemember: Bash is case sensitive.\n\n\n\n\n\ncat file1 file2 file3 …\ncat file1 file2 file3 &gt; merged_file\nsort file\nsort -h file\nsort -k1,1 -k2,2n file\nsort -k1,1 -k2,2nr file\npaste file1 file2\n\n\n\n\ngrep \"word\" file\ngrep -w \"word\" file\ngrep -v \"word\" file\ngrep -i \"word\" file\ngrep -c \"word\" file\ngrep -A10 \"word\" file\ngrep -B10 \"word\" file\ngrep -C10 \"word\" file\ngrep \"Locus10[12]\" file\n\n\n\n^ beginning of line → grep \"^&gt;\" file\n$ end of line → grep \"&gt;$\" file\n\n\nRegular expressions match text patterns.\n\n\n\n\n\n\nawk '{print $1}' file\nawk '{print $0}' file\nawk '{print $NF}' file\nawk '{print $4\" \"$1}' file\nawk -F\";\" '{print $3,$4}'\nawk '$1==$2 {print}'\nawk '$1 ~ /chr1/ && $3-$2&gt;10 {print}'\nawk '{if ($1~\"&gt;\") print $0; else print length}' fasta_file\n\n\n\n\nsed 's/Locus/Transcript/' file\nsed 's/Locus/Transcript/g' file\nsed -i 's/Locus/Transcript/g' file\nsed '/Locus/d' file\n\n\n\n\nThe pipe sends the output of one program as input to the next.\ngrep \"word\" file1 | sed 's/ /   /g' | program1 &gt; file2\n\n\n\n\nvar1=\"ciao\"\necho $var1\necho \"$var1\"\necho '$var1'\n\n\n\n\nfor i in *.fasta; do echo $i; done\nfor i in *.fasta; do mv \"$i\" \"${i}_filtered\"; done\nfor i in *fastq; do sed 's/@/&gt;/' \"$i\" &gt; \"${i}_editname\"; done\nfor i in *fasta; do grep -c \"&gt;\" \"$i\"; done &gt; counts\nfor i in *fasta; do program1 \"$i\" &gt; \"output_$i\"; done\nfor i in */ ; do cd \"$i\"; cp *.fasta ../; cd ..; done"
+    "section": "Capiamo dove ci troviamo nel terminale",
+    "text": "Capiamo dove ci troviamo nel terminale\npwd"
+  },
+  {
+    "objectID": "bash_intro.html#guardiamo-che-files-sono-presenti-nella-directory-in-cui-ci-troviamo",
+    "href": "bash_intro.html#guardiamo-che-files-sono-presenti-nella-directory-in-cui-ci-troviamo",
+    "title": "BASH per Bioinformatica",
+    "section": "Guardiamo che files sono presenti nella directory in cui ci troviamo:",
+    "text": "Guardiamo che files sono presenti nella directory in cui ci troviamo:\nls\nls -ltrh\nman list"
+  },
+  {
+    "objectID": "bash_intro.html#entriamo-nella-cartella-esercizi_fastq-e-listiamo-i-file-presenti",
+    "href": "bash_intro.html#entriamo-nella-cartella-esercizi_fastq-e-listiamo-i-file-presenti",
+    "title": "BASH per Bioinformatica",
+    "section": "Entriamo nella cartella esercizi_fastq e listiamo i file presenti",
+    "text": "Entriamo nella cartella esercizi_fastq e listiamo i file presenti\ncd esercizi_fastq\nls -ltrh"
+  },
+  {
+    "objectID": "bash_intro.html#creiamo-una-nuova-cartella",
+    "href": "bash_intro.html#creiamo-una-nuova-cartella",
+    "title": "BASH per Bioinformatica",
+    "section": "Creiamo una nuova cartella",
+    "text": "Creiamo una nuova cartella\nmkdir directory_prova_fastq"
+  },
+  {
+    "objectID": "bash_intro.html#copiamo-un-file-fastq",
+    "href": "bash_intro.html#copiamo-un-file-fastq",
+    "title": "BASH per Bioinformatica",
+    "section": "Copiamo un file fastq",
+    "text": "Copiamo un file fastq\ncp S1_10_L001_R1_001.fastq.gz primo_file.fastq"
+  },
+  {
+    "objectID": "bash_intro.html#rinominiamo-questo-file",
+    "href": "bash_intro.html#rinominiamo-questo-file",
+    "title": "BASH per Bioinformatica",
+    "section": "Rinominiamo questo file",
+    "text": "Rinominiamo questo file\nmv primo_file.fastq file_prova_fastq"
+  },
+  {
+    "objectID": "bash_intro.html#spostiamolo-nella-cartella-prova_fastq-che-abbiamo-creato",
+    "href": "bash_intro.html#spostiamolo-nella-cartella-prova_fastq-che-abbiamo-creato",
+    "title": "BASH per Bioinformatica",
+    "section": "Spostiamolo nella cartella prova_fastq che abbiamo creato",
+    "text": "Spostiamolo nella cartella prova_fastq che abbiamo creato\nmv file_prova_fastq /directory_prova_fastq"
+  },
+  {
+    "objectID": "bash_intro.html#torniamo-alla-directory-precedente",
+    "href": "bash_intro.html#torniamo-alla-directory-precedente",
+    "title": "BASH per Bioinformatica",
+    "section": "Torniamo alla directory precedente",
+    "text": "Torniamo alla directory precedente\ncd ..\nls *.gz"
+  },
+  {
+    "objectID": "bash_intro.html#visualizziamo-le-prime-8-righe",
+    "href": "bash_intro.html#visualizziamo-le-prime-8-righe",
+    "title": "BASH per Bioinformatica",
+    "section": "Visualizziamo le prime 8 righe",
+    "text": "Visualizziamo le prime 8 righe\nzcat S1_10_L001_R1_001.fastq.gz | head -n 8\nOppure possiamo usare:\ngunzip -c S1_10_L001_R1_001.fastq.gz | head -n 8"
+  },
+  {
+    "objectID": "bash_intro.html#per-scorrere-il-file",
+    "href": "bash_intro.html#per-scorrere-il-file",
+    "title": "BASH per Bioinformatica",
+    "section": "Per scorrere il file",
+    "text": "Per scorrere il file\nzcat S1_10_L001_R1_001.fastq.gz | less -S"
+  },
+  {
+    "objectID": "bash_intro.html#contiamo-le-righe",
+    "href": "bash_intro.html#contiamo-le-righe",
+    "title": "BASH per Bioinformatica",
+    "section": "Contiamo le righe",
+    "text": "Contiamo le righe\nzcat S1_10_L001_R1_001.fastq.gz | wc -l"
+  },
+  {
+    "objectID": "bash_intro.html#contiamo-il-numero-di-reads",
+    "href": "bash_intro.html#contiamo-il-numero-di-reads",
+    "title": "BASH per Bioinformatica",
+    "section": "Contiamo il numero di reads",
+    "text": "Contiamo il numero di reads\nzcat test_S1_R1.fastq.gz | grep -c \"^@\"\nOppure possiamo usare:\necho $(( $(zcat S1_10_L001_R1_001.fastq.gz | wc -l) / 4 ))"
+  },
+  {
+    "objectID": "bash_intro.html#cerchiamo-una-sequenza",
+    "href": "bash_intro.html#cerchiamo-una-sequenza",
+    "title": "BASH per Bioinformatica",
+    "section": "Cerchiamo una sequenza",
+    "text": "Cerchiamo una sequenza\nzcat S1_10_L001_R1_001.fastq.gz | grep -c \"ACGTACG\""
+  },
+  {
+    "objectID": "bash_intro.html#contiamo-la-lunghezza-della-prima-read",
+    "href": "bash_intro.html#contiamo-la-lunghezza-della-prima-read",
+    "title": "BASH per Bioinformatica",
+    "section": "Contiamo la lunghezza della prima read:",
+    "text": "Contiamo la lunghezza della prima read:\nzcat S1_10_L001_R1_001.fastq.gz | sed -n '2p' | awk '{print length}'\nOppure:\nseq=$(zcat S1_10_L001_R1_001.fastq.gz | sed -n '2p')\necho ${#seq}"
+  },
+  {
+    "objectID": "bash_intro.html#calcoliamo-la-lunghezza-di-ogni-read",
+    "href": "bash_intro.html#calcoliamo-la-lunghezza-di-ogni-read",
+    "title": "BASH per Bioinformatica",
+    "section": "Calcoliamo la lunghezza di ogni read",
+    "text": "Calcoliamo la lunghezza di ogni read\nzcat S1_10_L001_R1_001.fastq.gz | awk 'NR%4==2 {print length}'"
+  },
+  {
+    "objectID": "bash_intro.html#calcoliamo-la-lunghezza-media",
+    "href": "bash_intro.html#calcoliamo-la-lunghezza-media",
+    "title": "BASH per Bioinformatica",
+    "section": "Calcoliamo la lunghezza media",
+    "text": "Calcoliamo la lunghezza media\nzcat S1_10_L001_R1_001.fastq.gz  | awk 'NR%4==2 { total+=length; n++ } END { print total/n }'"
+  },
+  {
+    "objectID": "bash_intro.html#rinominiamo-tutti-i-files-in-un-formato-più-semplice",
+    "href": "bash_intro.html#rinominiamo-tutti-i-files-in-un-formato-più-semplice",
+    "title": "BASH per Bioinformatica",
+    "section": "Rinominiamo tutti i files in un formato più semplice:",
+    "text": "Rinominiamo tutti i files in un formato più semplice:\nfor f in *.fastq.gz\ndo\n    sample=$(echo \"$f\" | cut -d'_' -f1)\n    read=$(echo \"$f\" | cut -d'_' -f4)\n    mv \"$f\" \"${sample}_${read}.fastq.gz\"\ndone"
+  },
+  {
+    "objectID": "bash_intro.html#reindirizziamo-loutput",
+    "href": "bash_intro.html#reindirizziamo-loutput",
+    "title": "BASH per Bioinformatica",
+    "section": "Reindirizziamo l’output",
+    "text": "Reindirizziamo l’output\nzcat S1_R1.fastq.gz | head -n 20 &gt; subset_S1_R1.fastq"
+  },
+  {
+    "objectID": "bash_intro.html#apriamo-il-nuovo-file-con-un-editor-di-testo",
+    "href": "bash_intro.html#apriamo-il-nuovo-file-con-un-editor-di-testo",
+    "title": "BASH per Bioinformatica",
+    "section": "Apriamo il nuovo file con un editor di testo",
+    "text": "Apriamo il nuovo file con un editor di testo\nnano subset_S1_R1.fastq"
   },
   {
     "objectID": "bash_intro.html#paths-files-and-directories",
     "href": "bash_intro.html#paths-files-and-directories",
     "title": "BASH per Bioinformatica",
-    "section": "",
-    "text": "Open linux or mac terminal\npwd #print working directory\ncd #change directory (relative or absolute path)\ncd .. # bring you back one directory up\ncd ~ #cd home\nls #print list of elements in directory\nls -lh # print sizes in human readable format\nman list # (or any command, gives the manual for that command)\nhistory #display last commands\nls *.fasta #list all fasta files\nmkdir newfoldername #make new directory"
+    "section": "Paths, files and directories",
+    "text": "Paths, files and directories\nOpen linux or mac terminal\npwd #print working directory\ncd #change directory (relative or absolute path)\ncd .. # bring you back one directory up\ncd ~ #cd home\nls #print list of elements in directory\nls -lh # print sizes in human readable format\nman list # (or any command, gives the manual for that command)\nhistory #display last commands\nls *.fasta #list all fasta files\nmkdir newfoldername #make new directory"
   },
   {
     "objectID": "bash_intro.html#edit-files",
     "href": "bash_intro.html#edit-files",
     "title": "BASH per Bioinformatica",
-    "section": "",
-    "text": "nano nomefile #create new empty file\n\nCtrl+S to save\n\nCtrl+X to exit\n\nCtrl+W to search\n\ncp filename pathwheretocopy\nmv filename pathwheretocopy\nmv filename new_filename\nless filename\ncat filename\nhead filename\ntail filename\nhead -n5 filename\nwc filename\nwc -l filename\nrm file\nrm *\ncp -r foldername\nmv foldername pathwheretomove\nrm -r foldername\n\nTIP: Be VERY careful with rm: once removed, files cannot be restored.\nRemember: Bash is case sensitive."
+    "section": "Edit files",
+    "text": "Edit files\nnano nomefile #create new empty file\n\nCtrl+S to save\n\nCtrl+X to exit\n\nCtrl+W to search\n\ncp filename pathwheretocopy\nmv filename pathwheretocopy\nmv filename new_filename\nless filename\ncat filename\nhead filename\ntail filename\nhead -n5 filename\nwc filename\nwc -l filename\nrm file\nrm *\ncp -r foldername\nmv foldername pathwheretomove\nrm -r foldername\n\nTIP: Be VERY careful with rm: once removed, files cannot be restored.\nRemember: Bash is case sensitive."
   },
   {
     "objectID": "bash_intro.html#merge-and-sort-files",
     "href": "bash_intro.html#merge-and-sort-files",
     "title": "BASH per Bioinformatica",
-    "section": "",
-    "text": "cat file1 file2 file3 …\ncat file1 file2 file3 &gt; merged_file\nsort file\nsort -h file\nsort -k1,1 -k2,2n file\nsort -k1,1 -k2,2nr file\npaste file1 file2"
+    "section": "Merge and sort files",
+    "text": "Merge and sort files\ncat file1 file2 file3 …\ncat file1 file2 file3 &gt; merged_file\nsort file\nsort -h file\nsort -k1,1 -k2,2n file\nsort -k1,1 -k2,2nr file\npaste file1 file2"
   },
   {
     "objectID": "bash_intro.html#grep",
     "href": "bash_intro.html#grep",
     "title": "BASH per Bioinformatica",
-    "section": "",
-    "text": "grep \"word\" file\ngrep -w \"word\" file\ngrep -v \"word\" file\ngrep -i \"word\" file\ngrep -c \"word\" file\ngrep -A10 \"word\" file\ngrep -B10 \"word\" file\ngrep -C10 \"word\" file\ngrep \"Locus10[12]\" file\n\n\n\n^ beginning of line → grep \"^&gt;\" file\n$ end of line → grep \"&gt;$\" file\n\n\nRegular expressions match text patterns."
+    "section": "Grep",
+    "text": "Grep\ngrep \"word\" file\ngrep -w \"word\" file\ngrep -v \"word\" file\ngrep -i \"word\" file\ngrep -c \"word\" file\ngrep -A10 \"word\" file\ngrep -B10 \"word\" file\ngrep -C10 \"word\" file\ngrep \"Locus10[12]\" file\n\nSpecial characters\n\n^ beginning of line → grep \"^&gt;\" file\n$ end of line → grep \"&gt;$\" file\n\n\nRegular expressions match text patterns."
   },
   {
     "objectID": "bash_intro.html#awk",
     "href": "bash_intro.html#awk",
     "title": "BASH per Bioinformatica",
-    "section": "",
-    "text": "awk '{print $1}' file\nawk '{print $0}' file\nawk '{print $NF}' file\nawk '{print $4\" \"$1}' file\nawk -F\";\" '{print $3,$4}'\nawk '$1==$2 {print}'\nawk '$1 ~ /chr1/ && $3-$2&gt;10 {print}'\nawk '{if ($1~\"&gt;\") print $0; else print length}' fasta_file"
+    "section": "Awk",
+    "text": "Awk\nawk '{print $1}' file\nawk '{print $0}' file\nawk '{print $NF}' file\nawk '{print $4\" \"$1}' file\nawk -F\";\" '{print $3,$4}'\nawk '$1==$2 {print}'\nawk '$1 ~ /chr1/ && $3-$2&gt;10 {print}'\nawk '{if ($1~\"&gt;\") print $0; else print length}' fasta_file"
   },
   {
     "objectID": "bash_intro.html#sed",
     "href": "bash_intro.html#sed",
     "title": "BASH per Bioinformatica",
-    "section": "",
-    "text": "sed 's/Locus/Transcript/' file\nsed 's/Locus/Transcript/g' file\nsed -i 's/Locus/Transcript/g' file\nsed '/Locus/d' file"
+    "section": "Sed",
+    "text": "Sed\nsed 's/Locus/Transcript/' file\nsed 's/Locus/Transcript/g' file\nsed -i 's/Locus/Transcript/g' file\nsed '/Locus/d' file"
   },
   {
     "objectID": "bash_intro.html#pipe",
     "href": "bash_intro.html#pipe",
     "title": "BASH per Bioinformatica",
-    "section": "",
-    "text": "The pipe sends the output of one program as input to the next.\ngrep \"word\" file1 | sed 's/ /   /g' | program1 &gt; file2"
+    "section": "Pipe |",
+    "text": "Pipe |\nThe pipe sends the output of one program as input to the next.\ngrep \"word\" file1 | sed 's/ /   /g' | program1 &gt; file2"
   },
   {
     "objectID": "bash_intro.html#variables",
     "href": "bash_intro.html#variables",
     "title": "BASH per Bioinformatica",
-    "section": "",
-    "text": "var1=\"ciao\"\necho $var1\necho \"$var1\"\necho '$var1'"
+    "section": "Variables",
+    "text": "Variables\nvar1=\"ciao\"\necho $var1\necho \"$var1\"\necho '$var1'"
   },
   {
     "objectID": "bash_intro.html#for-loop",
     "href": "bash_intro.html#for-loop",
     "title": "BASH per Bioinformatica",
-    "section": "",
-    "text": "for i in *.fasta; do echo $i; done\nfor i in *.fasta; do mv \"$i\" \"${i}_filtered\"; done\nfor i in *fastq; do sed 's/@/&gt;/' \"$i\" &gt; \"${i}_editname\"; done\nfor i in *fasta; do grep -c \"&gt;\" \"$i\"; done &gt; counts\nfor i in *fasta; do program1 \"$i\" &gt; \"output_$i\"; done\nfor i in */ ; do cd \"$i\"; cp *.fasta ../; cd ..; done"
-  },
-  {
-    "objectID": "bash_intro.html#listare-i-file",
-    "href": "bash_intro.html#listare-i-file",
-    "title": "BASH per Bioinformatica",
-    "section": "1. Listare i file",
-    "text": "1. Listare i file\nls -l"
-  },
-  {
-    "objectID": "bash_intro.html#visualizzare-le-prime-8-righe",
-    "href": "bash_intro.html#visualizzare-le-prime-8-righe",
-    "title": "BASH per Bioinformatica",
-    "section": "2. Visualizzare le prime 8 righe",
-    "text": "2. Visualizzare le prime 8 righe\nzcat S1_10_L001_R1_001.fastq.gz | head -n 8"
-  },
-  {
-    "objectID": "bash_intro.html#scorrere-il-file",
-    "href": "bash_intro.html#scorrere-il-file",
-    "title": "BASH per Bioinformatica",
-    "section": "3. Scorrere il file",
-    "text": "3. Scorrere il file\nzcat S1_10_L001_R1_001.fastq.gz | less -S"
-  },
-  {
-    "objectID": "bash_intro.html#contare-le-linee",
-    "href": "bash_intro.html#contare-le-linee",
-    "title": "BASH per Bioinformatica",
-    "section": "4. Contare le linee",
-    "text": "4. Contare le linee\nzcat S1_10_L001_R1_001.fastq.gz | wc -l"
-  },
-  {
-    "objectID": "bash_intro.html#numero-di-reads",
-    "href": "bash_intro.html#numero-di-reads",
-    "title": "BASH per Bioinformatica",
-    "section": "5. Numero di reads",
-    "text": "5. Numero di reads\necho $(( $(zcat S1_10_L001_R1_001.fastq.gz | wc -l) / 4 ))\n\nAlternativa:\nzcat test_S1_R1.fastq.gz | grep -c \"^@\""
-  },
-  {
-    "objectID": "bash_intro.html#lunghezza-della-prima-read",
-    "href": "bash_intro.html#lunghezza-della-prima-read",
-    "title": "BASH per Bioinformatica",
-    "section": "6. Lunghezza della prima read",
-    "text": "6. Lunghezza della prima read\nzcat S1_10_L001_R1_001.fastq.gz | sed -n '2p' | awk '{print length}'\nOppure:\nseq=$(zcat S1_10_L001_R1_001.fastq.gz | sed -n '2p')\necho ${#seq}"
-  },
-  {
-    "objectID": "bash_intro.html#lunghezza-di-ogni-read",
-    "href": "bash_intro.html#lunghezza-di-ogni-read",
-    "title": "BASH per Bioinformatica",
-    "section": "7. Lunghezza di ogni read",
-    "text": "7. Lunghezza di ogni read\nzcat S1_10_L001_R1_001.fastq.gz | awk 'NR%4==2 {print length}'"
-  },
-  {
-    "objectID": "bash_intro.html#lunghezza-media",
-    "href": "bash_intro.html#lunghezza-media",
-    "title": "BASH per Bioinformatica",
-    "section": "8. Lunghezza media",
-    "text": "8. Lunghezza media\nzcat S1_10_L001_R1_001.fastq.gz  | awk 'NR%4==2 { total+=length; n++ } END { print total/n }'"
-  },
-  {
-    "objectID": "bash_intro.html#cercare-una-sequenza",
-    "href": "bash_intro.html#cercare-una-sequenza",
-    "title": "BASH per Bioinformatica",
-    "section": "9. Cercare una sequenza",
-    "text": "9. Cercare una sequenza\nzcat S1_10_L001_R1_001.fastq.gz | grep -c \"ACGTACG\""
-  },
-  {
-    "objectID": "bash_intro.html#rinominare-file",
-    "href": "bash_intro.html#rinominare-file",
-    "title": "BASH per Bioinformatica",
-    "section": "10. Rinominare file",
-    "text": "10. Rinominare file\nfor f in *.fastq.gz; do\n    sample=$(echo \"$f\" | cut -d'_' -f1)\n    read=$(echo \"$f\" | grep -o \"R[12]\")\n    new=\"test_${sample}_${read}.fastq.gz\"\n    mv \"$f\" \"$new\"\ndone"
-  },
-  {
-    "objectID": "bash_intro.html#aggiungere-un-prefisso-agli-header",
-    "href": "bash_intro.html#aggiungere-un-prefisso-agli-header",
-    "title": "BASH per Bioinformatica",
-    "section": "11. Aggiungere un prefisso agli header",
-    "text": "11. Aggiungere un prefisso agli header\nzcat S1_R1.fastq.gz  | awk 'NR%4==1{print \"@S1_\" substr($0,2)} NR%4!=1{print}'  | gzip &gt; S1_R1_renamed.fastq.gz"
-  },
-  {
-    "objectID": "bash_intro.html#reindirizzare-output",
-    "href": "bash_intro.html#reindirizzare-output",
-    "title": "BASH per Bioinformatica",
-    "section": "12. Reindirizzare output",
-    "text": "12. Reindirizzare output\nzcat S1_R1.fastq.gz | head -n 20 &gt; subset_S1_R1.fastq"
+    "section": "For loop",
+    "text": "For loop\nfor i in *.fasta; do echo $i; done\nfor i in *.fasta; do mv \"$i\" \"${i}_filtered\"; done\nfor i in *fastq; do sed 's/@/&gt;/' \"$i\" &gt; \"${i}_editname\"; done\nfor i in *fasta; do grep -c \"&gt;\" \"$i\"; done &gt; counts\nfor i in *fasta; do program1 \"$i\" &gt; \"output_$i\"; done\nfor i in */ ; do cd \"$i\"; cp *.fasta ../; cd ..; done"
   },
   {
     "objectID": "intro_r.html",
