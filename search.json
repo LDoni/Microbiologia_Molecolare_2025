@@ -151,7 +151,7 @@
     "href": "bash_intro.html#guardiamo-che-files-sono-presenti-nella-directory-in-cui-ci-troviamo",
     "title": "BASH per Bioinformatica",
     "section": "Guardiamo che files sono presenti nella directory in cui ci troviamo:",
-    "text": "Guardiamo che files sono presenti nella directory in cui ci troviamo:\nls\nls -ltrh\nman list"
+    "text": "Guardiamo che files sono presenti nella directory in cui ci troviamo:\nls\nls --help\nls -ltrh"
   },
   {
     "objectID": "bash_intro.html#entriamo-nella-cartella-esercizi_fastq-e-listiamo-i-file-presenti",
@@ -221,7 +221,7 @@
     "href": "bash_intro.html#contiamo-il-numero-di-reads",
     "title": "BASH per Bioinformatica",
     "section": "Contiamo il numero di reads",
-    "text": "Contiamo il numero di reads\nzcat test_S1_R1.fastq.gz | grep -c \"^@\"\nOppure possiamo usare:\necho $(( $(zcat S1_10_L001_R1_001.fastq.gz | wc -l) / 4 ))"
+    "text": "Contiamo il numero di reads\nzcat S1_10_L001_R1_001.fastq.gz | grep -c \"^@\"\nOppure possiamo usare:\necho $(( $(zcat S1_10_L001_R1_001.fastq.gz | wc -l) / 4 ))"
   },
   {
     "objectID": "bash_intro.html#cerchiamo-una-sequenza",
@@ -243,13 +243,6 @@
     "title": "BASH per Bioinformatica",
     "section": "Calcoliamo la lunghezza di ogni read",
     "text": "Calcoliamo la lunghezza di ogni read\nzcat S1_10_L001_R1_001.fastq.gz | awk 'NR%4==2 {print length}'"
-  },
-  {
-    "objectID": "bash_intro.html#calcoliamo-la-lunghezza-media",
-    "href": "bash_intro.html#calcoliamo-la-lunghezza-media",
-    "title": "BASH per Bioinformatica",
-    "section": "Calcoliamo la lunghezza media",
-    "text": "Calcoliamo la lunghezza media\nzcat S1_10_L001_R1_001.fastq.gz  | awk 'NR%4==2 { total+=length; n++ } END { print total/n }'"
   },
   {
     "objectID": "bash_intro.html#rinominiamo-tutti-i-files-in-un-formato-più-semplice",
