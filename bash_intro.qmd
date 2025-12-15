@@ -79,7 +79,7 @@ zcat S1_10_L001_R1_001.fastq.gz | wc -l
 ## Contiamo il numero di reads
 
 ```bash
-zcat test_S1_R1.fastq.gz | grep -c "^@"
+zcat S1_10_L001_R1_001.fastq.gz | grep -c "^@"
 ```
 Oppure possiamo usare:
 
