@@ -112,12 +112,6 @@ echo ${#seq}
 zcat S1_10_L001_R1_001.fastq.gz | awk 'NR%4==2 {print length}'
 ```
 
-## Calcoliamo la lunghezza media
-
-```bash
-zcat S1_10_L001_R1_001.fastq.gz  | awk 'NR%4==2 { total+=length; n++ } END { print total/n }'
-```
-
 ## Rinominiamo tutti i files in un formato più semplice:
 
 ```bash
