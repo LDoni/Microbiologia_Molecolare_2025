@@ -117,6 +117,37 @@ zcat S1_10_L001_R1_001.fastq.gz | awk 'NR%4==2 {print length}'
 ```bash
 for f in *.fastq.gz
 do
+   #echo = stampa a schermo   
+    echo $f
+done
+
+for f in *.fastq.gz
+do
+   sample=$(echo "$f" | cut -d'_' -f1)
+   read=$(echo "$f" | cut -d'_' -f4)
+   #echo = stampa a schermo   
+   echo -e  $sample
+   echo "##########"
+   echo -e  $read
+done
+
+for f in *.fastq.gz
+do
+    sample=$(echo "$f" | cut -d'_' -f1)
+    read=$(echo "$f" | cut -d'_' -f4)
+   echo "mv "$f" "${sample}_${read}.fastq.gz""
+done
+
+for f in *.fastq.gz
+do
+    sample=$(echo "$f" | cut -d'_' -f1)
+    read=$(echo "$f" | cut -d'_' -f4)
+   mv "$f" "${sample}_${read}.fastq.gz"
+done
+
+
+for f in *.fastq.gz
+do
     sample=$(echo "$f" | cut -d'_' -f1)
     read=$(echo "$f" | cut -d'_' -f4)
     mv "$f" "${sample}_${read}.fastq.gz"

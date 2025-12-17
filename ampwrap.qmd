@@ -36,6 +36,10 @@ Useremo il modulo Illumina.
 ## Help del comando
 
 ```bash
+conda activate ampwrap
+
+cd /home/aula
+
 ampwrap short --help
 ```
 
