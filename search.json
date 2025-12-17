@@ -186,7 +186,7 @@
     "href": "bash_intro.html#spostiamolo-nella-cartella-prova_fastq-che-abbiamo-creato",
     "title": "BASH per Bioinformatica",
     "section": "Spostiamolo nella cartella prova_fastq che abbiamo creato",
-    "text": "Spostiamolo nella cartella prova_fastq che abbiamo creato\nmv file_prova_fastq /directory_prova_fastq"
+    "text": "Spostiamolo nella cartella prova_fastq che abbiamo creato\nmv file_prova_fastq directory_prova_fastq"
   },
   {
     "objectID": "bash_intro.html#torniamo-alla-directory-precedente",
@@ -249,7 +249,7 @@
     "href": "bash_intro.html#rinominiamo-tutti-i-files-in-un-formato-più-semplice",
     "title": "BASH per Bioinformatica",
     "section": "Rinominiamo tutti i files in un formato più semplice:",
-    "text": "Rinominiamo tutti i files in un formato più semplice:\nfor f in *.fastq.gz\ndo\n   #echo = stampa a schermo   \n    echo $f\ndone\n\nfor f in *.fastq.gz\ndo\n   sample=$(echo \"$f\" | cut -d'_' -f1)\n   read=$(echo \"$f\" | cut -d'_' -f4)\n   #echo = stampa a schermo   \n   echo -e  $sample\n   echo \"##########\"\n   echo -e  $read\ndone\n\nfor f in *.fastq.gz\ndo\n    sample=$(echo \"$f\" | cut -d'_' -f1)\n    read=$(echo \"$f\" | cut -d'_' -f4)\n   echo \"mv \"$f\" \"${sample}_${read}.fastq.gz\"\"\ndone\n\nfor f in *.fastq.gz\ndo\n    sample=$(echo \"$f\" | cut -d'_' -f1)\n    read=$(echo \"$f\" | cut -d'_' -f4)\n   mv \"$f\" \"${sample}_${read}.fastq.gz\"\ndone\n\n\nfor f in *.fastq.gz\ndo\n    sample=$(echo \"$f\" | cut -d'_' -f1)\n    read=$(echo \"$f\" | cut -d'_' -f4)\n    mv \"$f\" \"${sample}_${read}.fastq.gz\"\ndone"
+    "text": "Rinominiamo tutti i files in un formato più semplice:\nfor f in *.fastq.gz\ndo\n   #echo = stampa a schermo   \n    echo $f\ndone\nfor f in *.fastq.gz\ndo\n   sample=$(echo \"$f\" | cut -d'_' -f1)\n   read=$(echo \"$f\" | cut -d'_' -f4)\n   #echo = stampa a schermo   \n   echo -e  $sample\n   echo \"##########\"\n   echo -e  $read\ndone\nfor f in *.fastq.gz\ndo\n    sample=$(echo \"$f\" | cut -d'_' -f1)\n    read=$(echo \"$f\" | cut -d'_' -f4)\n   echo \"mv \"$f\" \"${sample}_${read}.fastq.gz\"\"\ndone\nfor f in *.fastq.gz\ndo\n    sample=$(echo \"$f\" | cut -d'_' -f1)\n    read=$(echo \"$f\" | cut -d'_' -f4)\n   mv \"$f\" \"${sample}_${read}.fastq.gz\"\ndone\nfor f in *.fastq.gz\ndo\n    sample=$(echo \"$f\" | cut -d'_' -f1)\n    read=$(echo \"$f\" | cut -d'_' -f4)\n    mv \"$f\" \"${sample}_${read}.fastq.gz\"\ndone"
   },
   {
     "objectID": "bash_intro.html#reindirizziamo-loutput",
