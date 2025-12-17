@@ -45,7 +45,7 @@ mv primo_file.fastq file_prova_fastq
 ## Spostiamolo nella cartella prova_fastq che abbiamo creato
 
 ```bash
-mv file_prova_fastq /directory_prova_fastq
+mv file_prova_fastq directory_prova_fastq
 ```
 ## Torniamo alla directory precedente
 
@@ -120,7 +120,8 @@ do
    #echo = stampa a schermo   
     echo $f
 done
-
+```
+```
 for f in *.fastq.gz
 do
    sample=$(echo "$f" | cut -d'_' -f1)
@@ -130,22 +131,24 @@ do
    echo "##########"
    echo -e  $read
 done
-
+```
+```
 for f in *.fastq.gz
 do
     sample=$(echo "$f" | cut -d'_' -f1)
     read=$(echo "$f" | cut -d'_' -f4)
    echo "mv "$f" "${sample}_${read}.fastq.gz""
 done
-
+```
+```
 for f in *.fastq.gz
 do
     sample=$(echo "$f" | cut -d'_' -f1)
     read=$(echo "$f" | cut -d'_' -f4)
    mv "$f" "${sample}_${read}.fastq.gz"
 done
-
-
+```
+```
 for f in *.fastq.gz
 do
     sample=$(echo "$f" | cut -d'_' -f1)
