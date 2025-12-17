@@ -121,18 +121,18 @@ do
     echo $f
 done
 ```
-```
+```bash
 for f in *.fastq.gz
 do
    sample=$(echo "$f" | cut -d'_' -f1)
    read=$(echo "$f" | cut -d'_' -f4)
    #echo = stampa a schermo   
-   echo -e  $sample
+   echo $sample
    echo "##########"
-   echo -e  $read
+   echo $read
 done
 ```
-```
+```bash
 for f in *.fastq.gz
 do
     sample=$(echo "$f" | cut -d'_' -f1)
@@ -140,20 +140,12 @@ do
    echo "mv "$f" "${sample}_${read}.fastq.gz""
 done
 ```
-```
+```bash
 for f in *.fastq.gz
 do
     sample=$(echo "$f" | cut -d'_' -f1)
     read=$(echo "$f" | cut -d'_' -f4)
    mv "$f" "${sample}_${read}.fastq.gz"
-done
-```
-```
-for f in *.fastq.gz
-do
-    sample=$(echo "$f" | cut -d'_' -f1)
-    read=$(echo "$f" | cut -d'_' -f4)
-    mv "$f" "${sample}_${read}.fastq.gz"
 done
 ```
 
